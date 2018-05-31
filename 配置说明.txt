@@ -1,0 +1,27 @@
+--- BEGIN ---
+
+jdk
+tomcat8
+idea
+nodejs -> npm -> cnpm
+
+
+
+file -> new -> module from existing... -> 选择到项目文件夹下的pom.xml -> ok
+file -> settings -> build -> build tools -> maven -> 更改user settings file和local repository分别到指定的settings.xml文件和指定的maven包下
+file -> project structure -> project -> sdk设置到jdk文件夹下, project compiler output设置到项目文件夹xxx\src\main\webapp\web-inf\classes <- 复制这个路径
+file -> project structure -> modules -> path -> ... <- 刚才复制的粘贴在这两个 output path 下
+file -> project structure -> artifacts -> + -> web applacation...explode.. -> from ... -> 把下面的右边右键推到左边, output... 填写 xxx\src\main\webapp
+
+
+控制台 -> 打开到项目文件的main目录下 -> 安装gulp(安装的方法在gulpfile.js下)
+
+配置服务器 -> edit configura... -> + -> tomcat serve -> 设置tomcat路径 -> deployment -> + -> arti... -> 选择exploded那个, application context 填写 web-attendance -> server -> 路径填写http://localhost.../web-attendance/attendance#index -> ok (如果端口冲突改下面的http port和jmx port)
+
+点击运行或调试
+
+数据库配置文件在 main\resour...\jdbc...
+gulp配置文件在gulpfile.js
+
+
+--- END ---
