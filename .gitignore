@@ -3,3 +3,5 @@ web-attendance.iml
 classes
 src/main/node_modules
 target
+src/main/webapp/WEB-INF/*classes
+src/main/webapp/WEB-INF/lib
