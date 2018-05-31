@@ -1,0 +1,31 @@
+/*=====================================通用样式==================================================*/
+body{
+    /*line-height: 34px;*/
+    font-size: 14px;
+    font-family: 微软雅黑;
+    margin: 0 auto;
+    width: 1347px;
+}
+.l{
+    float: left;
+}
+.r{
+    float: right;
+}
+.cl{
+    clear: both;
+}
+.cont{
+    width: 1250px;
+    margin: 0 auto;
+}
+image{
+    border: none;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
+/*=======================================通用样式==============================================*/

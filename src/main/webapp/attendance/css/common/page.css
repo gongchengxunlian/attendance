@@ -1,0 +1,54 @@
+body{
+    font-size: medium;
+    color: #000000;
+}
+.nowrap{
+    white-space: nowrap;
+}
+.btn-toolbar{
+    margin-bottom: .5em;
+}
+.margin-auto{
+    margin: auto;
+}
+.btn-width-xsm{
+    padding-left: .5em;
+    padding-right: .5em;
+}
+.btn-width-sm{
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
+.btn-width-md{
+    padding-left: 5em;
+    padding-right: 5em;
+}
+.btn-width-lg{
+    padding-left: 8em;
+    padding-right: 8em;
+}
+.btn-width-xlg{
+    padding-left: 10em;
+    padding-right: 10em;
+}
+textarea.no-resize{
+    resize: none;
+}
+.close{
+    outline: none;
+}
+.close:after{
+    content: 'X';
+    font-size: small;
+    padding: .25em .75em;
+    border-radius: 5px;
+}
+.close:hover:after{
+    background-color: red;
+    color: #ffffff;
+}
+
+
+
+
+

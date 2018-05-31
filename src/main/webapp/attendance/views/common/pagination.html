@@ -1,0 +1,15 @@
+<div class="paginationDiv">
+  <div class="row panel-nopadding-footer" style="margin: 0; padding: 1em 0">
+
+      <div class="lt-pagination">
+
+        <uib-pagination boundary-links="true" max-size="5" ng-change="queryList()" total-items="pagination.totalCount" num-pages="pagination.totalPage" ng-model="pagination.currentPage" items-per-page="pagination.pageSize" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+        <span class="pagemsg" style="margin: auto 1em">
+            共{{pagination.totalCount}}条数据，当前{{pagination.currentPage}}/{{pagination.totalPage}}页。每页显示数量：
+            <select class="form-control" id="maxPageSize-select" ng-model="pagination.pageSize" ng-options="maxPageSize for maxPageSize in pagination.pageSizeList" ng-change="queryList()"></select>
+        </span>
+
+      </div>
+
+  </div>
+</div>

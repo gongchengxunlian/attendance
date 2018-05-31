@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzu.edu.dao.StudentInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fzu.edu.model.StudentInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="college_id" property="collegeId" jdbcType="INTEGER" />
+    <result column="flag" property="flag" jdbcType="INTEGER" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, code, school_id, college_id, flag, info
+  </sql>
+
+  <select id="getAllStudent" parameterType="hashmap" resultType="hashmap">
+    SELECT UBI.*, TEI.id tid, TEI.code, TEI.info tinfo, SCI.id sid, SCI.name sname, SCI.code scode, COI.id cid, COI.name cname, COI.code ccode
+    ,CASE UBI.power
+    WHEN 0 THEN '数据管理员'
+    WHEN 1 THEN '校园管理员'
+    WHEN 2 THEN '教师'
+    WHEN 3 THEN '学生'
+    END AS roleName
+    FROM user_basic_info AS UBI, student_info AS TEI, school_info AS SCI, college_info AS COI
+    WHERE
+    UBI.flag = 0 AND TEI.flag = 0 AND SCI.flag = 0 AND COI.flag = 0 AND UBI.power = 3
+    AND UBI.id = TEI.user_id AND TEI.college_id = COI.id AND SCI.id = COI.school_id
+    <if test="collegeId!=null">
+      AND COI.id = #{collegeId}
+    </if>
+    <if test="schoolId!=null">
+      AND SCI.id = #{schoolId}
+    </if>
+    <if test="name!=null and name!=''">
+      AND UBI.[name] LIKE '%'+#{name}+'%'
+    </if>
+    <if test="code!=null and code!=''">
+      AND TEI.[code] LIKE '%'+#{code}+'%'
+    </if>
+    <if test="code!=null and code!=''">
+      AND UBI.[mail] LIKE '%'+#{mail}+'%'
+    </if>
+    <if test="code!=null and code!=''">
+      AND UBI.[phone] LIKE '%'+#{phone}+'%'
+    </if>
+    <if test="order!=null and order!=''">
+      ORDER BY
+      <if test="order!='code'">
+        UBI.[${order}]
+      </if>
+      <if test="order=='code'">
+        TEI.code
+      </if>
+      <if test="__order == '0' || __order == 0">
+        ASC
+      </if>
+      <if test="__order == '1' || __order == 1">
+        DESC
+      </if>
+    </if>
+  </select>
+
+
+  <select id="loginCheck" resultType="hashmap">
+    SELECT UBI.id, TI.id as rid
+    FROM user_basic_info UBI
+    LEFT JOIN user_login_info ULI ON ULI.user_id = UBI.id
+    LEFT JOIN student_info TI ON TI.user_id = UBI.id
+    WHERE
+    UBI.flag = 0 AND TI.flag = 0
+    AND ${sqlWhere}
+    ;
+  </select>
+
+</mapper>

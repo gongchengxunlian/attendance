@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/attendance/css/classManage/distribution.css">
+<script type="text/ng-template" id="classDistribution.html">
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()"></button>
+    <h4 class="modal-title">教室分布设置</h4>
+    <div style="display: inline-block" class="distribution-set">
+        <label>行 </label><input ng-model="set_row" type="number" size="3" min="5" class="form-control" ng-change="changeRow()" />&nbsp;&nbsp;
+        <label>列 </label><input ng-model="set_col" type="number" size="3" min="5" class="form-control" ng-change="changeCol()" />
+    </div>
+</div>
+<div class="modal-body">
+    <form name="distribution" class="form" ng-submit="saveData()">
+        <div class="distribution-body">
+            <table class="table table-striped" border="1">
+                <tr>
+                    <td class="distribution-row-title" ng-repeat="col in colArray track by $index">{{$index != 0 ? $index : ''}}</td>
+                </tr>
+                <tr class="distribution-row-body" ng-repeat="(i, row) in rowArray track by $index">
+                    <td
+                            ng-repeat="(j, col) in colArray track by $index"
+                            ng-click="setRoad($event, i, j)"
+                            ng-class="setClass(i, j)"
+                            onmousemove="javascript:$(this).hasClass('distribution-cell') ? $('.distribution-row-body').find('td:nth-child('+($(this).parent().find('td').index($(this)) + 1) +')').addClass('distribution-cell-hover') : '';"
+                            onmouseout="javascript:$(this).hasClass('distribution-cell') ? $('.distribution-row-body').find('td:nth-child('+($(this).parent().find('td').index($(this)) + 1) +')').removeClass('distribution-cell-hover') : '';"
+                    >{{j == 0 ? (i + 1) : ''}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-single btn-width-md margin-auto">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</script>

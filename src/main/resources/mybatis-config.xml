@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <plugins>
+        <plugin interceptor="com.fzu.edu.utils.PageInterceptor">
+            <property name="databaseType" value="sqlServer"/>
+        </plugin>
+    </plugins>
+    <!-- mybatis别名定义 -->
+    <!-- <typeAliases>
+         <typeAlias alias="Userinfo" type="com.fzu.edu.model.Userinfo"/>
+
+         <typeAlias alias="Company" type="com.fzu.edu.model.Company"/>
+     </typeAliases>-->
+
+
+</configuration>

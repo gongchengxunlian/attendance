@@ -1,0 +1,166 @@
+<style rel="stylesheet">
+    .classIndex{
+        display: inline-block !important;
+        height: auto;
+        word-break: break-all;
+    }
+    #showClassIndex{
+        position: absolute;
+        width: 50%;
+        margin: auto;
+        top: 20%;
+        left: 25%;
+        background-color: #fff;
+        box-shadow: 0 0 10px black;
+        padding: 3em 1em 1em 1em;
+    }
+    #showClassIndex select{
+        overflow: hidden;
+        font-size: medium;
+    }
+    #showClassIndex select option{
+        text-align: center;
+    }
+    .titleShowClassIndex{
+        position: absolute;
+        top: 1em;
+    }
+    .closeShowClassIndex{
+        position: absolute;
+        top: .75em;
+        right: 1em;
+        padding: .1em .5em;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .closeShowClassIndex:hover{
+        background-color: blue;
+        color: #ffffff;
+    }
+</style>
+<script type="text/ng-template" id="arrangeForm.html" xmlns="http://www.w3.org/1999/html">
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()"></button>
+    <h4 class="modal-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <form name="courseForm" class="form" ng-submit="saveData()">
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">选择课程：</label>
+                    <select select2 required class="form-control" ng-model="courseId">
+                        <option value="" disabled selected>请选择一门课程</option>
+                        <option ng-repeat="course in courseData" value="{{course.id}}">{{course.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">开课时间：</label>
+                    <select class="form-control" required ng-model="formData.start_year">
+                        <option value="" selected disabled>学年</option>
+                        <option value="{{currentYear - 1 + $index}}" ng-repeat="startYear in startYearOptions track by $index">{{currentYear - 1 + $index}}-{{currentYear + $index}}</option>
+                    </select>
+                    <select class="form-control" required ng-model="formData.term">
+                        <option value="" selected disabled>学期</option>
+                        <option value="{{$index}}" ng-repeat="terms in ['上学期', '下学期'] track by $index">{{terms}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <!--<span class="form-icon-required"></span>-->
+                <div class="form-group">
+                    <label style="opacity: 0" class="form-label">开课时间：</label>
+                    <select class="form-control" required ng-model="formData.start_time">
+                        <option value="" selected disabled>开课时间</option>
+                        <option value="{{$index + 1}}" ng-repeat="startWeek in startWeekOptions track by $index">第{{$index + 1}}周</option>
+                    </select>
+                    <select class="form-control" required ng-model="formData.time_type">
+                        <option value="" selected disabled>单双周</option>
+                        <option ng-if="!formData.start_time || $index % 2 == formData.start_time % 2 || $index == 0" value="{{$index}}" ng-repeat="timeTpye in ['每周', '单周', '双周'] track by $index">{{timeTpye}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-repeat="weekAndClass in weekAndClassIndex track by $index">
+            <div class="col-md-12 form-inline">
+                <!--<span class="form-icon-required"></span>-->
+                <div class="form-group">
+                    <label style="opacity: 0" class="form-label">开课时间：</label>
+                    <select class="form-control" required ng-model="formData.week[$index]">
+                        <option value="" selected disabled>星期</option>
+                        <option value="{{$index}}" ng-repeat="week in ['日', '一', '二', '三', '四', '五', '六'] track by $index">星期{{week}}</option>
+                    </select>
+                    <a href="javascript:;" class="form-control classIndex" ng-click="showClassIndex($index)">
+                        <span ng-if="!formData.classIndex[$index]">选择第几节上课</span>
+                        <div style="display: inline-block; padding: .25em .5em;" ng-repeat="class in formData.classIndex[$index]">第{{class}}节</div>
+                    </a>
+                    <button type="button" class="btn btn-width-xsm btn-danger" ng-click="weekAndClassIndex.pop()">-</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <!--<span class="form-icon-required"></span>-->
+                <div class="form-group">
+                    <label style="opacity: 0" class="form-label">开课时间：</label>
+                    <a style="margin: auto" type="button" class="btn btn-width-md btn-info" ng-click="weekAndClassIndex.push('')">+</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">上课教师：</label>
+                    <select select2 class="form-control" required ng-model="formData.teacherId">
+                        <option value="" selected disabled>选择教师</option>
+                        <option value="teacher.id" ng-repeat="teacher in teacherOptions">{{teacher.name}}[{{teacher.code}}]</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">上课教室：</label>
+                    <select select2 class="form-control" required ng-model="formData.teacherId">
+                        <option value="" selected disabled>选择教室</option>
+                        <option value="{{class.id}}" ng-repeat="class in classesOptions">{{class.name}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-single btn-width-md margin-auto">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div style="width: 100%; height: 100%; position: fixed; top: 0; left: 0;" ng-show="isShowClassIndex">
+    <div id="showClassIndex">
+        <span class="titleShowClassIndex">选择哪节上课</span>
+        <span class="closeShowClassIndex" ng-click="changeClassIndex()">X</span>
+        <select class="form-control" multiple ng-model="classIndex" size="12">
+            <option value="{{$index + 1}}" ng-repeat="class in classOptions track by $index">第{{$index + 1}}节</option>
+        </select>
+    </div>
+</div>
+
+</script>

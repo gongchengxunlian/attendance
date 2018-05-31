@@ -1,0 +1,140 @@
+<!-- Removing search and results count filter -->
+<link rel="stylesheet" href="css/basicInfoManager/clientInfo.css">
+<div class="panel ">
+    <div class="panel-heading">
+        <h3 class="panel-title">客户信息</h3>
+        <div class="panel-actions">
+            <a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>
+            <a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>
+        </div>
+    </div>
+    <div class="panel-body ">
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+
+                // Replace checkboxes when they appear
+                var $state = $("#companygrid thead input[type='checkbox']");
+
+                $("#companygrid").on('draw.dt', function () {
+                    cbr_replace();
+                    $state.trigger('change');
+                });
+
+                // Script to select all checkboxes
+                $state.on('change', function (ev) {
+                    var $chcks = $("#companygrid tbody input[type='checkbox']");
+
+                    if ($state.is(':checked')) {
+                        $chcks.prop('checked', true).trigger('change');
+                    }
+                    else {
+                        $chcks.prop('checked', false).trigger('change');
+                    }
+                });
+            });
+        </script>
+
+        <div class="btn-toolbar">
+            <div class="btn-group focus-btn-group">
+                <button class="btn btn-default gridBtn" ng-click="addClient()"><span class="fa-plus"></span> 新增</button>
+                <button class="btn btn-default gridBtn" ng-click="delRows()"><span class="fa-minus"></span> 删除</button>
+                <button class="btn btn-default gridBtn" ng-click="importExcel()"><span class="fa-exclamation-circle"></span> 导入</button>
+                <button class="btn btn-default gridBtn"ng-click="exportExcel()"><span class="fa-asterisk"></span> 导出</button>
+
+            </div>
+
+            <div class="searchBox">
+
+                <div  class="form-inline">
+                    <label class="control-label"><strong>关键字: </strong></label>
+                    <div class="form-group">
+                        <select  select2 style="width:140px;" class="form-control" ng-model ="cateSelect">
+                            <option value="">全部</option>
+                            <option value="0">客户id</option>
+                            <option value="1">客户名称</option>
+                            <option value="2">归属区域</option>
+                            <option value="3">所在地区</option>
+                            <option value="4">联系人</option>
+                            <option value="5">联系电话</option>
+                            <option value="6">邮编</option>
+                            <option value="7">状态</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-model="code" class="form-control" size="25" placeholder="名字" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary btn-single" ng-click="queryList()">查询</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-secondary btn-single" ng-click="reset()">重置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+        <table class="table  table-bordered table-striped" id="companygrid">
+            <thead>
+            <tr >
+                <th width="100">
+                    <input type="checkbox" ng-model="select_all" ng-click="selectAll()"><i></i>
+                    <span ng-hide="select_all" style="white-space: nowrap;">全选</span>
+                    <span ng-show="select_all" style="white-space: nowrap;">取消全选</span>
+                </th>
+                <th width="100">序号</th>
+                <th width="120">客户id</th>
+                <th width="170">客户名称</th>
+                <th width="130">归属区域</th>
+                <th width="130">所在地区</th>
+                <th width="120">联系人</th>
+                <th width="140">联系电话</th>
+                <th width="100">。。。</th>
+               <!-- <th width="100">邮箱</th>
+                <th width="100">传真</th>
+                <th width="100">行业类别</th>
+                <th width="100">企业性质</th>
+                <th width="100">公司成立时间</th>
+                <th width="100">法定代表人</th>
+                <th width="100">组织代码</th>
+                <th width="100">纳税人识别号</th>
+                <th width="100">开户行</th>
+                <th width="100">账号</th>-->
+                <th width="250">操作</th>
+            </tr>
+            </thead>
+
+            <tbody class="middle-align">
+            <tr ng-repeat="row in root.data">
+                <td>
+                    <input type="checkbox" class="cbr" ng-model="row.checked"  ng-change="selectOne()" >
+                </td>
+                <td>{{$index}}</td>
+                <td>{{row.client_id}}</td>
+                <td>{{row.name}}</td>
+                <td>{{row.area_id}}</td>
+                <td>{{row.location}}</td>
+                <td>{{row.contacts_one}}</td>
+                <td>{{row.phone_one}}</td>
+                <th>留白</th>
+                <td style="white-space: nowrap;">
+                    <a href="" class="btn btn-secondary btn-sm btn-icon icon-left" ng-click="editRow(row.id)">
+                        编辑
+                    </a>
+
+                    <a href="" class="btn btn-danger btn-sm btn-icon icon-left" ng-click="delRow(row.id)">
+                        删除
+                    </a>
+                    <a href="" class="btn btn-info btn-sm btn-icon icon-left" ng-click="adminRow(row.id)">
+                        管理员详情
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <div ng-show="root.data.length>0" ng-include="'views/common/pagination.html'"></div>
+    </div>
+</div>
+</div>
+<div ng-include=" 'views/basicData/clientInfoManager/clientForm.html'"></div>

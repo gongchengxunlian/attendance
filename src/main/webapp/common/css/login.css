@@ -1,0 +1,16 @@
+#loginBox{
+    background: none;
+    background-image:url("../../risk/assets/images/bg.png");
+    background-repeat: repeat;
+}
+
+#loginBox p{
+    color: rgba(0, 0, 0, 0.52);
+}
+
+#loginBox .panel-body{
+    color: black;
+}
+.panel .panel-heading > .panel-options .nav-tabs > li > a{
+    color: rgba(255, 255, 255, 0.9);
+}

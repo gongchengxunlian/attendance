@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" class="fixed">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+<body >
+<!--<style >
+    @media  screen and (min-width:1440px) {
+        html, body {
+            font: 16px/1.5 tahoma, arial, 'Hiragino Sans GB', \5b8b\4f53, sans-serif;
+            color: #333;
+            margin: 0 auto;
+        }
+
+        .login-container {
+            position: absolute;
+            width: 55%;
+            top: 20%;
+            left: 63%;
+        }
+    }
+    @media  screen and (max-width:1440px) and (min-width:1024px){
+        html, body{font:16px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;color:#333;}
+       .login-container{ position: absolute;
+            width: 55%;
+            top: 20%;
+            left: 60%;}
+    }
+    @media  screen and (max-width:1024px) and (min-width:768px){
+        html, body{font:16px/1.5 tahoma,arial,'Hiragino Sans GB',\5b8b\4f53,sans-serif;color:#333;}
+        .login-container{ position: absolute;
+            width: 55%;
+            top: 15%;
+            left: 35%;}
+    }
+
+    </style>-->
+
+<!-- start: page -->
+<section class="body-sign">
+    <div class="center-sign">
+        <a href="" class="logo pull-left">
+            <!--<img src="common/assets/images/logo.png" height="54" alt="Porto Admin" />-->
+        </a>
+
+        <div class="panel panel-sign">
+            <div class="panel-title-sign mt-xl text-right">
+                <h2 class="title text-uppercase text-weight-bold m-none"><i class="fa fa-user mr-xs"></i> 登录</h2>
+            </div>
+            <div class="panel-body">
+                <form ng-submit="loginSys()">
+                <div class="form-group mb-lg">
+                    <label>用户名</label>
+                    <div class="input-group input-group-icon">
+                        <input required type="text" ng-model="username" class="form-control input-lg" />
+                        <span class="input-group-addon">
+                            <span class="icon icon-lg">
+                                <i class="fa fa-user"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group mb-lg">
+                    <div class="clearfix">
+                        <label class="pull-left">密码</label>
+                        <a href="#recoverPassword" class="pull-right" >忘记密码?</a>
+                    </div>
+                    <div class="input-group input-group-icon">
+                        <input required type="{{!showPassword ? 'password' : 'text'}}" ng-model="password" class="form-control input-lg" />
+                        <span class="input-group-addon" ng-click="showPassword = !showPassword">
+                            <span class="icon icon-lg" style="cursor: pointer; pointer-events: all;">
+                                <i class="fa" ng-class="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="checkbox-custom checkbox-default">
+                            <input id="RememberMe" name="rememberme" type="checkbox"/>
+                            <label for="RememberMe">记住密码</label>
+                            <a style="cursor: pointer" id="register" ng-click="userRegister()">前往注册</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 text-right">
+                        <button type="submit" class="btn btn-primary hidden-xs" >登录</button>
+                    </div>
+                </div>
+                </form>
+                <!--		<span class="mt-lg mb-lg line-thru text-center text-uppercase">
+                            <span>or</span>
+                        </span>
+
+                <div class="mb-xs text-center">
+                    <a class="btn btn-facebook mb-md ml-xs mr-xs">Connect with <i class="fa fa-facebook"></i></a>
+                    <a class="btn btn-twitter mb-md ml-xs mr-xs">Connect with <i class="fa fa-twitter"></i></a>
+                </div>
+
+                <p class="text-center">Don't have an account yet? <a href="pages-signup.html">Sign Up!</a>-->
+
+            </div>
+        </div>
+
+        <!--<p class="text-center text-muted mt-md mb-md">&copy; 移动互联网与万集物流大数据实验室.</p>-->
+    </div>
+</section>
+<div ng-include="'attendance/views/basicData/userManage/basicForm.html'"></div>
+<!-- end: page -->
+
+<!--<div id="id1" style="position: fixed;width: 100%;height: 100%;top: 0;left: 0;z-index: -999;background-image: url('/common/image/login.jpg');background-repeat: no-repeat;background-position: center;
+    background-position-y: top;background-size: cover"></div>-->
+</body>
+</html>
+

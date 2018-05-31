@@ -1,0 +1,196 @@
+<ul class="nav nav-main">
+    <li class="nav-active">
+        <a href="#index">
+            <i class="fa fa-home" aria-hidden="true"></i>
+            <span>主页面</span>
+        </a>
+    </li>
+    <!--<li>-->
+        <!--<a href="#listPage">-->
+            <!--&lt;!&ndash;<span class="pull-right label label-primary">182</span>&ndash;&gt;-->
+            <!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
+            <!--<span>列表页面</span>-->
+        <!--</a>-->
+    <!--</li>-->
+    <li class="nav-parent">
+        <a>
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            <span>学校管理</span>
+        </a>
+        <ul class="nav nav-children" ng-if="sign == 0">
+            <li>
+                <a href="#schoolMenage" >
+                    学校管理
+                </a>
+            </li>
+        </ul>
+        <ul class="nav nav-children" ng-if="sign < 2">
+            <li>
+                <a ui-sref="collegeManage({ showAll: 1 })">
+                    学院管理
+                </a>
+            </li>
+        </ul>
+        <ul class="nav nav-children" ng-if="sign == 1">
+            <li>
+                <a href="#classManage">
+                    教室管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-parent" ng-show="sign < 3">
+        <a ui-sref="courseManage({ showAll: 1 })">
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            <span>课程管理</span>
+        </a>
+        <ul class="nav nav-children" ng-if="sign == 1">
+            <li>
+                <a href="#courseArrange">
+                    课程安排
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li ng-if="sign < 3">
+        <a href="#userManage">
+            <i class="fa fa-user-md"></i>
+            <span>用户管理</span>
+        </a>
+    </li>
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-tasks" aria-hidden="true"></i>-->
+            <!--<span>UI Elements</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="ui-elements-typography.html">-->
+                    <!--Typography-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-parent">-->
+                <!--<a>-->
+                    <!--Icons-->
+                <!--</a>-->
+                <!--<ul class="nav nav-children">-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-elusive.html">-->
+                            <!--Elusive-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-font-awesome.html">-->
+                            <!--Font Awesome-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-glyphicons.html">-->
+                            <!--Glyphicons-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-line-icons.html">-->
+                            <!--Line Icons-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-meteocons.html">-->
+                            <!--Meteocons-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-line-icons.html">-->
+                            <!--Line Icons-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a href="ui-elements-icons-meteocons.html">-->
+                            <!--Meteocons-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-list-alt" aria-hidden="true"></i>-->
+            <!--<span>Forms</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="forms-basic.html">-->
+                    <!--Basic-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-table" aria-hidden="true"></i>-->
+            <!--<span>Tables</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="tables-basic.html">-->
+                    <!--Basic-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-map-marker" aria-hidden="true"></i>-->
+            <!--<span>Maps</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="maps-google-maps.html">-->
+                    <!--Basic-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-columns" aria-hidden="true"></i>-->
+            <!--<span>Layouts</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="layouts-default.html">-->
+                    <!--Default-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+    <!--<li class="nav-parent">-->
+        <!--<a>-->
+            <!--<i class="fa fa-asterisk" aria-hidden="true"></i>-->
+            <!--<span>Extra</span>-->
+        <!--</a>-->
+        <!--<ul class="nav nav-children">-->
+            <!--<li>-->
+                <!--<a href="extra-changelog.html">-->
+                    <!--Changelog-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a href="extra-ajax-made-easy.html">-->
+                    <!--Ajax Made Easy-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</li>-->
+</ul>
+
+
+<!-- Theme Base, Components and Settings -->
+<script src="../common/assets/javascripts/theme.js"></script>
+<!-- Theme Custom -->
+<script src="../common/assets/javascripts/theme.custom.js"></script>
+<!-- Theme Initialization Files -->
+<script src="../common/assets/javascripts/theme.init.js"></script>
+
+

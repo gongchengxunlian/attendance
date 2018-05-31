@@ -1,0 +1,56 @@
+<script type="text/ng-template" id="classForm.html">
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()"></button>
+    <h4 class="modal-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <form name="classForm" class="form" ng-submit="saveData()">
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">教学楼：</label>
+                    <!--<select select2 ng-model="formData.teachBuildId" required class="form-control" name="teachBuildId" >
+                        <option value="">请选择一个教学楼</option>
+                        <option value="{{teachBuild.id}}" ng-repeat="teachBuild in teachBuildOptions">{{teachBuild.name}}</option>
+                        <option value="-1">其他</option>
+                    </select>-->
+                    <input ng-model="formData.buildName" required class="form-control" /><!-- ng-if="formData.teachBuildId == -1"-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label"><span style="opacity: 0;">名</span>名称：</label>
+                    <!--<select select2 ng-model="formData.classId" required class="form-control" name="classId" >
+                        <option value="">请选择一个名称</option>
+                        <option value="{{class.id}}" ng-repeat="class in classptions">{{class.name}}</option>
+                        <option value="-1">其他</option>
+                    </select>-->
+                    <input ng-model="formData.className" required class="form-control" /><!-- ng-if="formData.classId == -1"-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    <label class="form-label"><span style="opacity: 0;">分</span>分布：</label>
+                    <a href="javascript:;" class="form-control" ng-click="openSetDist()">点击查看分布</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    <button class="btn btn-primary btn-single btn-width-md margin-auto">保存</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</script>
+<div ng-include="'views/basicData/schoolManage/classDistribution.html'"></div>

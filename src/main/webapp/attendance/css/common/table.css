@@ -1,0 +1,61 @@
+.table .select-all{
+    width: 8em;
+    text-align: center;
+}
+.table{
+    cursor: default;
+}
+.table .order{
+    width: 5em;
+    text-align: center;
+}
+.table .operation-2{
+    width: 7.5em;
+    text-align: center;
+}
+.table .operation-3{
+    width: 10.25em;
+    text-align: center;
+}
+
+.table-order.table-order-select{
+    opacity: 1;
+}
+.table-order{
+    width: 0;
+    height: 0;
+    opacity: .3;
+    cursor: pointer;
+}
+.table-order:hover{
+    opacity: 1;
+}
+.table-order:after{
+    content: '';
+    border-style: solid;
+    border-width: 6px;
+    border-color: transparent;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    position: relative;
+}
+.table-order-asc:after{
+    border-top-color: #000;
+    top: 3px;
+}
+.table-order-desc:after{
+    border-bottom-color: #000;
+    bottom: 3px;
+}
+.table td{
+    vertical-align: middle !important;
+}
+.table.table-hover tbody tr:hover td{
+    background-color: transparent !important;
+}
+.table.table-hover tbody tr:hover{
+    box-shadow: inset 0 0 10px #00c4ff;
+}
+
+

@@ -1,0 +1,41 @@
+.form{
+    padding-left: 1em;
+    padding-right: 1em;
+}
+.form .row+.row{
+    margin-top: 1em;
+}
+.form .form-inline{
+    display: inline-flex;
+}
+.form .form-inline .form-group, .form .form-inline .form-control{
+    flex: 1;
+    display: inline-flex;
+}
+.form-icon-required{
+    position: absolute;
+    left: 0;
+    top: .6em;
+    color: red;
+}
+.form-icon-required:after{
+    content: '*';
+}
+.form-label{
+    margin: 0;
+    padding: 6px 0;
+}
+input.form-control{
+    border: 1px solid #dddddd !important;
+}
+.form-control .select2-choice{
+    width: 100%;
+    height: 100%;
+}
+.select2-container.form-control{
+    border: 1px solid #cccccc;
+}
+input[type='radio'].form-control+input[type='radio'].form-control{
+    margin-left: 6px;
+}
+

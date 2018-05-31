@@ -1,0 +1,79 @@
+<script type="text/ng-template" id="basicForm.html">
+
+<form name="userBaseForm" class="form" ng-submit="saveData()">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()"></button>
+    <h4 class="modal-title">{{title}}</h4>
+</div>
+<div class="modal-body">
+    <!--<form name="userBaseForm" class="form" ng-submit="saveData()">-->
+        <div class="row">
+            <div class="col-md-6 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">姓名：</label>
+                    <input type="text" ng-model="formData.name" required  class="form-control" name="name"  >
+                </div>
+            </div>
+            <div class="col-md-6 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">电子邮箱：</label>
+                    <input type="email" ng-model="formData.mail" required  class="form-control" name="mail"  >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">联系电话：</label>
+                    <input type="phone" ng-model="formData.phone" required  class="form-control" name="phone"  >
+                </div>
+            </div>
+            <div class="col-md-2 form-inline">
+                <div class="form-group">
+                    <label class="form-label">性别：</label>
+                    <input type="radio" ng-model="formData.sex" class="form-control" name="sex" value="0" >
+                    <input type="radio" ng-model="formData.sex" class="form-control" name="sex" value="1" >
+                </div>
+            </div>
+            <div class="col-md-4 form-inline">
+                <div class="form-group">
+                    <label class="form-label">生日：</label>
+                    <input type="date" readonly placeholder="请选择提醒时间" class="form-control"
+                           datetime-picker="yyyy-MM-dd"
+                           ng-model="formData.birthday"
+                           is-open="birthdayOptions.open"
+                           enable-time="false"
+                           datepicker-options="birthdayOptions.config"
+                           ng-click="birthdayOptions.openEvent()"
+                    />
+                    <!--button-bar="birthdayOptions.buttonBar"-->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    <label class="form-label">备注：</label>
+                    <textarea rows="8" ng-model="formData.info" class="form-control no-resize" name="info"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--<div class="row">
+            <div class="col-md-12 form-inline">
+                <div class="form-group">
+                    &lt;!&ndash;<button type="submit" class="btn btn-primary btn-single btn-width-md margin-auto">保存并退出</button>&ndash;&gt;
+                    <button ng-if="userBaseForm.$valid" type="submit" class="btn btn-primary btn-single btn-width-md margin-auto">&lt;!&ndash;保存并&ndash;&gt;继续编辑教育信息</button>
+                </div>
+            </div>
+        </div>-->
+    <!--</form>-->
+</div>
+
+<div ng-include="'/attendance/views/basicData/userManage/eduForm.html'"></div>
+
+</form>
+
+</script>

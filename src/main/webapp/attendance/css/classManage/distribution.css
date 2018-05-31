@@ -1,0 +1,58 @@
+.distribution-window .modal-dialog{
+    /*max-height: 85%;*/
+    /*overflow: auto;*/
+}
+.distribution-window .modal-body{
+    /*max-height: 85%;*/
+    /*max-height: 80vh;*/
+}
+
+
+.distribution-set{
+    display: inline-block;
+    white-space: nowrap;
+    top: 1em;
+    position: absolute;
+    right: 3em;
+}
+.distribution-set > *{
+    display: inline-block;
+    max-width: 8em;
+}
+.distribution-body{
+    min-height: 500px;
+    max-height: 75vh;
+    box-shadow: 0 0 5px black;
+    margin: 1em;
+    overflow: auto;
+}
+.distribution-body table{
+    width: auto;
+    margin: auto;
+}
+.distribution-body td{
+    width: 2em;
+    height: 2em;
+    text-align: center;
+}
+.distribution-body th{
+    text-align: center;
+}
+.distribution-row-title,.distribution-col-title{
+    background-color: #1d2127 !important;
+    color: #fff;
+}
+.distribution-row-body:hover .distribution-cell, .distribution-cell-hover{
+    background-color: #a1f3f3;
+}
+.distribution-col-title:hover ~ .distribution-cell{
+    background-color: inherit;
+}
+.distribution-cell:hover{
+    background-color: #99c2f3 !important;
+}
+.distribution-col-title{  }
+.distribution-cell-road:after{
+    content: "道";
+    font-size: x-small;
+}
