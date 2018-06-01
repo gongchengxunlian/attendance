@@ -125,7 +125,7 @@
                     <label class="form-label">上课教师：</label>
                     <select select2 class="form-control" required ng-model="formData.teacherId">
                         <option value="" selected disabled>选择教师</option>
-                        <option value="teacher.id" ng-repeat="teacher in teacherOptions">{{teacher.name}}[{{teacher.code}}]</option>
+                        <option value="teacher.id" ng-repeat="teacher in teacherOptions">{{teacher.name}} [工号：{{teacher.code}}]</option>
                     </select>
                 </div>
             </div>
@@ -135,7 +135,11 @@
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">上课教室：</label>
-                    <select select2 class="form-control" required ng-model="formData.teacherId">
+                    <select select2 class="form-control" required ng-model="formData.buildName">
+                        <option value="" selected disabled>选择教学楼教室</option>
+                        <option value="{{class.id}}" ng-repeat="class in classesOptions">{{class.name}}</option>
+                    </select>
+                    <select select2 class="form-control" required ng-model="formData.classId">
                         <option value="" selected disabled>选择教室</option>
                         <option value="{{class.id}}" ng-repeat="class in classesOptions">{{class.name}}</option>
                     </select>

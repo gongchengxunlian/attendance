@@ -140,7 +140,7 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http,httpSer
     getSchoolAndCollege();
     function getSchoolAndCollege() {
 
-        $http.get("/collegeMenage/getSchoolAndCollege", {params: {id: $rootScope.schoolInfo.id}}).success(function (data) {
+        $http.get("/collegeManage/getSchoolAndCollege", {params: {id: $rootScope.schoolInfo.id}}).success(function (data) {
             if ($.type(data) == 'array'){
                 $scope.schoolAndCollege = data;
                 if (data.length == 1){

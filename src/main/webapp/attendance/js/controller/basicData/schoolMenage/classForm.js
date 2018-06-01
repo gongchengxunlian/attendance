@@ -45,7 +45,7 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params,$http,httpServ
             SweetAlert.error('请设置教室分布', '');
             return;
         }
-        httpService.addRow('classMenage/addClass', {params: JSON.stringify($scope.formData)}).then
+        httpService.addRow('classManage/addClass', {params: JSON.stringify($scope.formData)}).then
         (function (result) {
             if (result > 0){
                 SweetAlert.success('操作成功');

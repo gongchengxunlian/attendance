@@ -23,7 +23,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = "/classMenage",produces = {"application/json;charset=UTF-8"})
+@RequestMapping(value = "/classManage",produces = {"application/json;charset=UTF-8"})
 public class ClassManageController {
 
     private Logger log = Logger.getLogger(ClassManageController.class);
@@ -52,6 +52,21 @@ public class ClassManageController {
             List<HashMap> classInfos = classManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), classInfos);
             return JSON.toJSONString(page);
+        }catch (Exception e){
+            System.out.println(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/getAllToTree", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllToTree(@RequestParam Map params, HttpSession session) {
+        log.info("查询所有教室");
+        try {
+            Integer schoolId = ((SchoolInfo) session.getAttribute("schoolInfo")).getId();
+            params.put("school_id", schoolId);
+            List<HashMap> classInfos = classManageService.getAllToTree(params);
+            return JSON.toJSONString(classInfos);
         }catch (Exception e){
             System.out.println(e);
             return "0";

@@ -5,3 +5,4 @@ src/main/node_modules
 target
 src/main/webapp/WEB-INF/*classes
 src/main/webapp/WEB-INF/lib
+src/main/webapp/attendance/dist

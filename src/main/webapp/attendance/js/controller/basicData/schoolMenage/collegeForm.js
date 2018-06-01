@@ -41,7 +41,7 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
 
     //  保存
     $scope.saveData = function () {
-        httpService.addRow('collegeMenage/addCollege', $scope.formData).then
+        httpService.addRow('collegeManage/addCollege', $scope.formData).then
         (function (result) {
             if (result > 0){
                 SweetAlert.success('操作成功');

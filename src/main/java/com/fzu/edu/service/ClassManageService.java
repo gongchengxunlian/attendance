@@ -3,6 +3,7 @@ package com.fzu.edu.service;
 import com.baomidou.mybatisplus.service.IService;
 import com.fzu.edu.model.ClassInfo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,4 +15,6 @@ public interface ClassManageService extends IService<ClassInfo> {
     List getAll(Map params);
 
     int addOrUpdateClass(String params);
+
+    List<HashMap> getAllToTree(Map params);
 }

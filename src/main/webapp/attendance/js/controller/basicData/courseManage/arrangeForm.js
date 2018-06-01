@@ -48,7 +48,6 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
         SweetAlert.error("没有课程信息", '请检查网络...');
     });
 
-
     /**
      * 加载教师信息
      */
@@ -67,38 +66,21 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
         SweetAlert.error("没有用户信息", '请检查网络...');
     });
 
+    /**
+     * 加载教室信息
+     */
+    httpService.getAll('classManage/getAllToTree').then(function (data) {
+        if (data){
+            $scope.classesOptions = data.data;
+        }else {
+            SweetAlert.info("没有教室信息");
+            // $scope.dismiss();
+            // $scope.tableData = [];
+        }
+    }, function (result) {
+        SweetAlert.error("没有教室信息", '请检查网络...');
+    });
 
-
-    // if (!$scope.formData || !$scope.formData.schoolId){
-
-
-        // $http.get("/collegeMenage/getSchoolAndCollege", {params: $rootScope.schoolInfo}).success(function (data) {
-        //     if ($.type(data) == 'array'){
-        //         $scope.schoolAndCollege = data;
-        //         if (data.length == 1){
-        //             $scope.schoolIndex = 0;
-        //         }else {
-        //             getSchoolIndex(data);
-        //         }
-        //     }else {
-        //         SweetAlert.error('学校学院加载失败', '系统维护中...');
-        //     }
-        // }).error(function (result) {
-        //     SweetAlert.error('学校加载失败', '系统维护中...');
-        // });
-    // }
-
-    //  计算schoolIndex
-    // function getSchoolIndex(data) {
-    //     if (!$scope.formData.schoolId) return;
-    //     for (var i in data){
-    //         if ($scope.formData.schoolId == data[i].id){
-    //             $scope.schoolIndex = i;
-    //             $scope.formData.collegeId = $scope.formData.collegeId;
-    //             break;
-    //         }
-    //     }
-    // }
 
     $scope.close = function (data) {
         $uibModalInstance.close(data);

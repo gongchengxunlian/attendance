@@ -187,7 +187,7 @@ function($scope, $rootScope, $state, $uibModal,$http,httpService,localStorageSer
     //  编辑学院
     $scope.editCollegeData = function (data) {
         localStorageService.set("userData_collegeSetting", data);
-        $state.go('collegeMenage', { showAll: 2 });
+        $state.go('collegeManage', { showAll: 2 });
     };
 
     function getModel(params) {

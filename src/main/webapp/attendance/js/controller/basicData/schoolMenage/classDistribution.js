@@ -87,7 +87,7 @@ function($scope, $rootScope, dis, $uibModalInstance,$http,httpService,localStora
             road: $scope.road
         };
         $scope.close(params);
-        // httpService.addRow('classMenage/addClass', {params: JSON.stringify(params)}).then(function (result) {
+        // httpService.addRow('classManage/addClass', {params: JSON.stringify(params)}).then(function (result) {
         //     if (result > 0){
         //         SweetAlert.success('操作成功');
         //         $scope.close(result);

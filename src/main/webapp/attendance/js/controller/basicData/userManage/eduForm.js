@@ -22,7 +22,7 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
 
     getSchoolAndCollege();
     function getSchoolAndCollege() {
-        $http.get("/collegeMenage/getSchoolAndCollege", {params: $rootScope.schoolInfo}).success(function (data) {
+        $http.get("/collegeManage/getSchoolAndCollege", {params: $rootScope.schoolInfo}).success(function (data) {
             if ($.type(data) == 'array'){
                 $scope.schoolAndCollege = data;
                 if (data.length == 1){

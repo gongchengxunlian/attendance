@@ -120,7 +120,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             params.schoolId = $scope.schoolInfo.id;
         }catch (e){}
 
-        httpService.getAll('collegeMenage/getAll', params).then(function (data) {
+        httpService.getAll('collegeManage/getAll', params).then(function (data) {
             if (data){
                 $scope.tableData = data.data;
                 $scope.pagination.pageSize = data.pageSize;
@@ -181,7 +181,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         });
     };
     function delData(ids) {
-        httpService.delRow('collegeMenage/delRow', {ids: JSON.stringify(ids)}).then(function (data) {
+        httpService.delRow('collegeManage/delRow', {ids: JSON.stringify(ids)}).then(function (data) {
             if (data == 0){
                 SweetAlert.error("删除失败");
             }else {

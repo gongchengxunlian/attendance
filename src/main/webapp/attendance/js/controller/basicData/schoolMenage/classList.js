@@ -86,7 +86,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             searchValue: $scope.searchValue
         };
 
-        httpService.getAll('classMenage/getAll', params).then(function (data) {
+        httpService.getAll('classManage/getAll', params).then(function (data) {
             if (data){
                 $scope.tableData = data.data;
                 angular.forEach($scope.tableData, function (value) {
@@ -170,7 +170,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         });
     };
     function delData(ids) {
-        httpService.delRow('classMenage/delRow', {ids: JSON.stringify(ids)}).then(function (data) {
+        httpService.delRow('classManage/delRow', {ids: JSON.stringify(ids)}).then(function (data) {
             if (data == 0){
                 SweetAlert.error("删除失败");
             }else {

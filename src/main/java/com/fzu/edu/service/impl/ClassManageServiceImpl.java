@@ -37,4 +37,9 @@ public class ClassManageServiceImpl extends ServiceImpl<ClassManageMapper, Class
         return myClass;
     }
 
+    public List<HashMap> getAllToTree(Map params) {
+        List<HashMap> myClass = classManageMapper.getAllClass(params);
+        myClass = CDataSet.MergeField(myClass, "buildName");
+        return myClass;
+    }
 }
