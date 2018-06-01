@@ -11,7 +11,7 @@ import java.util.Map;
 public class FieldSet {
 
     //    字段合并
-    public static List MergeField(List data, String... fieldNames){
+    public static List MergeField(List<? extends Map> data, String... fieldNames){
         Map mergeList = new HashMap();
         for (Object o : data){
             Map m = (Map) o;

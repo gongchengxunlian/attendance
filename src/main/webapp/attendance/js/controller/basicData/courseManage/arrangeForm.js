@@ -71,7 +71,7 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
      */
     httpService.getAll('classManage/getAllToTree').then(function (data) {
         if (data){
-            $scope.classesOptions = data.data;
+            $scope.classesOptions = data;
         }else {
             SweetAlert.info("没有教室信息");
             // $scope.dismiss();

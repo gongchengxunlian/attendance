@@ -135,13 +135,13 @@
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">上课教室：</label>
-                    <select select2 class="form-control" required ng-model="formData.buildName">
-                        <option value="" selected disabled>选择教学楼教室</option>
-                        <option value="{{class.id}}" ng-repeat="class in classesOptions">{{class.name}}</option>
+                    <select select2 class="form-control" required ng-model="classIndex">
+                        <option value="" selected disabled>选择教学楼</option>
+                        <option value="{{$index}}" ng-repeat="class in classesOptions track by $index">{{class.buildName}}</option>
                     </select>
-                    <select select2 class="form-control" required ng-model="formData.classId">
+                    <select ng-if="classIndex" select2 class="form-control" required ng-model="formData.classId">
                         <option value="" selected disabled>选择教室</option>
-                        <option value="{{class.id}}" ng-repeat="class in classesOptions">{{class.name}}</option>
+                        <option value="{{class.id}}" ng-repeat="class in classesOptions[classIndex].data track by $index">{{class.className}}</option>
                     </select>
                 </div>
             </div>

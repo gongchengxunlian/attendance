@@ -58,7 +58,7 @@ public class CDataSet {
      * @param fieldNames    需要整理的字段名
      * @return  最后结果
      */
-    public static List MergeField(List data, String... fieldNames){
+    public static List MergeField(List<? extends Map> data, String... fieldNames){
         return FieldSet.MergeField(data, fieldNames);
     }
 

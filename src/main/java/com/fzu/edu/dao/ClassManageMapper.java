@@ -11,5 +11,5 @@ import java.util.Map;
 @Repository
 public interface ClassManageMapper extends BaseMapper<ClassInfo> {
 
-    List<HashMap> getAllClass(Map params);
+    List<ClassInfo> getAllClass(Map params);
 }

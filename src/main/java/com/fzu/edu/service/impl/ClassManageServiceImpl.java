@@ -1,5 +1,6 @@
 package com.fzu.edu.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.fei.common.CDataSet;
@@ -33,13 +34,14 @@ public class ClassManageServiceImpl extends ServiceImpl<ClassManageMapper, Class
     }
 
     public List getAll(Map params) {
-        List<HashMap> myClass = classManageMapper.getAllClass(params);
+        List<ClassInfo> myClass = classManageMapper.getAllClass(params);
         return myClass;
     }
 
     public List<HashMap> getAllToTree(Map params) {
-        List<HashMap> myClass = classManageMapper.getAllClass(params);
-        myClass = CDataSet.MergeField(myClass, "buildName");
-        return myClass;
+        List<ClassInfo> myClass = classManageMapper.getAllClass(params);
+        List<HashMap> myClassInfo = JSONObject.parseObject(JSON.toJSONString(myClass), List.class);
+        myClassInfo = CDataSet.MergeField(myClassInfo, "buildName");
+        return myClassInfo;
     }
 }
