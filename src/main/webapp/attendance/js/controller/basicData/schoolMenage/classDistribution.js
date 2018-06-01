@@ -12,6 +12,7 @@ function($scope, $rootScope, dis, $uibModalInstance,$http,httpService,localStora
         $uibModalInstance.dismiss(data);
     };
 
+    $scope.lock = dis.lock || false;
     $scope.set_row = dis.row || 5;
     $scope.set_col = dis.col || 5;
     $scope.rowArray = new Array($scope.set_row);
@@ -45,6 +46,7 @@ function($scope, $rootScope, dis, $uibModalInstance,$http,httpService,localStora
     //  点击设置道路
     $scope.road = dis.road || [];
     $scope.setRoad = function (event, row, col) {
+        if ($scope.lock) return;
         if (col){
             var location = {x: row, y: col};
             var index = -1;

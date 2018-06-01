@@ -112,8 +112,28 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     };
 
     //  编辑数据
-    $scope.editData = function (data) {
-        getModel(data);
+    $scope.editData = function (data, lock) {
+        getModel(data, lock);
+    };
+
+    $scope.showDis = function (data) {
+        $uibModal.open({
+            backdrop:'static',
+            keyboard: false,
+            animation: true,
+            templateUrl: 'classDistribution.html',
+            controller: 'classDistributionController',
+            size: 'xlg',
+            // windowClass: 'distribution-window',
+            resolve: {
+                dis: {
+                    row: data.row,
+                    col:data.col,
+                    road: data.road,
+                    lock: true
+                }
+            }
+        });
     };
 
     //  删除数据

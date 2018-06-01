@@ -12,10 +12,10 @@
     <result column="col" jdbcType="INTEGER" property="col" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, build_name, class_name, flag, road, school_id
+    id, build_name, class_name, flag, road, school_id, row, col
   </sql>
 
-  <select id="getAllClass" parameterType="hashmap" resultMap="hashmap">
+  <select id="getAllClass" parameterType="hashmap" resultMap="BaseResultMap">
     SELECT CI.*,SI.id AS schoolId, SI.name AS schoolName
     FROM class_info AS CI, school_info AS SI
     WHERE
