@@ -42,9 +42,6 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     $rootScope.menuList = [
         { title: '教室列表' }
     ];
-    if ($scope.schoolInfo && $rootScope.sign == 0){
-        $rootScope.menuList.splice(0, 0, { title: '学校列表', href: '#schoolMenage' });
-    }
     $scope.bodyTitle = $rootScope.menuList[$rootScope.menuList.length - 1].title;
 
     $scope.pagination = {
@@ -57,24 +54,10 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     $scope.pagination.pageSize = $scope.pagination.pageSizeList[0];
     $scope.pageFields = {
         list: [
-            { title: '教室编号', type: 'code', order: 'desc' },
-            { title: '教室名称', type: 'name', order: 'desc' },
-            { title: '教室详情', type: 'info' }
-        ],
-        order: 'code',
-        __order: false
-    };
-
-    // 搜索条件
-    $scope.searchOptions = {
-        '': '请选择搜索条件',
-        name: '教室名称',
-        code: '教室编号'
-    };
-    // 初始化查询条件
-    $scope.searchValue = {
-        key: '',
-        value: ''
+            { title: '教学楼', type: 'buildName' },
+            { title: '教室', type: 'className' },
+            { title: '分布', type: 'info' }
+        ]
     };
 
     // table信息
@@ -89,21 +72,9 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
      */
 
 
-    //  改变排序
-    $scope.setOrder = function (index) {
-        if ($scope.pageFields.order == $scope.pageFields.list[index].type){
-            $scope.pageFields.__order = !$scope.pageFields.__order;
-            $scope.pageFields.__order ? $scope.pageFields.list[index].order = 'asc' : $scope.pageFields.list[index].order = 'desc';
-        }else {
-            $scope.pageFields.order = $scope.pageFields.list[index].type;
-        }
-        $scope.queryList();
-    };
-
-
     //  重置搜索条件
     $scope.searchInit = function () {
-        $scope.searchValue.value = '';
+        $scope.searchValue = '';
         $scope.queryList();
     };
 
@@ -112,17 +83,15 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         var params = {
             pageSize: $scope.pagination.pageSize,
             pageNo: $scope.pagination.currentPage,
-            order: $scope.pageFields.order,
-            __order: $scope.pageFields.__order ? 0 : 1
+            searchValue: $scope.searchValue
         };
-        params[$scope.searchValue.key] = $scope.searchValue.value;
-        try {
-            params.schoolId = $scope.schoolInfo.id;
-        }catch (e){}
 
         httpService.getAll('classMenage/getAll', params).then(function (data) {
             if (data){
                 $scope.tableData = data.data;
+                angular.forEach($scope.tableData, function (value) {
+                    value.road = JSON.parse(value.road);
+                });
                 $scope.pagination.pageSize = data.pageSize;
                 $scope.pagination.currentPage = data.pageNo;
                 $scope.pagination.totalCount = data.totalCount;
@@ -198,11 +167,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             SweetAlert.error("删除失败", '请检查网络...');
         });
     }
-    //  编辑教室
-    $scope.editClassData = function (data) {
-        localStorageService.set("classData_classSetting", data);
-        $state.go('classPage');
-    };
+
 
     function getModel(params) {
         params = params || {};

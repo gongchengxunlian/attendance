@@ -38,4 +38,16 @@ input.form-control{
 input[type='radio'].form-control+input[type='radio'].form-control{
     margin-left: 6px;
 }
+@media (min-width: 1750px){
+    .table-col-size-2{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .table-col-size-2>table{
+        width: calc(50% - 5px);
+    }
+    .table-col-size-2>table+table{
+        margin-left: 10px;
+    }
+}
 

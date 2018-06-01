@@ -4,6 +4,7 @@
 app.controller('classDistributionController',['$scope', '$rootScope', 'dis', '$uibModalInstance','$http','httpService','localStorageService','$interval','SweetAlert',
 function($scope, $rootScope, dis, $uibModalInstance,$http,httpService,localStorageService,$interval,SweetAlert){
 
+    console.log(dis);
     $scope.close = function (data) {
         $uibModalInstance.close(data);
     };

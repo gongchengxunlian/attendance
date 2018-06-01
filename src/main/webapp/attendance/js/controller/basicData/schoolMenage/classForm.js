@@ -41,6 +41,10 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params,$http,httpServ
 
     //  保存
     $scope.saveData = function () {
+        if (!$scope.formData.row || !$scope.formData.col){
+            SweetAlert.error('请设置教室分布', '');
+            return;
+        }
         httpService.addRow('classMenage/addClass', {params: JSON.stringify($scope.formData)}).then
         (function (result) {
             if (result > 0){

@@ -8,29 +8,21 @@
     <result column="flag" jdbcType="INTEGER" property="flag" />
     <result column="road" jdbcType="VARCHAR" property="road" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="row" jdbcType="INTEGER" property="row" />
+    <result column="col" jdbcType="INTEGER" property="col" />
   </resultMap>
   <sql id="Base_Column_List">
     id, build_name, class_name, flag, road, school_id
   </sql>
 
-  <select id="getAllClass" parameterType="hashmap" resultMap="BaseResultMap">
+  <select id="getAllClass" parameterType="hashmap" resultMap="hashmap">
     SELECT CI.*,SI.id AS schoolId, SI.name AS schoolName
     FROM class_info AS CI, school_info AS SI
     WHERE
     CI.flag = 0 AND SI.flag = 0
-    AND CI.school_id = SI.id
-    <if test="name!=null and name!=''">
-      AND CI.[name] LIKE '%'+#{name}+'%'
-    </if>
-    <if test="code!=null and code!=''">
-      AND CI.[code] LIKE '%'+#{code}+'%'
-    </if>
-    ORDER BY CI.[${order}]
-    <if test="__order == '0' || __order == 0">
-      ASC
-    </if>
-    <if test="__order == '1' || __order == 1">
-      DESC
+    AND CI.school_id = SI.id AND CI.school_id = #{school_id}
+    <if test="searchValue!=null and searchValue!=''">
+      AND CI.[build_name] LIKE '%'+#{searchValue}+'%'
     </if>
 
   </select>
