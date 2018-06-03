@@ -1,6 +1,6 @@
 package com.fzu.edu.model;
 
-public class UserBasicInfo {
+public class UserInfo {
     private Integer id;
 
     private String name;
@@ -19,10 +19,30 @@ public class UserBasicInfo {
 
     private Integer power;
 
-    public UserBasicInfo() {
+    private Integer schoolId;
+
+    private Integer collegeId;
+
+    public Integer getSchoolId() {
+        return schoolId;
     }
 
-    public UserBasicInfo(Integer id) {
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
+
+    public Integer getCollegeId() {
+        return collegeId;
+    }
+
+    public void setCollegeId(Integer collegeId) {
+        this.collegeId = collegeId;
+    }
+
+    public UserInfo() {
+    }
+
+    public UserInfo(Integer id) {
         this.id = id;
     }
 

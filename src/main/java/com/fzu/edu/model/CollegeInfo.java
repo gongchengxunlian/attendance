@@ -1,5 +1,8 @@
 package com.fzu.edu.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollegeInfo {
     private String name;
 
@@ -7,11 +10,72 @@ public class CollegeInfo {
 
     private Integer schoolId;
 
+    private String schoolName;
+
     private String info;
 
     private Integer id;
 
     private String code;
+
+    private Integer parentId;
+
+    private CollegeInfo parent;
+
+    private List<CollegeInfo> children = new ArrayList<CollegeInfo>();
+
+    public List<CollegeInfo> getChildren() {
+        if (children.size() == 0) return null;
+        return children;
+    }
+
+    public void setChildren(List<CollegeInfo> children) {
+        for (CollegeInfo collegeInfo : children){
+            addChild(collegeInfo);
+        }
+    }
+
+    public void addChild(CollegeInfo collegeInfo){
+        children.add(collegeInfo);
+        if (collegeInfo.getParent() != null) {
+            if (!collegeInfo.getParent().equals(this)) collegeInfo.setParent(this);
+        }else {
+            collegeInfo.setParent(this, false);
+        }
+    }
+
+    public CollegeInfo getParent() {
+        return parent;
+    }
+
+    public CollegeInfo getRootParent() {
+        if (parent == null) return this;
+        return parent.getRootParent();
+    }
+
+    public void setParent(CollegeInfo parent) {
+        setParent(parent, true);
+    }
+    public void setParent(CollegeInfo parent, boolean set) {
+        this.parent = parent;
+        if (set) parent.addChild(this);
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 
     public Integer getId() {
         return id;

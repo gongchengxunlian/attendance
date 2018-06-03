@@ -10,7 +10,9 @@
                         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.fzu.edu"/>
+    <context:component-scan base-package="com.fzu.edu">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
 
     <!-- 第一种方式：加载一个properties文件 -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -107,7 +109,7 @@
         -->
         <!-- Oracle需要添加该项 -->
         <!-- <property name="dbType" value="oracle" /> -->
-        <property name="dbType" value="sqlserver"/>
+        <property name="dbType" value="mysql"/>
         <!-- 全局表为下划线命名设置 true -->
         <property name="dbColumnUnderline" value="true"/>
     </bean>

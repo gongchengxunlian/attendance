@@ -1,14 +1,14 @@
 package com.fzu.edu.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.fzu.edu.model.UserBasicInfo;
+import com.fzu.edu.model.UserInfo;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
 
 @Repository
-public interface UserBasicInfoMapper extends BaseMapper<UserBasicInfo> {
+public interface UserInfoMapper extends BaseMapper<UserInfo> {
 
-    List getAllUserBasic(Map params);
+    List getAllUserInfo(Map params);
 }

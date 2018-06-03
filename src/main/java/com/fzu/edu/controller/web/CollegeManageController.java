@@ -22,7 +22,7 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping(value = "/collegeMenage",produces = {"application/json;charset=UTF-8"})
+@RequestMapping(value = "/collegeManage",produces = {"application/json;charset=UTF-8"})
 public class CollegeManageController {
 
     private Logger log = Logger.getLogger(CollegeManageController.class);

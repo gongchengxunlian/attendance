@@ -7,10 +7,16 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="flag" property="flag" jdbcType="INTEGER" />
     <result column="school_id" property="schoolId" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.fzu.edu.model.CollegeInfo" extends="BaseResultMap" >
     <result column="info" property="info" jdbcType="LONGVARCHAR" />
   </resultMap>
+
+  <resultMap id="CollegeParent" type="com.fzu.edu.model.CollegeInfo" extends="BaseResultMap">
+    <collection column="parent_id" property="parent" ofType="com.fzu.edu.model.CollegeInfo" select="getCollegeParent"/>
+  </resultMap>
+  <resultMap id="CollegeChild" type="com.fzu.edu.model.CollegeInfo" extends="BaseResultMap">
+    <collection column="id" property="children" ofType="com.fzu.edu.model.CollegeInfo" select="getCollegeChild"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, code, name, flag, school_id
   </sql>
@@ -18,23 +24,42 @@
     info
   </sql>
 
+  <!--递归查询-->
+  <select id="getCollegeParent" resultMap="CollegeParent">
+    SELECT * FROM college_info WHERE id = #{parent_id} AND flag = 0;
+  </select>
+  <select id="getCollegeChild" resultMap="CollegeChild">
+    SELECT * FROM college_info WHERE parent_id = #{id} AND flag = 0;
+  </select>
+
+  <!--向上查询-->
+  <select id="getCollegeParents" resultMap="CollegeParent">
+    SELECT * FROM college_info WHERE id = #{collegeId} AND flag = 0;
+  </select>
+  <!--向下查询-->
+  <select id="getCollegeChildren" resultMap="CollegeChild">
+    SELECT * FROM college_info WHERE id = #{collegeId} AND flag = 0;
+  </select>
+
+
   <!--查询学院信息-->
-  <select id="getAllCollege" parameterType="hashmap" resultMap="ResultMapWithBLOBs">
+  <select id="getAllCollege" parameterType="hashmap" resultMap="CollegeChild">
     SELECT CI.*,SI.id AS schoolId, SI.name AS schoolName
     FROM college_info AS CI, school_info AS SI
     WHERE
       CI.flag = 0 AND SI.flag = 0
       AND CI.school_id = SI.id
+      AND CI.parent_id IS NULL
     <if test="schoolId!=null and schoolId!=''">
       AND SI.id = #{schoolId}
     </if>
     <if test="name!=null and name!=''">
-      AND CI.[name] LIKE '%'+#{name}+'%'
+      AND CI.`name` LIKE '%'+#{name}+'%'
     </if>
     <if test="code!=null and code!=''">
-      AND CI.[code] LIKE '%'+#{code}+'%'
+      AND CI.`code` LIKE '%'+#{code}+'%'
     </if>
-    ORDER BY CI.[${order}]
+    ORDER BY CI.`${order}`
     <if test="__order == '0' || __order == 0">
       ASC
     </if>

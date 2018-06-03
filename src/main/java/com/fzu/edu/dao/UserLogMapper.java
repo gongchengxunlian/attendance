@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface UserLogMapper extends BaseMapper<UserLoginType> {
-
-}
+public interface UserLogMapper extends BaseMapper<UserLoginType> {  }

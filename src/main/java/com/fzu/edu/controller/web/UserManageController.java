@@ -2,8 +2,7 @@ package com.fzu.edu.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.fzu.edu.model.UserBasicInfo;
-import com.fzu.edu.service.UserBasicManageService;
+import com.fzu.edu.service.UserManageService;
 import com.fzu.edu.service.UserEduManageService;
 import com.fzu.edu.service.UserLogService;
 import com.fzu.edu.utils.Page;
@@ -31,7 +30,7 @@ public class UserManageController {
 
     private Logger log = Logger.getLogger(UserManageController.class);
     @Resource
-    private UserBasicManageService userBasicManageService;
+    private UserManageService userManageService;
     @Resource
     private UserEduManageService userEduManageService;
     @Resource
@@ -42,7 +41,7 @@ public class UserManageController {
     public String addUser(@RequestParam Map params) {
         log.info("新增/修改用户基本信息");
         try {
-            return JSON.toJSONString(userBasicManageService.addOrUpdateUserBasic(params));
+            return JSON.toJSONString(userManageService.addOrUpdateUserBasic(params));
         }catch (Exception e){
             System.out.println(e);
             return "0";
@@ -66,7 +65,7 @@ public class UserManageController {
     public String getAll(@RequestParam Map params) {
         log.info("查询所有用户");
         try {
-            List<Map> userInfos = userBasicManageService.getAll(params);
+            List<Map> userInfos = userManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), userInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
@@ -87,7 +86,7 @@ public class UserManageController {
                 params = new HashMap();
                 params.put("id", id);
                 params.put("flag", 1);
-                userBasicManageService.addOrUpdateUserBasic(params);
+                userManageService.addOrUpdateUserBasic(params);
                 n++;
             }
             return JSON.toJSONString(n);
@@ -106,10 +105,9 @@ public class UserManageController {
             if (u_detail.equals(0)) return "0";
 
             HttpSession session = request.getSession();
-            session.setAttribute("userbasicInfo", ((HashMap)u_detail).get("userbasicInfo"));
+            session.setAttribute("userInfo", ((HashMap)u_detail).get("userInfo"));
             session.setAttribute("schoolInfo", ((HashMap)u_detail).get("schoolInfo"));
             session.setAttribute("collegeInfo", ((HashMap)u_detail).get("collegeInfo"));
-            session.setAttribute("roleInfo", ((HashMap)u_detail).get("roleInfo"));
 
             return JSON.toJSONString(u_detail);
         }catch (Exception e){

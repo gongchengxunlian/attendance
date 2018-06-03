@@ -103,9 +103,8 @@ function ($scope, $http, localStorageService,$state,$rootScope,$location,$window
                 SweetAlert.swal('登录失败', '账号或密码不正确', 'error');
             }else {
                 try {
-                    var userInfo = data.userBasicInfo;
+                    var userInfo = data.userInfo;
                     userInfo.sign = userInfo.power;
-                    userInfo.roleInfo = data.roleInfo;
                     localStorageService.set("userInfo", userInfo);
 
                     var schoolInfo = data.schoolInfo;

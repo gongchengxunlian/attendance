@@ -21,13 +21,13 @@
     SELECT * FROM school_info WHERE
       flag = 0
     <if test="name!=null and name!=''">
-      AND [name] LIKE '%'+#{name}+'%'
+      AND `name` LIKE '%'+#{name}+'%'
     </if>
     <if test="code!=null and code!=''">
-      AND [code] LIKE '%'+#{code}+'%'
+      AND `code` LIKE '%'+#{code}+'%'
     </if>
     <if test="order!=null and order!=''">
-      ORDER BY [${order}]
+      ORDER BY `${order}`
       <if test="__order == '0' || __order == 0">
         ASC
       </if>

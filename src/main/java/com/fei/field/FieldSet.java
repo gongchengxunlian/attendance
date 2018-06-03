@@ -1,5 +1,6 @@
 package com.fei.field;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +11,18 @@ import java.util.Map;
  */
 public class FieldSet {
 
+    public static <T> List MergeField(List<T> data, String... fieldNames){
+        if (data == null || data.size() == 0) return data;
+        T test = data.get(0);
+        if (test instanceof Map){
+            return MergeField2((List<? extends Map>) data, fieldNames);
+        }else {
+            return MergeField3(data, test.getClass(), fieldNames);
+        }
+    }
+
     //    字段合并
-    public static List MergeField(List<? extends Map> data, String... fieldNames){
+    private static List MergeField2(List<? extends Map> data, String... fieldNames){
         Map mergeList = new HashMap();
         for (Object o : data){
             Map m = (Map) o;
@@ -29,6 +40,44 @@ public class FieldSet {
                 ((ArrayList) mergeList.get(merge)).add(m);
             };
         }
+
+        return getMargeData(mergeList);
+    }
+
+    private static <T> List MergeField3(List<T> data, Class c, String... fieldNames){
+
+        Field[] fields = c.getDeclaredFields();
+        HashMap<String, Field> fieldHashMap = new HashMap<String, Field>();
+        for (Field field : fields){
+            fieldHashMap.put(field.getName(), field);
+        }
+
+        Map mergeList = new HashMap();
+        for (T o : data){
+            Map merge = new HashMap();
+            for (String fieldName : fieldNames){
+                Field field = fieldHashMap.get(fieldName);
+                if (field != null){
+                    field.setAccessible(true);
+                    try {
+                        merge.put(fieldName, field.get(o));
+                    }catch (IllegalAccessException iae){
+                        iae.printStackTrace();
+                    }
+                    field.setAccessible(false);
+                }
+            }
+            if (mergeList.get(merge) == null){
+                mergeList.put(merge, new ArrayList());
+            }
+            ((ArrayList) mergeList.get(merge)).add(o);
+        }
+
+        return getMargeData(mergeList);
+
+    }
+
+    private static List getMargeData(Map mergeList){
         List dataList = new ArrayList();
         for (Object o : mergeList.entrySet()){
             Map.Entry entry = (Map.Entry) o;
@@ -39,5 +88,4 @@ public class FieldSet {
         }
         return dataList;
     }
-
 }

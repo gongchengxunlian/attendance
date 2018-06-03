@@ -25,6 +25,7 @@ public class CollegeManageServiceImpl extends ServiceImpl<CollegeManageMapper, C
 
     public int addOrUpdateCollege(Map params) {
         CollegeInfo collegeInfo = CDataSet.MapToData(params, CollegeInfo.class);
+        collegeInfo.setSchoolName(null);
         if (collegeInfo.getId() == null) return collegeManageMapper.insert(collegeInfo);
         else return collegeManageMapper.updateById(collegeInfo);
     }

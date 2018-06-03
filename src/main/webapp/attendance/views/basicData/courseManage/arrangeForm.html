@@ -139,7 +139,7 @@
                         <option value="" selected disabled>选择教学楼</option>
                         <option value="{{$index}}" ng-repeat="class in classesOptions track by $index">{{class.buildName}}</option>
                     </select>
-                    <select ng-if="classIndex" select2 class="form-control" required ng-model="formData.classId">
+                    <select ng-if="classesOptions[classIndex].data.length" select2 class="form-control" required ng-model="formData.classId">
                         <option value="" selected disabled>选择教室</option>
                         <option value="{{class.id}}" ng-repeat="class in classesOptions[classIndex].data track by $index">{{class.className}}</option>
                     </select>

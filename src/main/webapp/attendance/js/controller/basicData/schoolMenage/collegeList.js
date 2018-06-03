@@ -40,11 +40,11 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
 
     //  页面
     $rootScope.menuList = [
-        { title: '学院列表' }
+        { title: '院系列表' }
     ];
-    if ($scope.schoolInfo && $rootScope.sign == 0){
-        $rootScope.menuList.splice(0, 0, { title: '学校列表', href: '#schoolMenage' });
-    }
+    // if ($scope.schoolInfo && $rootScope.sign == 0){
+    //     $rootScope.menuList.splice(0, 0, { title: '学校列表', href: '#schoolMenage' });
+    // }
     $scope.bodyTitle = $rootScope.menuList[$rootScope.menuList.length - 1].title;
 
     $scope.pagination = {
@@ -143,8 +143,8 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     };
 
     //  编辑数据
-    $scope.editData = function (data) {
-        getModel(data);
+    $scope.editData = function (data, parent) {
+        getModel(data, parent);
     };
 
     //  删除数据
@@ -204,13 +204,14 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         $state.go('collegePage');
     };
 
-    function getModel(params) {
+    function getModel(params, parent) {
         params = params || {};
 
         try {
-            params.schoolId = $scope.schoolInfo.id;
-            params.schoolName = $scope.schoolInfo.name;
+            params.schoolId = parent.schoolId || $scope.schoolInfo.id;
+            params.schoolName = parent.schoolName || $scope.schoolInfo.name;
         }catch (e){}
+        params.parent = parent;
 
         $uibModal.open({
             backdrop:'static',

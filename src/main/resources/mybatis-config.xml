@@ -10,7 +10,7 @@
 
     <plugins>
         <plugin interceptor="com.fzu.edu.utils.PageInterceptor">
-            <property name="databaseType" value="sqlServer"/>
+            <property name="databaseType" value="mysql"/>
         </plugin>
     </plugins>
     <!-- mybatis别名定义 -->

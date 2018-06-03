@@ -40,8 +40,7 @@ public class ClassManageServiceImpl extends ServiceImpl<ClassManageMapper, Class
 
     public List<HashMap> getAllToTree(Map params) {
         List<ClassInfo> myClass = classManageMapper.getAllClass(params);
-        List<HashMap> myClassInfo = JSONObject.parseObject(JSON.toJSONString(myClass), List.class);
-        myClassInfo = CDataSet.MergeField(myClassInfo, "buildName");
+        List<HashMap> myClassInfo = CDataSet.MergeField(myClass, "buildName");
         return myClassInfo;
     }
 }

@@ -14,4 +14,6 @@ public interface CollegeManageMapper extends BaseMapper<CollegeInfo> {
     List getAllCollege(Map params);
 
     List getSchoolAndCollege(SchoolInfo schoolInfo);
+
+    CollegeInfo getCollegeParents(Integer collegeId);
 }
