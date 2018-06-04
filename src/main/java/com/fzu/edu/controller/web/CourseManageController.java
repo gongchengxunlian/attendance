@@ -36,7 +36,7 @@ public class CourseManageController {
         try {
             return JSON.toJSONString(courseManageService.addOrUpdateCourse(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -46,11 +46,11 @@ public class CourseManageController {
     public String getAll(@RequestParam Map params) {
         log.info("查询所有课程");
         try {
-            List<HashMap> courseInfos = courseManageService.getAll(params);
+            List courseInfos = courseManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), courseInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -71,7 +71,7 @@ public class CourseManageController {
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -83,7 +83,7 @@ public class CourseManageController {
         try {
             return JSON.toJSONString(courseManageService.getCollegeAndCourse(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }

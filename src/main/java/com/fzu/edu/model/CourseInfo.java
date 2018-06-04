@@ -1,43 +1,22 @@
 package com.fzu.edu.model;
 
 public class CourseInfo {
+
+    private Integer id;
+
     private String name;
+
+    private String code;
+
+    private String info;
 
     private Integer flag;
 
     private Integer collegeId;
 
-    private String info;
-
-    private Integer id;
-
-    private Integer startTime;
-
-    private Integer timeType;
-
     private Float credit;
 
     private Float studyHours;
-
-    private String week;
-
-    private String classIndex;
-
-    public String getClassIndex() {
-        return classIndex;
-    }
-
-    public void setClassIndex(String classIndex) {
-        this.classIndex = classIndex;
-    }
-
-    public String getWeek() {
-        return week;
-    }
-
-    public void setWeek(String week) {
-        this.week = week;
-    }
 
     public Float getCredit() {
         return credit;
@@ -54,24 +33,6 @@ public class CourseInfo {
     public void setStudyHours(Float studyHours) {
         this.studyHours = studyHours;
     }
-
-    public Integer getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Integer startTime) {
-        this.startTime = startTime;
-    }
-
-    public Integer getTimeType() {
-        return timeType;
-    }
-
-    public void setTimeType(Integer timeType) {
-        this.timeType = timeType;
-    }
-
-    private String code;
 
     public Integer getId() {
         return id;

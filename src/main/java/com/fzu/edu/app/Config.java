@@ -35,7 +35,7 @@ public class Config {
                 loginTypeHashMap.put(loginType.getType(), loginType);
             }
         }catch (Exception e){
-            log.warn(e);
+            log.error(e);
         }
     }
 

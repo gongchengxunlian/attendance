@@ -43,7 +43,7 @@ public class UserManageController {
         try {
             return JSON.toJSONString(userManageService.addOrUpdateUserBasic(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -55,7 +55,7 @@ public class UserManageController {
         try {
             return JSON.toJSONString(userEduManageService.addUserEdu(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -69,7 +69,7 @@ public class UserManageController {
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), userInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -91,7 +91,7 @@ public class UserManageController {
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -111,7 +111,7 @@ public class UserManageController {
 
             return JSON.toJSONString(u_detail);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }

@@ -1,7 +1,9 @@
 package com.fzu.edu.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.fzu.edu.model.CollegeChildren;
 import com.fzu.edu.model.CollegeInfo;
+import com.fzu.edu.model.CollegeInfoExtends;
 import com.fzu.edu.model.SchoolInfo;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,7 @@ public interface CollegeManageMapper extends BaseMapper<CollegeInfo> {
 
     List getSchoolAndCollege(SchoolInfo schoolInfo);
 
-    CollegeInfo getCollegeParents(Integer collegeId);
+    CollegeInfoExtends getCollegeParents(Integer collegeId);
+
+    int insertCollegeChildren(CollegeChildren cc);
 }

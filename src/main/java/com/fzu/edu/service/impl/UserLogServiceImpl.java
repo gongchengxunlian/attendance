@@ -59,8 +59,8 @@ public class UserLogServiceImpl implements UserLogService {
 
         try {
             Integer collegeId = userInfo.getCollegeId();
-            CollegeInfo collegeInfos = collegeManageMapper.getCollegeParents(collegeId);
-            if (collegeInfos != null) collegeInfo = collegeInfos.getRootParent();
+            CollegeInfoExtends collegeInfos = collegeManageMapper.getCollegeParents(collegeId);
+            if (collegeInfos != null) collegeInfo = collegeInfos.getRootParent(true);
             if (collegeInfo != null) schoolInfo = schoolManageMapper.selectById(collegeInfo.getSchoolId());
             else schoolInfo = schoolManageMapper.selectById(userInfo.getSchoolId());
         }catch (Exception e){

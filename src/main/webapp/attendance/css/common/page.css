@@ -48,6 +48,20 @@ textarea.no-resize{
     color: #ffffff;
 }
 
+.sign-hover-up:hover,.sign-up{
+    position: relative;
+}
+.sign-hover-up:hover *[class^='sign-']:after,.sign-up:hover *[class^='sign-']:after{
+    position: absolute;
+    top: -.25em;
+    font-size: xx-small;
+    color: red;
+    display: inherit;
+}
+.sign-delete:after{
+    content: '\2716';
+    display: none;
+}
 
 
 

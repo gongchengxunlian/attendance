@@ -3,7 +3,9 @@ package com.fzu.edu.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.fei.common.CDataSet;
+import com.fzu.edu.dao.CourseFullInfoMapper;
 import com.fzu.edu.dao.CourseManageMapper;
+import com.fzu.edu.model.CourseFullInfo;
 import com.fzu.edu.model.CourseInfo;
 import com.fzu.edu.model.CollegeInfo;
 import com.fzu.edu.service.CourseManageService;
@@ -25,6 +27,8 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
 
     @Resource
     private CourseManageMapper courseManageMapper;
+    @Resource
+    private CourseFullInfoMapper courseFullInfoMapper;
 
     public int addOrUpdateCourse(String params) {
         CourseInfo courseInfo = JSONObject.parseObject(params, CourseInfo.class);
@@ -33,31 +37,7 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
     }
 
     public List getAll(Map params) {
-        List<HashMap> course = courseManageMapper.getAllCourse(params);
-        for (HashMap h : course){
-            String time = h.get("time").toString();
-            ArrayList timeList = new ArrayList();
-            String weekStr = h.get("week").toString();
-            String classIndexStr = h.get("class_index").toString();
-            String[] weeks = JSONObject.parseObject(weekStr, String[].class);
-            String[] classIndexs = JSONObject.parseObject(classIndexStr, String[].class);
-            int i = 0;
-            for (; i < weeks.length; i++){
-                String week = "星期" + CDataSet.numberToString(weeks[i]);
-                String classIndex = "第" + CDataSet.numberToString(classIndexs[i]) + "节课";
-                String timeTemp = week + ", " + classIndex;
-                timeList.add(timeTemp);
-                time += ", [" + timeTemp + "]";
-            }
-            h.put("timeHeader", h.get("time").toString());
-            h.put("timeList", timeList);
-            h.put("time", time);
-            h.put("week", weeks);
-            h.put("classIndex", classIndexs);
-            h.put("studyHours", h.get("study_hours"));
-            h.put("timeType", h.get("time_type"));
-            h.put("startTime", h.get("start_time"));
-        }
+        List<CourseFullInfo> course = courseManageMapper.getAllCourse(params);
         return course;
     }
 

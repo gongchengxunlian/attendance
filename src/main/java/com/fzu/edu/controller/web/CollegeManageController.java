@@ -31,12 +31,12 @@ public class CollegeManageController {
 
     @RequestMapping(value = "/addCollege", method = RequestMethod.POST)
     @ResponseBody
-    public String addCollege(@RequestParam Map params) {
+    public String addCollege(@RequestParam String params) {
         log.info("新增/修改学院");
         try {
-            return JSON.toJSONString(collegeManageService.addOrUpdateCollege(params));
+            return JSON.toJSONString(collegeManageService.addOrUpdateCollege(params, false));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -50,7 +50,7 @@ public class CollegeManageController {
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), collegeInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -67,11 +67,11 @@ public class CollegeManageController {
                 params = new HashMap();
                 params.put("id", id);
                 params.put("flag", 1);
-                n += collegeManageService.addOrUpdateCollege(params);
+                n += collegeManageService.addOrUpdateCollege(JSON.toJSONString(params), true);
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -83,7 +83,7 @@ public class CollegeManageController {
         try {
             return JSON.toJSONString(collegeManageService.getSchoolAndCollege(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }

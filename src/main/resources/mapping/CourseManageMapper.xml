@@ -1,61 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzu.edu.dao.CourseManageMapper" >
-  <resultMap id="BaseResultMap" type="com.fzu.edu.model.CourseInfo" >
+  <resultMap id="CourseInfoMap" type="com.fzu.edu.model.CourseInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="flag" property="flag" jdbcType="INTEGER" />
-    <result column="start_time" property="startTime" jdbcType="INTEGER" />
-    <result column="time_type" property="timeType" jdbcType="INTEGER" />
-    <result column="college_id" property="collegeId" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.fzu.edu.model.CourseInfo" extends="BaseResultMap" >
     <result column="info" property="info" jdbcType="LONGVARCHAR" />
+    <result column="college_id" property="collegeId" jdbcType="INTEGER" />
+    <result column="credit" property="credit" jdbcType="FLOAT"/>
+    <result column="study_hours" property="studyHours" jdbcType="FLOAT"/>
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, code, name, flag, college_id, start_time, time_type
-  </sql>
-  <sql id="Blob_Column_List" >
-    info
-  </sql>
+  <resultMap id="CourseFullInfoMap" type="com.fzu.edu.model.CourseFullInfo" extends="CourseInfoMap" >
+    <result column="college_name" property="collegeName" jdbcType="VARCHAR"/>
+    <result column="school_id" property="schoolId" jdbcType="INTEGER"/>
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR"/>
+    <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+    <result column="parent_name" property="parentName" jdbcType="VARCHAR"/>
+  </resultMap>
 
   <!--查询学院信息-->
-  <select id="getAllCourse" parameterType="hashmap" resultType="hashmap">
-    SELECT
-      COI.*,
-      CI.id AS collegeId, CI.name AS collegeName,
-      SI.id AS schoolId, SI.name AS schoolName,
-        '从第' + CONVERT(VARCHAR,COI.start_time) + '周开始, ' +
-        CASE COI.time_type WHEN 0 THEN '每周' WHEN 1 THEN '单周' WHEN 2 THEN '双周' END
-      AS `time`
-    FROM course_info AS COI, college_info AS CI, school_info AS SI
+  <select id="getAllCourse" parameterType="hashmap" resultMap="CourseFullInfoMap">
+    SELECT *
+    FROM course_full_info
     WHERE
-      COI.flag = 0 AND CI.flag = 0 AND SI.flag = 0
-      AND COI.college_id = CI.id AND CI.school_id = SI.id
-    <!--<if test="collegeId!=null and collegeId!=''">
-      AND CI.id = #{collegeId}
-    </if>-->
+      flag = 0
     <if test="schoolName!=null and schoolName!=''">
-      AND CI.`name` LIKE '%'+#{schoolName}+'%'
+      AND `school_name` LIKE '%'+#{schoolName}+'%'
+    </if>
+    <if test="parentName!=null and parentName!=''">
+      AND `parent_name` LIKE '%'+#{parentName}+'%'
     </if>
     <if test="collegeName!=null and collegeName!=''">
-      AND SI.`name` LIKE '%'+#{collegeName}+'%'
+      AND `college_name` LIKE '%'+#{collegeName}+'%'
     </if>
     <if test="name!=null and name!=''">
-      AND COI.`name` LIKE '%'+#{name}+'%'
+      AND `name` LIKE '%'+#{name}+'%'
     </if>
     <if test="code!=null and code!=''">
-      AND COI.`code` LIKE '%'+#{code}+'%'
+      AND `code` LIKE '%'+#{code}+'%'
     </if>
     <if test="credit!=null and credit!=''">
-      AND COI.`credit` = #{credit}
+      AND `credit` = #{credit}
     </if>
     <if test="studyHours!=null and studyHours!=''">
-      AND COI.`study_hours` = #{studyHours}
+      AND `study_hours` = #{studyHours}
     </if>
     <if test="order!=null and order!=''">
-      ORDER BY COI.`${order}`
+      ORDER BY `${order}`
       <if test="__order == '0' || __order == 0">
         ASC
       </if>

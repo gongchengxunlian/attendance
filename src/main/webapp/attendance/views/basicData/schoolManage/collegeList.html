@@ -48,11 +48,11 @@
                         </div>
                     </th>
                     <th class="order text-center">序号</th>
-                    <th class="text-center" style="width: 12em;">
+                    <th class="nowrap text-center" style="width: 12em;">
                         {{pageFields.list[0].title}}
                         <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[0].order}} {{pageFields.order == pageFields.list[0].type ? 'table-order-select':''}}" ng-click="setOrder(0)"></span>
                     </th>
-                    <th class="text-center">
+                    <th class="nowrap text-center">
                         {{pageFields.list[1].title}}
                         <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[1].order}} {{pageFields.order == pageFields.list[1].type ? 'table-order-select':''}}" ng-click="setOrder(1)"></span>
                     </th>
@@ -62,13 +62,13 @@
                     <th class="nowrap text-center">
                         {{pageFields.list[2].title}}
                     </th>
-                    <th class="nowrap text-center" style="width: 112px">操作</th>
+                    <th class="nowrap text-center" style="width: 175px">操作</th>
                 </tr>
                 </thead>
 
                 <tbody class="middle-align">
                 <tr ng-if="tableData.length == 0">
-                    <td colspan="6" class="text-center">暂无学院信息</td>
+                    <td colspan="7" class="text-center">暂无学院信息</td>
                 </tr>
                 <tr ng-repeat="data in tableData">
                     <td class="text-center">
@@ -81,8 +81,8 @@
                     <td class="nowrap text-center" auto-title>
                         <div>{{data[pageFields.list[1].type]}}</div>
                     </td>
-                    <td class="nowrap" auto-title>
-                        <a style="padding: .5em" href="javascript:;" ng-click="editData(child, data)" ng-repeat="child in data.children">{{child.name}}</a>
+                    <td auto-title>
+                        <a class="nowrap sign-hover-up" style="padding: .5em" href="javascript:;" ng-repeat="child in data.children"><span title="编号: {{child.code}}" ng-click="editData(child, data)">{{child.name}}</span><span ng-click="delData(child.id)" class="sign-delete"></span></a>
                     </td>
                     <td class="nowrap" auto-title>
                         <div>{{data[pageFields.list[2].type]}}</div>
@@ -90,6 +90,9 @@
                     <td class="nowrap">
                         <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="editData(data)">
                             编辑
+                        </a>
+                        <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="addData(data)">
+                            添加系
                         </a>
                         <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="delData(data.id)">
                             删除

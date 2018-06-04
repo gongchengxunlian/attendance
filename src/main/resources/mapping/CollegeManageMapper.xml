@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzu.edu.dao.CollegeManageMapper" >
-  <resultMap id="BaseResultMap" type="com.fzu.edu.model.CollegeInfo" >
+
+  <resultMap id="CollegeBasicInfoMap" type="com.fzu.edu.model.CollegeBasicInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <id column="code" property="code" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -10,40 +11,42 @@
     <result column="info" property="info" jdbcType="LONGVARCHAR" />
   </resultMap>
 
-  <resultMap id="CollegeParent" type="com.fzu.edu.model.CollegeInfo" extends="BaseResultMap">
-    <collection column="parent_id" property="parent" ofType="com.fzu.edu.model.CollegeInfo" select="getCollegeParent"/>
-  </resultMap>
-  <resultMap id="CollegeChild" type="com.fzu.edu.model.CollegeInfo" extends="BaseResultMap">
-    <collection column="id" property="children" ofType="com.fzu.edu.model.CollegeInfo" select="getCollegeChild"/>
+  <resultMap id="CollegeChildrenMap" type="com.fzu.edu.model.CollegeChildren" extends="CollegeBasicInfoMap" >
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
   </resultMap>
 
-  <sql id="Base_Column_List" >
-    id, code, name, flag, school_id
-  </sql>
-  <sql id="Blob_Column_List" >
-    info
-  </sql>
+  <resultMap id="CollegeInfoMap" type="com.fzu.edu.model.CollegeInfo" extends="CollegeChildrenMap" >
+    <result column="school_name" property="schoolName" jdbcType="INTEGER" />
+    <result column="parent_name" property="parentName" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="CollegeParentMap" type="com.fzu.edu.model.CollegeInfoExtends" extends="CollegeInfoMap">
+    <collection column="parent_id" property="parent" ofType="com.fzu.edu.model.CollegeInfoExtends" select="getCollegeParent"/>
+  </resultMap>
+  <resultMap id="CollegeChildMap" type="com.fzu.edu.model.CollegeInfoExtends" extends="CollegeInfoMap">
+    <collection column="id" property="children" ofType="com.fzu.edu.model.CollegeInfoExtends" select="getCollegeChild"/>
+  </resultMap>
 
   <!--递归查询-->
-  <select id="getCollegeParent" resultMap="CollegeParent">
+  <select id="getCollegeParent" resultMap="CollegeParentMap">
     SELECT * FROM college_info WHERE id = #{parent_id} AND flag = 0;
   </select>
-  <select id="getCollegeChild" resultMap="CollegeChild">
+  <select id="getCollegeChild" resultMap="CollegeChildMap">
     SELECT * FROM college_info WHERE parent_id = #{id} AND flag = 0;
   </select>
 
   <!--向上查询-->
-  <select id="getCollegeParents" resultMap="CollegeParent">
+  <select id="getCollegeParents" resultMap="CollegeParentMap">
     SELECT * FROM college_info WHERE id = #{collegeId} AND flag = 0;
   </select>
   <!--向下查询-->
-  <select id="getCollegeChildren" resultMap="CollegeChild">
+  <select id="getCollegeChildren" resultMap="CollegeChildMap">
     SELECT * FROM college_info WHERE id = #{collegeId} AND flag = 0;
   </select>
 
 
   <!--查询学院信息-->
-  <select id="getAllCollege" parameterType="hashmap" resultMap="CollegeChild">
+  <select id="getAllCollege" parameterType="hashmap" resultMap="CollegeChildMap">
     SELECT CI.*,SI.id AS schoolId, SI.name AS schoolName
     FROM college_info AS CI, school_info AS SI
     WHERE
@@ -70,6 +73,10 @@
   </select>
   <!--查询学院信息end-->
 
+  <insert id="insertCollegeChildren">
+    INSERT INTO college_children   ( `id`,  parent_id )  VALUES   ( #{id}, #{parentId} )
+  </insert>
+
 
   <!--<select id="getSchoolAndCollege" resultType="hashmap" parameterType="com.fzu.edu.model.SchoolInfo">
     SELECT S.id, S.name, S.code, C.id AS cid, C.name AS cname, C.code AS ccode
@@ -82,7 +89,7 @@
     ;
   </select>-->
 
-  <select id="getSchoolAndCollege" resultType="hashmap" parameterType="hashmap">
+  <!--<select id="getSchoolAndCollege" resultType="hashmap" parameterType="hashmap">
     SELECT S.id, S.name, S.code, C.id AS cid, C.name AS cname, C.code AS ccode
     FROM school_info AS S
     LEFT JOIN college_info AS C ON S.id = C.school_id
@@ -91,6 +98,6 @@
       AND S.id = #{id}
     </if>
     ;
-  </select>
+  </select>-->
   
 </mapper>

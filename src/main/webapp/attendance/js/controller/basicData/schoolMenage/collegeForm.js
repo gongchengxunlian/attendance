@@ -4,15 +4,23 @@
 app.controller('collegeFormController',['$scope', '$rootScope', '$uibModalInstance', 'params','$http','httpService','localStorageService','$interval','SweetAlert',
 function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localStorageService,$interval,SweetAlert){
 
-    if (params){
-        $scope.title = '编辑学院信息';
+    if (params.isChild){
+        $scope.title = '系';
     }else {
-        $scope.title = '新增学院信息';
+        $scope.title = '学院';
+    }
+    if (!params.isAdd){
+        $scope.title = '编辑'+ $scope.title +'信息';
+    }else {
+        $scope.title = '新增'+ $scope.title +'信息';
     }
     $scope.formData = params;
 
-    if (!$scope.formData || !$scope.formData.schoolId){
-        $scope.showSchool = true;
+    // console.log(params, $rootScope.schoolInfo);
+
+    // if (!$scope.formData || !$scope.formData.schoolId){
+    if (params.isAdd){
+        // $scope.showSchool = true;
 
         httpService.getAll('schoolMenage/getAll').then(function (data) {
             if (data){
@@ -27,6 +35,7 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
             SweetAlert.error("没有学校信息", '请检查网络...');
             $scope.dismiss();
         });
+
     }
 
 
@@ -41,7 +50,14 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
 
     //  保存
     $scope.saveData = function () {
-        httpService.addRow('collegeManage/addCollege', $scope.formData).then
+        try {
+            if (!$scope.formData.parent.id){
+                delete $scope.formData.parent;
+            }
+        }catch (e){
+            delete $scope.formData.parent;
+        }
+        httpService.addRow('collegeManage/addCollege', {params: JSON.stringify($scope.formData)}).then
         (function (result) {
             if (result > 0){
                 SweetAlert.success('操作成功');

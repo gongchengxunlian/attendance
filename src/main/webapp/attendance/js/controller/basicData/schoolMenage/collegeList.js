@@ -59,7 +59,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         list: [
             { title: '学院编号', type: 'code', order: 'desc' },
             { title: '学院名称', type: 'name', order: 'desc' },
-            { title: '学院详情', type: 'info' }
+            { title: '其它学院信息', type: 'info' }
         ],
         order: 'code',
         __order: false
@@ -138,13 +138,22 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     $scope.queryList();
 
     //  新城数据
-    $scope.addData = function () {
-        getModel();
+    $scope.addData = function (data) {
+        var p = {
+            isAdd: true
+        };
+        if (data) p.isChild = true;
+        getModel(p, data);
     };
 
     //  编辑数据
     $scope.editData = function (data, parent) {
-        getModel(data, parent);
+        var p = {  };
+        $.extend(true, p, data);
+        if (parent) {
+            p.isChild = true
+        }
+        getModel(p, parent);
     };
 
     //  删除数据
@@ -169,7 +178,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         }
 
         SweetAlert.swal({
-            title: '确认删除所选择的学院全部信息',
+            title: '确认删除所选择的全部信息',
             showCancelButton: true,
             cancelButtonText: '取消',
             confirmButtonText: '确定',
@@ -187,7 +196,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             }else {
                 if (data > 1) {
                     SweetAlert.swal({
-                        title: '已删除' + data + "所学院的信息",
+                        title: '已删除' + data + "项信息",
                         type: 'info',
                         timer: '3000'
                     });
@@ -198,11 +207,11 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             SweetAlert.error("删除失败", '请检查网络...');
         });
     }
-    //  编辑学院
+    /*//  编辑学院
     $scope.editCollegeData = function (data) {
         localStorageService.set("collegeData_collegeSetting", data);
         $state.go('collegePage');
-    };
+    };*/
 
     function getModel(params, parent) {
         params = params || {};

@@ -6,15 +6,25 @@
 </div>
 <div class="modal-body">
     <form name="collegeForm" class="form" ng-submit="saveData()">
-        <div class="row" ng-if="showSchool">
+        <div class="row" ng-if="!schoolInfo.id">
             <div class="col-md-12 form-inline">
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">学校：</label>
-                    <select select2 ng-model="formData.schoolId" required class="form-control" name="schoolId" >
-                        <option value="">请选择一个学校</option>
-                        <option value="{{data.id}}" ng-repeat="data in schoolData">{{data.name}}</option>
+                    <select ng-if="formData.isAdd && !formData.isChild" select2 ng-model="formData.schoolId" required class="form-control" name="schoolId">
+                        <option value="" disabled>请选择一个学校</option>
+                        <option value="{{data.id}}" ng-repeat="data in schoolData">{{data.name}}{{data.id == formData.schoolId}}</option>
                     </select>
+                    <input ng-if="!formData.isAdd || formData.isChild" class="form-control" ng-model="formData.schoolName" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="formData.isChild">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">学院：</label>
+                    <input class="form-control" ng-model="formData.parent.name" readonly>
                 </div>
             </div>
         </div>

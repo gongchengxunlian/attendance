@@ -36,7 +36,7 @@ public class SchoolManageController {
         try {
             return JSON.toJSONString(schoolManageService.addOrUpdateSchool(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -50,7 +50,7 @@ public class SchoolManageController {
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), schoolInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -71,7 +71,7 @@ public class SchoolManageController {
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }

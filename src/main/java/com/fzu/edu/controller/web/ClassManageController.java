@@ -37,7 +37,7 @@ public class ClassManageController {
         try {
             return JSON.toJSONString(classManageService.addOrUpdateClass(params));
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -53,7 +53,7 @@ public class ClassManageController {
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), classInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -68,7 +68,7 @@ public class ClassManageController {
             List<HashMap> classInfos = classManageService.getAllToTree(params);
             return JSON.toJSONString(classInfos);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
@@ -89,7 +89,7 @@ public class ClassManageController {
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
-            System.out.println(e);
+            log.warn(e);
             return "0";
         }
     }
