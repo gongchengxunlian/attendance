@@ -15,7 +15,21 @@ public class CourseArrange {
 
     private String classIndex;
 
-    private String staryYear;
+    private String startYear;
+
+    private Integer term;
+
+    private Integer teacherId;
+
+    private Integer classId;
+
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
 
     public Integer getId() {
         return id;
@@ -73,11 +87,27 @@ public class CourseArrange {
         this.classIndex = classIndex == null ? null : classIndex.trim();
     }
 
-    public String getStaryYear() {
-        return staryYear;
+    public String getStartYear() {
+        return startYear;
     }
 
-    public void setStaryYear(String staryYear) {
-        this.staryYear = staryYear == null ? null : staryYear.trim();
+    public void setStartYear(String startYear) {
+        this.startYear = startYear == null ? null : startYear.trim();
+    }
+
+    public Integer getTerm() {
+        return term;
+    }
+
+    public void setTerm(Integer term) {
+        this.term = term;
+    }
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
     }
 }

@@ -3,6 +3,8 @@ package com.fzu.edu.controller.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.fzu.edu.model.CollegeInfo;
+import com.fzu.edu.model.CollegeInfoExtends;
+import com.fzu.edu.model.SchoolInfo;
 import com.fzu.edu.service.CollegeManageService;
 import com.fzu.edu.utils.Page;
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +37,7 @@ public class CollegeManageController {
     public String addCollege(@RequestParam String params) {
         log.info("新增/修改学院");
         try {
-            return JSON.toJSONString(collegeManageService.addOrUpdateCollege(params, false));
+            return JSON.toJSONString(collegeManageService.addOrUpdateCollege(params));
         }catch (Exception e){
             log.warn(e);
             return "0";
@@ -67,7 +70,7 @@ public class CollegeManageController {
                 params = new HashMap();
                 params.put("id", id);
                 params.put("flag", 1);
-                n += collegeManageService.addOrUpdateCollege(JSON.toJSONString(params), true);
+                n += collegeManageService.addOrUpdateCollege(JSON.toJSONString(params));
             }
             return JSON.toJSONString(n);
         }catch (Exception e){
@@ -78,8 +81,16 @@ public class CollegeManageController {
 
     @RequestMapping(value = "/getSchoolAndCollege", method = RequestMethod.GET)
     @ResponseBody
-    public String getSchoolAndCollege(@RequestParam Map params) {
+    public String getSchoolAndCollege(@RequestParam Map params, HttpSession session) {
         log.info("获得学校和学院");
+        SchoolInfo schoolInfo;
+        CollegeInfoExtends collegeInfo;
+        try {
+            schoolInfo = (SchoolInfo) session.getAttribute("schoolInfo");
+            collegeInfo = (CollegeInfoExtends) session.getAttribute("collegeInfo");
+            if (schoolInfo != null) params.put("schoolId", schoolInfo.getId());
+            if (collegeInfo != null) params.put("collegeId", collegeInfo.getId());
+        }catch (Exception e){  }
         try {
             return JSON.toJSONString(collegeManageService.getSchoolAndCollege(params));
         }catch (Exception e){

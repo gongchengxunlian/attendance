@@ -51,27 +51,29 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
     /**
      * 加载教师信息
      */
-    var params = {
-        sign: 2
+    $scope.searchTeacher = function (courseId) {
+        var params = {
+            courseId: courseId
+        };
+        httpService.getAll('userManage/getAll', params).then(function (data) {
+            if (data){
+                $scope.teacherOptions = data.data;
+            }else {
+                SweetAlert.info("没有用户信息");
+                // $scope.dismiss();
+                // $scope.tableData = [];
+            }
+        }, function (result) {
+            SweetAlert.error("没有用户信息", '请检查网络...');
+        });
     };
-    httpService.getAll('userManage/getAll', params).then(function (data) {
-        if (data){
-            $scope.teacherOptions = data.data;
-        }else {
-            SweetAlert.info("没有用户信息");
-            // $scope.dismiss();
-            // $scope.tableData = [];
-        }
-    }, function (result) {
-        SweetAlert.error("没有用户信息", '请检查网络...');
-    });
 
     /**
      * 加载教室信息
      */
     httpService.getAll('classManage/getAllToTree').then(function (data) {
         if (data){
-            $scope.classesOptions = data;
+            $scope.buildOptions = data;
         }else {
             SweetAlert.info("没有教室信息");
             // $scope.dismiss();
@@ -111,17 +113,17 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
     //  保存
     $scope.saveData = function () {
 
-        // httpService.addRow('courseMenage/addCourse', {params: JSON.stringify($scope.formData)}).then
-        // (function (result) {
-        //     if (result > 0){
-        //         SweetAlert.success('操作成功');
-        //         $scope.close(result);
-        //     }else {
-        //         SweetAlert.error('操作失败');
-        //     }
-        // }, function (reason) {
-        //     SweetAlert.error('操作失败', '系统维护中');
-        // });
+        httpService.addRow('courseMenage/addCourseArrage', {params: JSON.stringify($scope.formData)}).then
+        (function (result) {
+            if (result > 0){
+                SweetAlert.success('操作成功');
+                $scope.close(result);
+            }else {
+                SweetAlert.error('操作失败');
+            }
+        }, function (reason) {
+            SweetAlert.error('操作失败', '系统维护中');
+        });
     };
 
 }]);

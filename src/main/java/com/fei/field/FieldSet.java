@@ -1,5 +1,6 @@
 package com.fei.field;
 
+import com.fei.structure.StructureSet;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class FieldSet {
 
     private static <T> List MergeField3(List<T> data, Class c, String... fieldNames){
 
-        Field[] fields = c.getDeclaredFields();
+        Field[] fields = StructureSet.getDeclaredFields(c).toArray(new Field[0]);
         HashMap<String, Field> fieldHashMap = new HashMap<String, Field>();
         for (Field field : fields){
             fieldHashMap.put(field.getName(), field);
@@ -60,7 +61,8 @@ public class FieldSet {
                 if (field != null){
                     field.setAccessible(true);
                     try {
-                        merge.put(fieldName, field.get(o));
+                        Object oo = field.get(o);
+                        if (oo != null) merge.put(fieldName, oo);
                     }catch (IllegalAccessException iae){
                         iae.printStackTrace();
                     }

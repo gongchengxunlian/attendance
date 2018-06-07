@@ -2,6 +2,7 @@ package com.fzu.edu.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.fzu.edu.model.UserInfo;
 import com.fzu.edu.service.UserManageService;
 import com.fzu.edu.service.UserEduManageService;
 import com.fzu.edu.service.UserLogService;
@@ -62,9 +63,10 @@ public class UserManageController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     @ResponseBody
-    public String getAll(@RequestParam Map params) {
+    public String getAll(@RequestParam Map params, HttpSession session) {
         log.info("查询所有用户");
         try {
+            params.put("power", ((UserInfo) session.getAttribute("userInfo")).getPower());
             List<Map> userInfos = userManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), userInfos);
             return JSON.toJSONString(page);

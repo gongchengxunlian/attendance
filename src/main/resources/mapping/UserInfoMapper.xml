@@ -1,19 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fzu.edu.dao.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.fzu.edu.model.UserInfo" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="info" property="info" jdbcType="VARCHAR" />
-    <result column="sex" property="sex" jdbcType="INTEGER" />
-    <result column="mail" property="mail" jdbcType="VARCHAR" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="birthday" property="birthday" jdbcType="BIGINT" />
-    <result column="flag" property="flag" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, name, info, sex, mail, phone, birthday, flag
-  </sql>
+    <resultMap id="BaseResultMap" type="com.fzu.edu.model.UserInfo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="mail" property="mail" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="power" property="power" jdbcType="INTEGER" />
+        <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+        <result column="college_id" property="collegeId" jdbcType="INTEGER" />
+        <result column="flag" property="flag" jdbcType="INTEGER" />
+        <result column="info" property="info" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="INTEGER" />
+        <result column="birthday" property="birthday" jdbcType="BIGINT" />
+    </resultMap>
+    <resultMap id="UserFullInfoMap" type="com.fzu.edu.model.UserFullInfo" >
+        <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+        <result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+        <result column="college_name" property="collegeName" jdbcType="VARCHAR" />
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    </resultMap>
 
+
+    <select id="getAllUserInfo" resultMap="UserFullInfoMap">
+        SELECT
+            UI.id,
+            UI.`name`,
+            UI.`code`,
+            UI.mail,
+            UI.phone
+        <if test="courseId == null or courseId == ''">
+            ,UI.power,
+            UI.flag,
+            UI.sex,
+            UI.birthday,
+            UI.info,
+            SPC.school_id,
+            SPC.school_name,
+            SPC.school_code,
+            CASE WHEN UI.college_id IS NULL THEN NULL ELSE SPC.parent_id END parent_id,
+            CASE WHEN UI.college_id IS NULL THEN NULL ELSE SPC.parent_name END parent_name,
+            CASE WHEN UI.college_id IS NULL THEN NULL ELSE SPC.parent_code END parent_code,
+            SPC.college_id,
+            SPC.college_name,
+            SPC.college_code
+        </if>
+
+        FROM
+            user_info AS UI
+    <if test="courseId == null or courseId == ''">
+        LEFT JOIN s_p_c_info AS SPC ON
+            CASE WHEN UI.college_id IS NOT NULL THEN
+            SPC.parent_id = UI.college_id
+            OR
+            SPC.college_id = UI.college_id
+            ELSE
+            SPC.school_id = UI.school_id
+            END
+    </if>
+    <if test="courseId != null and courseId != ''">
+            , course_info AS CI
+    </if>
+        WHERE
+            UI.flag = 0
+        <if test="power != null and power != ''">
+            AND ( UI.power > #{power} OR ( UI.power &lt;= 1 AND UI.power = #{power} ))
+        </if>
+    <if test="courseId == null or courseId == ''">
+        <if test="name != null and name != ''">
+            AND `name` LIKE CONCAT('%', #{name}, '%')
+        </if>
+        <if test="mail != null and mail != ''">
+            AND `mail` LIKE CONCAT('%', #{mail}, '%')
+        </if>
+        <if test="phone != null and phone != ''">
+            AND `phone` LIKE CONCAT('%', #{phone}, '%')
+        </if>
+        <if test="code != null and code != ''">
+            AND `code` LIKE CONCAT('%', #{code}, '%')
+        </if>
+        <if test="type != null and type != ''">
+            AND `power` = #{type}
+        </if>
+        <if test="schoolName != null and schoolName != ''">
+            AND `school_name` LIKE CONCAT('%', #{schoolName}, '%')
+        </if>
+        <if test="collegeName != null and collegeName != ''">
+            AND
+            CASE
+            WHEN SPC.parent_id IS NULL THEN `college_name` LIKE CONCAT('%', #{collegeName}, '%')
+            ELSE `parent_name` LIKE CONCAT('%', #{collegeName}, '%')
+            END
+        </if>
+    </if>
+    <if test="courseId != null and courseId != ''">
+            AND CI.flag = 0
+            AND UI.college_id = CI.college_id
+            AND CI.id = #{courseId}
+    </if>
+
+    </select>
 
 </mapper>

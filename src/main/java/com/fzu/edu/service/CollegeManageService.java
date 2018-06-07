@@ -13,7 +13,7 @@ public interface CollegeManageService extends IService<CollegeInfo> {
 
     List getAll(Map params);
 
-    int addOrUpdateCollege(String params, boolean b);
+    int addOrUpdateCollege(String params);
 
     List getSchoolAndCollege(Map params);
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,10 +32,9 @@ public class CollegeManageServiceImpl extends ServiceImpl<CollegeManageMapper, C
     private CollegeChildrenManageMapper collegeChildrenManageMapper;
     private Logger log = Logger.getLogger(CollegeManageServiceImpl.class);
 
-    public int addOrUpdateCollege(String params, boolean b) {
+    public int addOrUpdateCollege(String params) {
         CollegeInfoExtends collegeInfo = JSON.parseObject(params, CollegeInfoExtends.class);
         collegeInfo.setSchoolName(null);
-//        if (!b) collegeInfo.setFlag(null);
         CollegeInfo m;
         if ((m = collegeInfo.getParent()) != null){
             collegeInfo.setParentId(m.getId());
@@ -71,11 +71,8 @@ public class CollegeManageServiceImpl extends ServiceImpl<CollegeManageMapper, C
     }
 
     public List getSchoolAndCollege(Map params) {
-        SchoolInfo schoolInfo = CDataSet.MapToData(params, SchoolInfo.class);
-        List dt = collegeManageMapper.getSchoolAndCollege(schoolInfo);
-        List<String> fields = CDataSet.getDeclaredFieldsStrings(SchoolInfo.class);
-        String[] fieldsS = fields.toArray(new String[0]);
-        List data = CDataSet.MergeField(dt, fieldsS);
+        List<CollegeInfoExtends> c = getAll(params);
+        List<HashMap> data = CDataSet.MergeField(c, "schoolId", "schoolName", "schoolCode");
         return data;
     }
 }

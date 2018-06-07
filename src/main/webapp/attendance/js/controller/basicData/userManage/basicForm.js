@@ -51,74 +51,10 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http,httpSer
         $uibModalInstance.dismiss(data);
     };
 
-    //  保存
-    /*$scope.saveData = function () {
-
-        try {
-            var formData = {};
-            $.extend(true, formData, $scope.formData);
-            formData.birthday = formData.birthday.getTime();
-        }catch (e){}
-
-        getModel(formData);
-        // $scope.dismiss(formData);
-
-        /!*httpService.addRow('userManage/addUserBasic', formData).then
-        (function (result) {
-            if ($.type(result) == 'object'){
-                // if ($scope.continue){
-                    result.userId = result.id;
-                    delete result.id;
-                    getModel(result);
-                    $scope.dismiss(result);
-                // }else {
-                //     SweetAlert.error('操作成功');
-                //     $scope.close(result);
-                // }
-            }else if(result > 0) {
-
-            }else {
-                SweetAlert.error('操作失败');
-            }
-        }, function (reason) {
-            SweetAlert.error('操作失败', '系统维护中');
-        });*!/
-    };*/
-
-    // $scope.saveDataAndExit = function () {
-        // $scope.continue = false;
-        // document.userBaseForm.submit();
-    // };
-
     $scope.saveDataAndContinue = function () {
         // $scope.continue = true;
         $scope.saveData();
     };
-
-    /*function getModel(params) {
-        $uibModal.open({
-            backdrop:'static',
-            keyboard: false,
-            animation: true,
-            templateUrl: 'eduForm.html',
-            controller: 'userEduFormController',
-            resolve: {
-                params: params
-            },
-            size: 'md'
-        }).result.then(function (result) {
-            $scope.close(result);
-        },function (reason) {
-            // $scope.reset();
-        });
-    }*/
-
-
-
-
-
-
-
 
 
     if (params){
@@ -129,6 +65,7 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http,httpSer
     // $scope.formData = params || {};
 
     $scope.powerOptions = [
+        { sign: 0, name: '数据管理员' },
         { sign: 1, name: '校园数据管理员' },
         { sign: 2, name: '教师' },
         { sign: 3, name: '学生' }
@@ -137,27 +74,41 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http,httpSer
 
     $scope.schoolAndCollege = [];
 
-    getSchoolAndCollege();
-    function getSchoolAndCollege() {
+    // getSchoolAndCollege();
+    // function getSchoolAndCollege() {
 
-        $http.get("/collegeManage/getSchoolAndCollege", {params: {id: $rootScope.schoolInfo.id}}).success(function (data) {
+        $http.get("/collegeManage/getSchoolAndCollege").success(function (data) {
             if ($.type(data) == 'array'){
                 $scope.schoolAndCollege = data;
-                if (data.length == 1){
-                    $scope.formData.schoolIndex = 0;
-                    try {
-                        $scope.formData.collegeId = $rootScope.schoolInfo.collegeInfo.id;
-                    }catch (e){}
-                }else {
-                    getSchoolIndex(data);
-                }
+                try {
+                    $scope.nameChange($scope.schoolName, data, 'school');
+                    if (data.length == 1){
+                        $scope.school_index = 0;
+                    }
+                    $scope.nameChange($scope.parentName, data[$scope.school_index].data, 'parent');
+                    $scope.nameChange($scope.collegeName, data[$scope.school_index].data[$scope.parent_index].children, 'college');
+                }catch (e){  }
             }else {
-                SweetAlert.error('学校学院加载失败', '系统维护中...');
+                SweetAlert.error('加载数据失败', '系统维护中...');
             }
         }).error(function (result) {
-            SweetAlert.error('学校加载失败', '系统维护中...');
+            SweetAlert.error('加载数据失败', '系统维护中...');
         });
-    }
+    // }
+
+    $scope.nameChange = function (name, data, type) {
+        try {
+            angular.forEach(data, function (d, index) {
+                var dataName = 'name';
+                if (type == 'school') dataName = 'schoolName';
+                if (d[dataName] == name){
+                    $scope[type + '_index'] = index;
+                    throw "";
+                }
+            });
+            $scope[type + '_index'] = -1;
+        }catch (e){  }
+    };
 
     //  计算formData.schoolIndex
     function getSchoolIndex(data) {
@@ -171,25 +122,22 @@ function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http,httpSer
         }
     }
 
-
-    /*$scope.close = function (data) {
-        $uibModalInstance.close(data);
-    };
-    $scope.dismiss = function (data) {
-        $uibModalInstance.dismiss(data);
-    };*/
-
-
     //  保存
     $scope.saveData = function () {
 
+        $scope.formData.schoolId = null;
+        $scope.formData.collegeId = null;
         try {
-            $scope.formData.schoolId = $scope.schoolAndCollege[$scope.formData.schoolIndex].id;
+            $scope.formData.schoolId = $scope.schoolAndCollege[$scope.school_index].schoolId;
+            $scope.formData.collegeId = $scope.schoolAndCollege[$scope.school_index].data[$scope.parent_index].id;
+            $scope.formData.collegeId = $scope.schoolAndCollege[$scope.school_index].data[$scope.parent_index].children[$scope.college_index].id;
         }catch (e){
-            SweetAlert.error('操作失败');
-            // $scope.close();
-            return;
+            if ((($rootScope.sign == 0 && $scope.formData.power <= 2) && !$scope.formData.schoolId) || (($scope.college_index || $scope.college_index === 0) && !$scope.formData.collegeId)){
+                SweetAlert.error('填写正确的学校信息');
+                return;
+            }
         }
+        console.log($scope.schoolAndCollege, $scope.school_index);
         var formData = {};
         formData = $.extend(true, formData, $scope.formData);
         formData.birthday = formData.birthday.getTime();

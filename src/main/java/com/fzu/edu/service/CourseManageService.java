@@ -13,7 +13,12 @@ public interface CourseManageService extends IService<CourseInfo> {
 
     List getAll(Map params);
 
+    List getAllCourseArrage(Map params);
+
     int addOrUpdateCourse(String params);
 
     List getCollegeAndCourse(Map params);
+
+    int addOrUpdateCourseArrage(String params);
+
 }

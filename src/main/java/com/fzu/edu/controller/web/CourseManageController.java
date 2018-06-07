@@ -2,7 +2,9 @@ package com.fzu.edu.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.fzu.edu.model.CourseArrangeDetail;
 import com.fzu.edu.model.CourseInfo;
+import com.fzu.edu.model.SchoolInfo;
 import com.fzu.edu.service.CourseManageService;
 import com.fzu.edu.utils.Page;
 import org.apache.log4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +44,18 @@ public class CourseManageController {
         }
     }
 
+    @RequestMapping(value = "/addCourseArrage", method = RequestMethod.POST)
+    @ResponseBody
+    public String addCourseArrage(@RequestParam String params) {
+        log.info("新增/修改课程安排");
+        try {
+            return JSON.toJSONString(courseManageService.addOrUpdateCourseArrage(params));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     @ResponseBody
     public String getAll(@RequestParam Map params) {
@@ -48,6 +63,21 @@ public class CourseManageController {
         try {
             List courseInfos = courseManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), courseInfos);
+            return JSON.toJSONString(page);
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/getAllCourseArrage", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllCourseArrage(@RequestParam Map params, HttpSession session) {
+        log.info("查询所有课程安排");
+        try {
+            params.put("schoolId", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
+            List<CourseArrangeDetail> courseArrageInfos = courseManageService.getAllCourseArrage(params);
+            Page page = new Page(params.get("pageNo"), params.get("pageSize"), courseArrageInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
             log.warn(e);

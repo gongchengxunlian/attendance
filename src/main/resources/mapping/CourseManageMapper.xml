@@ -26,19 +26,19 @@
     WHERE
       flag = 0
     <if test="schoolName!=null and schoolName!=''">
-      AND `school_name` LIKE '%'+#{schoolName}+'%'
+      AND `school_name` LIKE CONCAT('%', #{schoolName}, '%')
     </if>
     <if test="parentName!=null and parentName!=''">
-      AND `parent_name` LIKE '%'+#{parentName}+'%'
+      AND `parent_name` LIKE CONCAT('%', #{parentName}, '%')
     </if>
     <if test="collegeName!=null and collegeName!=''">
-      AND `college_name` LIKE '%'+#{collegeName}+'%'
+      AND ( `college_name` LIKE CONCAT('%', #{collegeName}, '%') OR `parent_name` LIKE CONCAT('%', #{collegeName}, '%') )
     </if>
     <if test="name!=null and name!=''">
-      AND `name` LIKE '%'+#{name}+'%'
+      AND `name` LIKE CONCAT('%', #{name}, '%')
     </if>
     <if test="code!=null and code!=''">
-      AND `code` LIKE '%'+#{code}+'%'
+      AND `code` LIKE CONCAT('%', #{code}, '%')
     </if>
     <if test="credit!=null and credit!=''">
       AND `credit` = #{credit}

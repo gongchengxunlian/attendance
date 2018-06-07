@@ -13,48 +13,58 @@
                     </div>
                 </div>
             </div>-->
-            <div class="row" ng-if="sign < 2">
+            <div class="row" ng-if="sign < 2 ? true : formData.power = 3 == 0">
                 <div class="col-md-12 form-inline">
                     <span class="form-icon-required"></span>
                     <div class="form-group">
                         <label class="form-label">用户类型：</label>
-                        <select ng-model="formData.power" required class="form-control" name="power"
-                            <!--ng-options="power.sign as power.name power in powerOptions | filter: (sign < power.sign) track by $index"-->
-                        >
-                            <option value="{{power.sign}}" ng-repeat="power in powerOptions track by $index" ng-if="sign < power.sign">{{power.name}}</option>
+                        <select ng-model="formData.power" required class="form-control" name="power">
+                            <option value="{{power.sign}}" ng-repeat="power in powerOptions track by $index" ng-if="sign < power.sign || ( power.sign <= 1 && power.sign == sign)">{{power.name}}</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <div class="row" ng-show="sign < 1 || rigister">
-                <div class="col-md-12 form-inline">
-                    <span class="form-icon-required" ng-if="formData.power > 0"></span>
-                    <div class="form-group">
-                        <label class="form-label">学校：</label>
-                        <select select2 ng-model="formData.schoolIndex" class="form-control" name="schoolIndex" ng-required="formData.power > 1">
-                            <option value="" disabled>请选择一个学校</option>
-                            <option value="{{$index}}" ng-repeat="school in schoolAndCollege">{{school.name}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row" ng-if="(sign < 1 || rigister) && formData.power > 1 && ( schoolAndCollege[formData.schoolIndex].data.length > 0 || formData.power > 1 )">
-                <div class="col-md-12 form-inline">
-                    <span class="form-icon-required" ng-if="formData.power > 1"></span>
-                    <div class="form-group">
-                        <label class="form-label">学院：</label>
-                        <select select2 ng-model="formData.collegeId" class="form-control" name="collegeId" ng-required="formData.power > 1">
-                            <option value="" disabled>请选择一个学院</option>
-                            <option ng-repeat="college in schoolAndCollege[formData.schoolIndex].data" value="{{college.cid}}">{{college.cname}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row" ng-if="formData.power > 0">
+            <div class="row" ng-if="sign == 0 && formData.power <= 2">
                 <div class="col-md-12 form-inline">
                     <span class="form-icon-required"></span>
                     <div class="form-group">
-                        <label class="form-label" ng-if="formData.power == 1">编号：</label>
+                        <label class="form-label">学校名称：</label>
+                        <input list="schoolName" required class="form-control" required ng-model="schoolName" name="schoolName" ng-change="nameChange(schoolName, schoolAndCollege, 'school')" />
+                        <datalist id="schoolName">
+                            <option ng-repeat="school in schoolAndCollege" value="{{school.schoolName}}" label="{{school.school_id}}"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="schoolAndCollege[school_index].data.length > 0 && sign < 2 && formData.power > 1">
+                <div class="col-md-12 form-inline">
+                    <span class="form-icon-required"></span>
+                    <div class="form-group">
+                        <label class="form-label">学院名称：</label>
+                        <input list="parentName" required class="form-control" required ng-model="parentName" name="parentName" ng-change="nameChange(parentName, schoolAndCollege[school_index].data, 'parent')" />
+                        <datalist id="parentName">
+                            <option ng-repeat="parent in schoolAndCollege[school_index].data" value="{{parent.name}}" label="{{parent.code}}"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-if="schoolAndCollege[school_index].data[parent_index].children.length > 0 && sign < 2 && formData.power > 1">
+                <div class="col-md-12 form-inline">
+                    <span class="form-icon-required"></span>
+                    <div class="form-group">
+                        <label class="form-label" style="text-indent: 1em">系名称：</label>
+                        <input list="collegeName" required class="form-control" required ng-model="collegeName" name="collegeName" ng-change="nameChange(collegeName, schoolAndCollege[school_index].data[parent_index].children, 'college')" />
+                        <datalist id="collegeName">
+                            <option ng-repeat="college in schoolAndCollege[school_index].data[parent_index].children" value="{{college.name}}" label="{{college.code}}"></option>
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-inline">
+                    <span class="form-icon-required"></span>
+                    <div class="form-group">
+                        <label class="form-label" ng-if="formData.power <= 1">编号：</label>
                         <label class="form-label" ng-if="formData.power == 2">工号：</label>
                         <label class="form-label" ng-if="formData.power == 3">学号：</label>
                         <input type="text" ng-model="formData.code" required class="form-control" name="code"  >

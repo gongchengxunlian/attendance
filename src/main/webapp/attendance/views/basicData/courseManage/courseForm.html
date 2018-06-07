@@ -10,16 +10,35 @@
             <div class="col-md-12 form-inline">
                 <span class="form-icon-required"></span>
                 <div class="form-group">
-                    <label class="form-label"><span ng-if="sign == 0">学校</span>学院<span ng-if="sign != 0">名称</span>：</label>
-                    <select select2 ng-model="schoolIndex" required class="form-control" name="schoolIndex" ng-show="sign == 0">
-                        <option value="" disabled selected>请选择一个学校</option>
-                        <option value="{{$index}}" ng-repeat="school in schoolAndCollege">{{school.name}}</option>
-                    </select>
-                    <!--{{schoolIndex}}{{123455}}-->
-                    <select select2 ng-model="formData.collegeId" required class="form-control" name="collegeId">
-                        <option value="" disabled selected>请选择一个学院</option>
-                        <option ng-repeat="college in schoolAndCollege[schoolIndex].data" value="{{college.cid}}">{{college.cname}}</option>
-                    </select>
+                    <label class="form-label">学校名称：</label>
+                    <input list="schoolName" required class="form-control" required ng-model="schoolName" name="schoolName" ng-change="nameChange(schoolName, schoolAndCollege, 'school')" />
+                    <datalist id="schoolName">
+                        <option ng-repeat="school in schoolAndCollege" value="{{school.schoolName}}" label="{{school.school_id}}"></option>
+                    </datalist>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="schoolAndCollege[school_index].data.length > 0">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label">学院名称：</label>
+                    <input list="parentName" required class="form-control" required ng-model="parentName" name="parentName" ng-change="nameChange(parentName, schoolAndCollege[school_index].data, 'parent')" />
+                    <datalist id="parentName">
+                        <option ng-repeat="parent in schoolAndCollege[school_index].data" value="{{parent.name}}" label="{{parent.code}}"></option>
+                    </datalist>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="schoolAndCollege[school_index].data[parent_index].children.length > 0">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <label class="form-label" style="text-indent: 1em">系名称：</label>
+                    <input list="collegeName" required class="form-control" required ng-model="collegeName" name="collegeName" ng-change="nameChange(collegeName, schoolAndCollege[school_index].data[parent_index].children, 'college')" />
+                    <datalist id="collegeName">
+                        <option ng-repeat="college in schoolAndCollege[school_index].data[parent_index].children" value="{{college.name}}" label="{{college.code}}"></option>
+                    </datalist>
                 </div>
             </div>
         </div>

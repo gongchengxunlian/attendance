@@ -60,9 +60,9 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             { title: '课程编号', type: 'code', order: 'desc' },
             { title: '课程名称', type: 'name', order: 'desc' },
             { title: '学校', type: 'schoolName', order: 'desc' },
-            { title: '学院', type: 'collegeName', order: 'desc' },
-            { title: '学时', type: 'study_hours', order: 'desc' },
-            { title: '学分', type: 'credit', order: 'desc' },
+            { title: '院系', type: 'collegeName', order: 'desc' },
+            { title: '学时', type: 'studyHours', order: 'desc' },
+            { title: '学分', type: 'credit', order: 'desc' }
         ],
         order: 'code',
         __order: false
@@ -74,7 +74,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         name: '课程名称',
         code: '课程编号',
         schoolName: '学校',
-        collegeName: '学院',
+        collegeName: '院系',
         // code: '单双周',
         credit: '学分',
         studyHours: '学时'
@@ -106,7 +106,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         }else {
             $scope.pageFields.order = $scope.pageFields.list[index].type;
         }
-        $scope.queryList();
+        // $scope.queryList();
     };
 
 

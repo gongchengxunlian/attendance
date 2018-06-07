@@ -5,23 +5,43 @@ public class UserInfo {
 
     private String name;
 
-    private String info;
-
-    private Integer sex;
-
-    private String mail;
+    private String code;
 
     private String phone;
 
-    private Long birthday;
+    private String mail;
 
-    private Integer flag;
+    private String password;
 
     private Integer power;
 
     private Integer schoolId;
 
     private Integer collegeId;
+
+    private Integer flag;
+
+    private Integer sex;
+
+    private Long birthday;
+
+    private String info;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Integer getSchoolId() {
         return schoolId;

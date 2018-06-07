@@ -54,12 +54,13 @@ public class UserLogServiceImpl implements UserLogService {
         if (userInfos.size() == 0) return 0;
 
         UserInfo userInfo = userInfos.get(0);
+        CollegeInfoExtends collegeInfos = null;
         CollegeInfo collegeInfo = null;
         SchoolInfo schoolInfo = null;
 
         try {
             Integer collegeId = userInfo.getCollegeId();
-            CollegeInfoExtends collegeInfos = collegeManageMapper.getCollegeParents(collegeId);
+            collegeInfos = collegeManageMapper.getCollegeParents(collegeId);
             if (collegeInfos != null) collegeInfo = collegeInfos.getRootParent(true);
             if (collegeInfo != null) schoolInfo = schoolManageMapper.selectById(collegeInfo.getSchoolId());
             else schoolInfo = schoolManageMapper.selectById(userInfo.getSchoolId());
@@ -68,15 +69,15 @@ public class UserLogServiceImpl implements UserLogService {
         }
         if (schoolInfo != null && schoolInfo.getFlag() == 1) {
             schoolInfo = null;
-            collegeInfo = null;
+            collegeInfos = null;
         }else if (schoolInfo == null){
-            collegeInfo = null;
+            collegeInfos = null;
         }
 
         HashMap u_detail = new HashMap();
         u_detail.put("userInfo", userInfo);
         u_detail.put("schoolInfo", schoolInfo);
-        u_detail.put("collegeInfo", collegeInfo);
+        u_detail.put("collegeInfo", collegeInfos);
 
         return u_detail;
     }

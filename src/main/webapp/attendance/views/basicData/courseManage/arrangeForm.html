@@ -51,7 +51,7 @@
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">选择课程：</label>
-                    <select select2 required class="form-control" ng-model="courseId">
+                    <select select2 required class="form-control" ng-model="formData.courseId" ng-change="searchTeacher(formData.courseId)">
                         <option value="" disabled selected>请选择一门课程</option>
                         <option ng-repeat="course in courseData" value="{{course.id}}">{{course.name}}</option>
                     </select>
@@ -63,9 +63,9 @@
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">开课时间：</label>
-                    <select class="form-control" required ng-model="formData.start_year">
+                    <select class="form-control" required ng-model="formData.startYear">
                         <option value="" selected disabled>学年</option>
-                        <option value="{{currentYear - 1 + $index}}" ng-repeat="startYear in startYearOptions track by $index">{{currentYear - 1 + $index}}-{{currentYear + $index}}</option>
+                        <option value="{{currentYear - 1 + $index}}" ng-repeat="start_year in startYearOptions track by $index">{{currentYear - 1 + $index}}-{{currentYear + $index}}</option>
                     </select>
                     <select class="form-control" required ng-model="formData.term">
                         <option value="" selected disabled>学期</option>
@@ -79,13 +79,13 @@
                 <!--<span class="form-icon-required"></span>-->
                 <div class="form-group">
                     <label style="opacity: 0" class="form-label">开课时间：</label>
-                    <select class="form-control" required ng-model="formData.start_time">
+                    <select class="form-control" required ng-model="formData.startTime">
                         <option value="" selected disabled>开课时间</option>
                         <option value="{{$index + 1}}" ng-repeat="startWeek in startWeekOptions track by $index">第{{$index + 1}}周</option>
                     </select>
-                    <select class="form-control" required ng-model="formData.time_type">
+                    <select class="form-control" required ng-model="formData.timeType">
                         <option value="" selected disabled>单双周</option>
-                        <option ng-if="!formData.start_time || $index % 2 == formData.start_time % 2 || $index == 0" value="{{$index}}" ng-repeat="timeTpye in ['每周', '单周', '双周'] track by $index">{{timeTpye}}</option>
+                        <option ng-if="!formData.startTime || $index % 2 == formData.startTime % 2 || $index == 0" value="{{$index}}" ng-repeat="timeTpye in ['每周', '单周', '双周'] track by $index">{{timeTpye}}</option>
                     </select>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                         <span ng-if="!formData.classIndex[$index]">选择第几节上课</span>
                         <div style="display: inline-block; padding: .25em .5em;" ng-repeat="class in formData.classIndex[$index]">第{{class}}节</div>
                     </a>
-                    <button type="button" class="btn btn-width-xsm btn-danger" ng-click="weekAndClassIndex.pop()">-</button>
+                    <button type="button" class="btn btn-width-xsm btn-danger" ng-show="$index == weekAndClassIndex.length - 1 && $index != 0" ng-click="weekAndClassIndex.pop()">-</button>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
                     <label class="form-label">上课教师：</label>
                     <select select2 class="form-control" required ng-model="formData.teacherId">
                         <option value="" selected disabled>选择教师</option>
-                        <option value="teacher.id" ng-repeat="teacher in teacherOptions">{{teacher.name}} [工号：{{teacher.code}}]</option>
+                        <option value="{{teacher.id}}" ng-repeat="teacher in teacherOptions">{{teacher.name}} [工号：{{teacher.code}}]</option>
                     </select>
                 </div>
             </div>
@@ -135,13 +135,13 @@
                 <span class="form-icon-required"></span>
                 <div class="form-group">
                     <label class="form-label">上课教室：</label>
-                    <select select2 class="form-control" required ng-model="classIndex">
+                    <select select2 class="form-control" required ng-model="buildIndex">
                         <option value="" selected disabled>选择教学楼</option>
-                        <option value="{{$index}}" ng-repeat="class in classesOptions track by $index">{{class.buildName}}</option>
+                        <option value="{{$index}}" ng-repeat="build in buildOptions track by $index">{{build.buildName}}</option>
                     </select>
-                    <select ng-if="classesOptions[classIndex].data.length" select2 class="form-control" required ng-model="formData.classId">
+                    <select ng-if="buildOptions[buildIndex].data.length" select2 class="form-control" required ng-model="formData.classId">
                         <option value="" selected disabled>选择教室</option>
-                        <option value="{{class.id}}" ng-repeat="class in classesOptions[classIndex].data track by $index">{{class.className}}</option>
+                        <option value="{{class.id}}" ng-repeat="class in buildOptions[buildIndex].data track by $index">{{class.className}}</option>
                     </select>
                 </div>
             </div>

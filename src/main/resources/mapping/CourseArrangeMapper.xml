@@ -1,18 +1,49 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fzu.edu.dao.CourseArrangeMapper" >
-  <resultMap id="BaseResultMap" type="com.fzu.edu.model.CourseArrange" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="flag" property="flag" jdbcType="INTEGER" />
-    <result column="course_id" property="courseId" jdbcType="INTEGER" />
-    <result column="start_time" property="startTime" jdbcType="INTEGER" />
-    <result column="time_type" property="timeType" jdbcType="INTEGER" />
-    <result column="week" property="week" jdbcType="VARCHAR" />
-    <result column="class_index" property="classIndex" jdbcType="VARCHAR" />
-    <result column="stary_year" property="staryYear" jdbcType="VARCHAR" />
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fzu.edu.dao.CourseArrangeMapper">
+  <resultMap id="BaseResultMap" type="com.fzu.edu.model.CourseArrange">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="start_time" jdbcType="INTEGER" property="startTime" />
+    <result column="time_type" jdbcType="INTEGER" property="timeType" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="class_index" jdbcType="VARCHAR" property="classIndex" />
+    <result column="start_year" jdbcType="VARCHAR" property="startYear" />
+    <result column="term" jdbcType="INTEGER" property="term" />
+    <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="class_id" jdbcType="INTEGER" property="classId" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, flag, course_id, start_time, time_type, week, class_index, stary_year
-  </sql>
+  <resultMap id="CourseFullArrangeMap" type="com.fzu.edu.model.CourseFullArrange" extends="BaseResultMap">
+    <result column="course_name" jdbcType="INTEGER" property="courseName" />
+    <result column="course_code" jdbcType="INTEGER" property="courseCode" />
+    <result column="teacher_name" jdbcType="INTEGER" property="teacherName" />
+    <result column="teacher_code" jdbcType="INTEGER" property="teacherCode" />
+    <result column="build_name" jdbcType="INTEGER" property="buildName" />
+    <result column="class_name" jdbcType="INTEGER" property="className" />
+  </resultMap>
+
+
+  <select id="checkTeacherExist">
+    <!--SELECT COUNT(1) FROM course_arrange WHERE teacher_id = #{teacherId} AND flag = 0
+    <if test="id != null and id != ''">
+      AND id != id
+    </if>-->
+    SELECT 0;
+  </select>
+
+  <select id="checkTimeConflict">
+    SELECT 0;
+  </select>
+
+  <select id="getAllCourseArrage" resultMap="CourseFullArrangeMap">
+    SELECT C.*
+    FROM course_full_arrange AS C, user_info AS U
+    WHERE C.teacher_id = U.id
+    <if test="schoolId != null and schoolId != ''">
+      AND U.schiil_id = #{schoolId}
+    </if>
+  </select>
+
 
 </mapper>

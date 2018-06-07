@@ -18,6 +18,8 @@
   <resultMap id="CollegeInfoMap" type="com.fzu.edu.model.CollegeInfo" extends="CollegeChildrenMap" >
     <result column="school_name" property="schoolName" jdbcType="INTEGER" />
     <result column="parent_name" property="parentName" jdbcType="INTEGER" />
+    <result column="school_code" property="schoolCode" jdbcType="INTEGER" />
+    <result column="parent_code" property="parentCode" jdbcType="INTEGER" />
   </resultMap>
 
   <resultMap id="CollegeParentMap" type="com.fzu.edu.model.CollegeInfoExtends" extends="CollegeInfoMap">
@@ -56,25 +58,29 @@
     <if test="schoolId!=null and schoolId!=''">
       AND SI.id = #{schoolId}
     </if>
+    <if test="collegeId!=null and collegeId!=''">
+      AND CI.id = #{collegeId}
+    </if>
     <if test="name!=null and name!=''">
       AND CI.`name` LIKE '%'+#{name}+'%'
     </if>
     <if test="code!=null and code!=''">
       AND CI.`code` LIKE '%'+#{code}+'%'
     </if>
-    ORDER BY CI.`${order}`
-    <if test="__order == '0' || __order == 0">
-      ASC
+    <if test="order!=null and order!=''">
+      ORDER BY CI.`${order}`
+      <if test="__order == '0' || __order == 0">
+        ASC
+      </if>
+      <if test="__order == '1' || __order == 1">
+        DESC
+      </if>
     </if>
-    <if test="__order == '1' || __order == 1">
-      DESC
-    </if>
-
   </select>
   <!--查询学院信息end-->
 
   <insert id="insertCollegeChildren">
-    INSERT INTO college_children   ( `id`,  parent_id )  VALUES   ( #{id}, #{parentId} )
+    INSERT INTO college_children ( `id`,  parent_id ) VALUES ( #{id}, #{parentId} )
   </insert>
 
 

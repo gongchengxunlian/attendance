@@ -58,9 +58,11 @@
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[2].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[5].order}} {{pageFields.order == pageFields.list[5].type ? 'table-order-select':''}}" ng-click="setOrder(2)"></span>
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[3].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[5].order}} {{pageFields.order == pageFields.list[5].type ? 'table-order-select':''}}" ng-click="setOrder(3)"></span>
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[4].title}}
@@ -81,7 +83,7 @@
                 <tr ng-if="tableData.length == 0">
                     <td colspan="10" class="text-center">暂无课程信息</td>
                 </tr>
-                <tr ng-repeat="data in tableData">
+                <tr ng-repeat="data in tableData | orderBy:pageFields.order:pageFields.__order">
                     <td class="text-center">
                         <input class="select-all-check-children" type="checkbox" ng-model="data.checked" >
                     </td>
@@ -96,7 +98,7 @@
                         <div>{{data[pageFields.list[2].type]}}</div>
                     </td>
                     <td class="nowrap text-center" auto-title>
-                        <div>{{data[pageFields.list[3].type]}}</div>
+                        <div>{{data.parentName || data.collegeName}}{{data.parentName ? " [ " + data.collegeName + " ]" : ''}}</div>
                     </td>
                     <td class="nowrap text-center" auto-title>
                         <div>{{data[pageFields.list[4].type]}}</div>

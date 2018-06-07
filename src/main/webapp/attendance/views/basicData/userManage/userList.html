@@ -20,10 +20,13 @@
                 <div class="form-group" ng-if="searchValue.key && searchOptions[searchValue.key].type!='select'">
                     <input type="text" ng-model="searchValue.value" class="form-control" size="25" placeholder="{{'请输入'+searchOptions[searchValue.key].name+'进行查询'}}" />
                 </div>
-                <div class="form-group" ng-if="searchValue.key && searchOptions[searchValue.key].type=='select'">
-                    <select ng-model="searchValue.value" class="form-control">
-                        <option value="" selected disabled>请选择{{searchOptions[searchValue.key].name}}进行查询</option>
-                        <option value="{{option.key}}" ng-repeat="option in searchOptions[searchValue.key].options" ng-if="!option.notNgIf">{{option.value}}</option>
+                <div class="form-group" ng-if="searchValue.key == 'type'">
+                    <select ng-model="searchValue.value" class="form-control" ng-model="searchValue.value">
+                        <option value="" ng-if="sign <= 1">全部</option>
+                        <option value="0" ng-if="sign == 0">数据管理员</option>
+                        <option value="1" ng-if="sign <= 1">校园数据管理员</option>
+                        <option value="2" ng-if="sign <= 1">教师</option>
+                        <option value="3" ng-if="sign <= 1">学生</option>
                     </select>
                 </div>
                 <div class="form-group" ng-show="searchValue.key">
@@ -46,9 +49,37 @@
                         </div>
                     </th>
                     <th class="order text-center">序号</th>
-                    <th class="text-center" ng-repeat="filed in pageFields.list" ng-style="filed.titleStyle" ng-class="filed.titleClass" ng-if="!filed.notNgIf" ng-show="!filed.notNgShow">
-                        {{filed.title}}
-                        <span ng-if="tableData.length && filed.order" class="table-order table-order-{{filed.order}} {{pageFields.order == filed.type ? 'table-order-select':''}}" ng-click="setOrder($index)"></span>
+                    <th class="text-center" ng-style="pageFields.list[0].titleStyle" ng-class="pageFields.list[0].titleClass" ng-if="!pageFields.list[0].notNgIf" ng-show="!pageFields.list[0].notNgShow">
+                        {{pageFields.list[0].title}}
+                        <span ng-if="tableData.length && pageFields.list[0].order" class="table-order table-order-{{pageFields.list[0].order}} {{pageFields.order == pageFields.list[0].type ? 'table-order-select':''}}" ng-click="setOrder(0)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[1].titleStyle" ng-class="pageFields.list[1].titleClass" ng-if="!pageFields.list[1].notNgIf" ng-show="!pageFields.list[1].notNgShow">
+                        {{pageFields.list[1].title}}
+                        <span ng-if="tableData.length && pageFields.list[1].order" class="table-order table-order-{{pageFields.list[1].order}} {{pageFields.order == pageFields.list[1].type ? 'table-order-select':''}}" ng-click="setOrder(1)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[2].titleStyle" ng-class="pageFields.list[2].titleClass" ng-if="!pageFields.list[2].notNgIf" ng-show="!pageFields.list[2].notNgShow">
+                        {{pageFields.list[2].title}}
+                        <span ng-if="tableData.length && pageFields.list[2].order" class="table-order table-order-{{pageFields.list[2].order}} {{pageFields.order == pageFields.list[2].type ? 'table-order-select':''}}" ng-click="setOrder(2)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[3].titleStyle" ng-class="pageFields.list[3].titleClass" ng-if="!pageFields.list[3].notNgIf" ng-show="!pageFields.list[3].notNgShow">
+                        {{pageFields.list[3].title}}
+                        <span ng-if="tableData.length && pageFields.list[3].order" class="table-order table-order-{{pageFields.list[3].order}} {{pageFields.order == pageFields.list[3].type ? 'table-order-select':''}}" ng-click="setOrder(3)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[4].titleStyle" ng-class="pageFields.list[4].titleClass" ng-if="!pageFields.list[4].notNgIf" ng-show="!pageFields.list[4].notNgShow">
+                        {{pageFields.list[4].title}}
+                        <span ng-if="tableData.length && pageFields.list[4].order" class="table-order table-order-{{pageFields.list[4].order}} {{pageFields.order == pageFields.list[4].type ? 'table-order-select':''}}" ng-click="setOrder(4)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[5].titleStyle" ng-class="pageFields.list[5].titleClass" ng-if="!pageFields.list[5].notNgIf" ng-show="!pageFields.list[5].notNgShow">
+                        {{pageFields.list[5].title}}
+                        <span ng-if="tableData.length && pageFields.list[5].order" class="table-order table-order-{{pageFields.list[5].order}} {{pageFields.order == pageFields.list[5].type ? 'table-order-select':''}}" ng-click="setOrder(5)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[6].titleStyle" ng-class="pageFields.list[6].titleClass" ng-if="!pageFields.list[6].notNgIf" ng-show="!pageFields.list[6].notNgShow">
+                        {{pageFields.list[6].title}}
+                        <span ng-if="tableData.length && pageFields.list[6].order" class="table-order table-order-{{pageFields.list[6].order}} {{pageFields.order == pageFields.list[6].type ? 'table-order-select':''}}" ng-click="setOrder(6)"></span>
+                    </th>
+                    <th class="text-center" ng-style="pageFields.list[7].titleStyle" ng-class="pageFields.list[7].titleClass" ng-if="!pageFields.list[7].notNgIf" ng-show="!pageFields.list[7].notNgShow">
+                        {{pageFields.list[7].title}}
+                        <span ng-if="tableData.length && pageFields.list[7].order" class="table-order table-order-{{pageFields.list[7].order}} {{pageFields.order == pageFields.list[7].type ? 'table-order-select':''}}" ng-click="setOrder(7)"></span>
                     </th>
                     <th class="nowrap text-center" style="width: 112px">操作</th>
                 </tr>
@@ -58,13 +89,34 @@
                 <tr ng-if="tableData.length == 0">
                     <td colspan="{{pageFields.list.length + 3}}" class="text-center">暂无用户信息</td>
                 </tr>
-                <tr ng-repeat="data in tableData" ng-click="showdetail(data)">
+                <tr ng-repeat="data in tableData | orderBy:pageFields.order:pageFields.__order" ng-click="showdetail(data)">
                     <td class="text-center">
                         <input class="select-all-check-children" type="checkbox" ng-model="data.checked" >
                     </td>
                     <td class="nowrap text-center">{{$index}}</td>
-                    <td class="nowrap text-center" auto-title ng-repeat="filed in pageFields.list" ng-click="filed.cellClick(data, filed.type)" ng-style="filed.cellStyle" ng-class="filed.cellClass" ng-if="!filed.notNgIf" ng-show="!filed.notNgShow">
-                        <div>{{data[filed.type]}}</div>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[0].cellClick(data, pageFields.list[0].type)" ng-style="pageFields.list[0].cellStyle" ng-class="pageFields.list[0].cellClass" ng-if="!pageFields.list[0].notNgIf" ng-show="!pageFields.list[0].notNgShow">
+                        <div>{{data[pageFields.list[0].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[1].cellClick(data, pageFields.list[1].type)" ng-style="pageFields.list[1].cellStyle" ng-class="pageFields.list[1].cellClass" ng-if="!pageFields.list[1].notNgIf" ng-show="!pageFields.list[1].notNgShow">
+                        <div>{{data[pageFields.list[1].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[2].cellClick(data, pageFields.list[2].type)" ng-style="pageFields.list[2].cellStyle" ng-class="pageFields.list[2].cellClass" ng-if="!pageFields.list[2].notNgIf" ng-show="!pageFields.list[2].notNgShow">
+                        <div>{{data[pageFields.list[2].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[3].cellClick(data, pageFields.list[3].type)" ng-style="pageFields.list[3].cellStyle" ng-class="pageFields.list[3].cellClass" ng-if="!pageFields.list[3].notNgIf" ng-show="!pageFields.list[3].notNgShow">
+                        <div>{{data[pageFields.list[3].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[4].cellClick(data, pageFields.list[4].type)" ng-style="pageFields.list[4].cellStyle" ng-show="!pageFields.list[4].notNgShow">
+                        <div>{{powerNameOptions[data.power]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[5].cellClick(data, pageFields.list[5].type)" ng-style="pageFields.list[5].cellStyle" ng-class="pageFields.list[5].cellClass" ng-if="!pageFields.list[5].notNgIf" ng-show="!pageFields.list[5].notNgShow">
+                        <div>{{data[pageFields.list[5].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[7].cellClick(data, pageFields.list[7].type)" ng-style="pageFields.list[7].cellStyle" ng-class="pageFields.list[7].cellClass" ng-if="!pageFields.list[7].notNgIf" ng-show="!pageFields.list[7].notNgShow">
+                        <div>{{data.parentName || data.collegeName}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title ng-click="pageFields.list[8].cellClick(data, pageFields.list[8].type)" ng-style="pageFields.list[8].cellStyle" ng-class="pageFields.list[8].cellClass" ng-if="!pageFields.list[8].notNgIf" ng-show="!pageFields.list[8].notNgShow">
+                        <div>{{data.parentName ? data.collegeName : ''}}</div>
                     </td>
                     <td class="nowrap text-center">
                         <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="editData(data)">

@@ -40,56 +40,8 @@ public class UserManageServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
     }
 
     public List getAll(Map params) {
-        if (params.get("sign") == null) return null;
-
-        Integer type = null;
-        try {
-            type = Integer.parseInt(params.get("type").toString());
-        }catch (Exception e){}
-
-        List<HashMap> userInfo = new ArrayList();
-//        switch (Integer.parseInt(params.get("sign").toString())){
-//            case 0:{
-//                List s = schoolAdministratorMapper.getAllSchoolAdministrator(params);
-//                if (type != null && type == 0){
-//                    userInfo = s;
-//                    break;
-//                }else {
-//                    userInfo.addAll(s);
-//                }
-//            }
-//            case 1:{
-//                List<HashMap> t = teacherInfoMapper.getAllTeacher(params);
-//                if (type != null && type == 1){
-//                    userInfo = t;
-//                    break;
-//                }else {
-//                    userInfo.addAll(t);
-//                }
-//            }
-//            case 2:{
-//                List<HashMap> s = studentInfoMapper.getAllStudent(params);
-//                if (type != null && type == 2){
-//                    userInfo = s;
-//                    break;
-//                }else {
-//                    userInfo.addAll(s);
-//                }
-//            }
-//            case 3:{
-//                if (type != null && type == 3){
-////                    userInfo = t;
-//                    break;
-//                }else {
-////                    userInfo.addAll(t);
-//                }
-//            }
-//            default:{
-//
-//            }
-//        }
-//        List userBasic = userBasicInfoMapper.getAllUserBasic(params);
-        return userInfo;
+        List u = userInfoMapper.getAllUserInfo(params);
+        return u;
     }
 
 }

@@ -80,6 +80,18 @@ public class StructureSet {
         return l;
     }
 
+    public static List<Field> getDeclaredFields(Class c){
+        List<Field> l = new ArrayList();
+        if (c.equals(Object.class)) return new ArrayList<Field>();
+        Field[] fields = c.getDeclaredFields();
+        for (Field f : fields){
+            l.add(f);
+        }
+        l.addAll(getDeclaredFields(c.getSuperclass()));
+        return l;
+    }
+
+
     public static void main(String[] args){
         Map m = new HashMap();
         m.put("isused", "false");

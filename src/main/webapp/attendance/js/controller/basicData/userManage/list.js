@@ -22,17 +22,19 @@ function($scope, $rootScope, $state, $uibModal,$http,httpService,localStorageSer
         pageSizeList: [10, 20, 30]
     };
     $scope.pagination.pageSize = $scope.pagination.pageSizeList[0];
+    $scope.powerNameOptions = ["数据管理员", "校园数据管理员", "教师", "学生"];
     $scope.pageFields = {
         list: [
             { title: '编号', type: 'code', order: 'desc', titleStyle: {width: '8em'} },
             { title: '姓名', type: 'name', order: 'desc', titleStyle: {width: '8em'}, titleClass: "", cellStyle: {}, cellClass: "", titleClick: undefined, cellClick: undefined, notNgIf: false, notNgShow: false },
-            { title: '学院', type: 'cname', order: 'desc', notNgIf: $rootScope.sign != 1 },
-            { title: '角色', type: 'roleName', order: 'desc', notNgIf: $rootScope.sign > 1 },
             { title: '电子邮箱', type: 'mail', order: 'desc', titleStyle: {width: '8em'} },
             { title: '联系电话', type: 'phone', order: 'desc', titleStyle: {width: '8em'} },
-            { title: '学校', type: 'sname', order: 'desc', notNgIf: $rootScope.sign > 0 },
+            { title: '角色', type: 'power', order: 'desc', notNgIf: $rootScope.sign > 1, titleStyle: {"width": '9em'} },
+            { title: '学校', type: 'schoolName', order: 'desc', notNgIf: $rootScope.sign > 0 },
+            { title: '学院', type: 'parentName', order: 'desc', notNgIf: $rootScope.sign > 1 || $rootScope.sign == 0 },
+            { title: '系', type: 'collegeName', order: 'desc', notNgIf: $rootScope.sign > 1 || $rootScope.sign == 0 }
         ],
-        order: 'code',
+        order: 'power',
         __order: false
     };
     //  改变排序
@@ -43,7 +45,7 @@ function($scope, $rootScope, $state, $uibModal,$http,httpService,localStorageSer
         }else {
             $scope.pageFields.order = $scope.pageFields.list[index].type;
         }
-        $scope.queryList();
+        // $scope.queryList();
     };
 
 
@@ -57,20 +59,14 @@ function($scope, $rootScope, $state, $uibModal,$http,httpService,localStorageSer
     switch ($rootScope.sign){
         case 0:{
             $scope.searchOptions.code = { name: '编号' };
-            $scope.searchOptions.type = { name: '角色', type: 'select', options: [
-                { key: -1, value: '全部', notNgIf: false },
-                { key: 1, value: '教师', notNgIf: 1 < $rootScope.sign },
-                { key: 2, value: '学生', notNgIf: 2 < $rootScope.sign }
-            ] };
+            $scope.searchOptions.type = { name: '角色', type: 'select' };
             $scope.searchOptions.schoolName = { name: '学校' };
             break;
         }
         case 1:{
             $scope.searchOptions.code = { name: '编号' };
-            $scope.searchOptions.sign = { name: '角色', type: 'select', options: [
-
-            ] };
-            $scope.searchOptions.schoolName = { name: '学院' };
+            $scope.searchOptions.type = { name: '角色', type: 'select'};
+            $scope.searchOptions.collegeName = { name: '学院' };
             break;
         }
         case 2:{
@@ -97,8 +93,7 @@ function($scope, $rootScope, $state, $uibModal,$http,httpService,localStorageSer
             pageSize: $scope.pagination.pageSize,
             pageNo: $scope.pagination.currentPage,
             order: $scope.pageFields.order,
-            __order: $scope.pageFields.__order ? 0 : 1,
-            sign: $rootScope.sign
+            __order: $scope.pageFields.__order ? 0 : 1
         };
         params[$scope.searchValue.key] = $scope.searchValue.value;
         try {

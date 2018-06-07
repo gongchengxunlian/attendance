@@ -10,41 +10,10 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
      * 数据区
      */
 
-    //  传入参数
-    if ($rootScope.sign > 0){
-        //  直接使用$rootScope中的学院信息
-        // $scope.schoolInfo = $rootScope.schoolInfo;
-    }else {
-        switch ($stateParams.showAll){
-            //  刷新
-            case 0:{
-                $scope.schoolInfo = localStorageService.get("schoolData_courseSetting");
-                break;
-            }
-            //  菜单点进来
-            case 1:{
-                localStorageService.remove("schoolData_courseSetting");
-                $scope.schoolInfo = undefined;
-                break;
-            }
-            //  从学院跳转进来
-            case 2:{
-                $scope.schoolInfo = localStorageService.get("schoolData_courseSetting");
-                break;
-            }
-            default:{
-                $scope.schoolInfo = undefined;
-            }
-        }
-    }
-
     //  页面
     $rootScope.menuList = [
         { title: '课程列表' }
     ];
-    if ($scope.schoolInfo && $rootScope.sign == 0){
-        $rootScope.menuList.splice(0, 0, { title: '学院列表', href: '#schoolMenage' });
-    }
     $scope.bodyTitle = $rootScope.menuList[$rootScope.menuList.length - 1].title;
 
     $scope.pagination = {
@@ -57,14 +26,13 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     $scope.pagination.pageSize = $scope.pagination.pageSizeList[0];
     $scope.pageFields = {
         list: [
+            { title: '学年学期', type: 'yearTerm', order: 'asc' },
             { title: '课程编号', type: 'code', order: 'desc' },
             { title: '课程名称', type: 'name', order: 'desc' },
-            { title: '学校', type: 'schoolName', order: 'desc' },
-            { title: '学院', type: 'collegeName', order: 'desc' },
-            { title: '学时', type: 'study_hours', order: 'desc' },
-            { title: '学分', type: 'credit', order: 'desc' },
+            { title: '任课教师', type: 'teacherName', order: 'desc' },
+            { title: '上课时间地点', type: 'whenWhere', order: 'desc' }
         ],
-        order: 'code',
+        order: 'yearTerm',
         __order: false
     };
 
@@ -106,7 +74,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         }else {
             $scope.pageFields.order = $scope.pageFields.list[index].type;
         }
-        $scope.queryList();
+        // $scope.queryList();
     };
 
 
@@ -125,11 +93,8 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             __order: $scope.pageFields.__order ? 0 : 1
         };
         params[$scope.searchValue.key] = $scope.searchValue.value;
-        try {
-            params.schoolId = $scope.schoolInfo.id;
-        }catch (e){}
 
-        httpService.getAll('courseMenage/getAll', params).then(function (data) {
+        httpService.getAll('courseMenage/getAllCourseArrage', params).then(function (data) {
             if (data){
                 $scope.tableData = data.data;
                 $scope.pagination.pageSize = data.pageSize;
@@ -137,11 +102,11 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
                 $scope.pagination.totalCount = data.totalCount;
                 $scope.pagination.totalPage = data.totalPage;
             }else {
-                SweetAlert.info("没有课程信息");
+                SweetAlert.info("没有课程信息安排");
                 // $scope.tableData = [];
             }
         }, function (result) {
-            SweetAlert.error("没有课程信息", '请检查网络...');
+            SweetAlert.error("没有课程信息安排", '请检查网络...');
         });
     };
     $scope.queryList();

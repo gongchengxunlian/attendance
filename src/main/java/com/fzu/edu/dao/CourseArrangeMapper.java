@@ -2,9 +2,17 @@ package com.fzu.edu.dao;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.fzu.edu.model.CourseArrange;
+import com.fzu.edu.model.CourseArrangeDetail;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CourseArrangeMapper extends BaseMapper<CourseArrange> {
 
+    int checkTeacherExist(CourseArrange courseArrange);
+
+    int checkTimeConflict(CourseArrange courseArrange);
+
+    List<CourseArrangeDetail> getAllCourseArrage();
 }

@@ -31,14 +31,19 @@
                     <input type="phone" ng-model="formData.phone" required  class="form-control" name="phone"  >
                 </div>
             </div>
-            <div class="col-md-2 form-inline">
+            <div class="col-md-6 form-inline">
                 <div class="form-group">
                     <label class="form-label">性别：</label>
-                    <input type="radio" ng-model="formData.sex" class="form-control" name="sex" value="0" >
-                    <input type="radio" ng-model="formData.sex" class="form-control" name="sex" value="1" >
+                    <input id="sex_man" type="radio" ng-model="formData.sex" class="form-label" name="sex" value="0" >
+                    <label class="form-label" for="sex_man">男</label>&nbsp;&nbsp;
+                    <input id="sex_woman" type="radio" ng-model="formData.sex" class="form-label" name="sex" value="1" >
+                    <label class="form-label" for="sex_woman">女</label>
                 </div>
             </div>
-            <div class="col-md-4 form-inline">
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 form-inline">
                 <div class="form-group">
                     <label class="form-label">生日：</label>
                     <input type="date" readonly placeholder="请选择提醒时间" class="form-control"
