@@ -12,7 +12,7 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
 
     //  页面
     $rootScope.menuList = [
-        { title: '课程列表' }
+        { title: '课程安排' }
     ];
     $scope.bodyTitle = $rootScope.menuList[$rootScope.menuList.length - 1].title;
 
@@ -27,8 +27,8 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     $scope.pageFields = {
         list: [
             { title: '学年学期', type: 'yearTerm', order: 'asc' },
-            { title: '课程编号', type: 'code', order: 'desc' },
-            { title: '课程名称', type: 'name', order: 'desc' },
+            { title: '课程编号', type: 'courseCode', order: 'desc' },
+            { title: '课程名称', type: 'courseName', order: 'desc' },
             { title: '任课教师', type: 'teacherName', order: 'desc' },
             { title: '上课时间地点', type: 'whenWhere', order: 'desc' }
         ],
@@ -39,8 +39,8 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     // 搜索条件
     $scope.searchOptions = {
         '': '请选择搜索条件',
-        name: '课程名称',
-        code: '课程编号',
+        courseName: '课程名称',
+        courseCode: '课程编号',
         schoolName: '学校',
         collegeName: '学院',
         // code: '单双周',

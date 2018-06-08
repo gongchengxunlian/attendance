@@ -254,6 +254,20 @@ public class ExcelSet {
     }
 
 
+
+    public static List<Map> readData(InputStream inputStream, List fields){
+        XSSFWorkbook workBook;
+        try {
+            workBook = new XSSFWorkbook(inputStream);
+        }catch (FileNotFoundException fnfe){
+            System.out.println(fnfe);
+            return null;
+        }catch (IOException ioe){
+            System.out.println(ioe);
+            return null;
+        }
+        return readData(workBook, fields);
+    }
     /**
      * 读excel中的文档
      * @param file  文件
@@ -274,7 +288,9 @@ public class ExcelSet {
             System.out.println(ioe);
             return null;
         }
-
+        return readData(workBook, fields);
+    }
+    private static List<Map> readData(XSSFWorkbook workBook, List fields){
         //  取得的数据
         List<Map> data = new ArrayList<Map>();
 

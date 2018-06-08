@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by CLY on 2018/3/22.
@@ -67,10 +64,20 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
     }
 
     public List getAllCourseArrage(Map params) {
-        List<CourseArrangeDetail> courseArrangeDetails = courseArrangeMapper.getAllCourseArrage();
-        for (CourseArrangeDetail courseArrangeDetail : courseArrangeDetails){
+        List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage();
+        List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
+        for (CourseFullArrange courseFullArrange : courseFullArranges){
+            String week = (String) courseFullArrange.getWeek();
+            String classIndex = (String) courseFullArrange.getClassIndex();
+            courseFullArrange.setWeek(null);
+            courseFullArrange.setClassIndex(null);
+            String courseFullArrangeStr = JSON.toJSONString(courseFullArrange);
+            CourseArrangeDetail courseArrangeDetail = JSON.parseObject(courseFullArrangeStr, CourseArrangeDetail.class);
+            courseArrangeDetail.setWeek(JSON.parseObject(week, ArrayList.class));
+            courseArrangeDetail.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
             courseArrangeDetail.createYearTerm();
             courseArrangeDetail.createWhenWhere();
+            courseArrangeDetails.add(courseArrangeDetail);
         }
         return courseArrangeDetails;
     }
@@ -89,8 +96,8 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
      * @param courseArrange
      */
     private void removeSameWeekAndClassIndex(CourseArrange courseArrange){
-        ArrayList classIndex = JSON.parseObject(courseArrange.getClassIndex(), ArrayList.class);
-        ArrayList week = JSON.parseObject(courseArrange.getWeek(), ArrayList.class);
+        ArrayList classIndex = JSON.parseObject(courseArrange.getClassIndex().toString(), ArrayList.class);
+        ArrayList week = JSON.parseObject(courseArrange.getWeek().toString(), ArrayList.class);
         HashMap W = new HashMap();
         for (int i = 0; i < week.size(); i++){
             Object w = week.get(i);
@@ -114,6 +121,7 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
             for (Object oo : value.entrySet()){
                 cii.add(((Map.Entry) oo).getKey());
             }
+            Collections.sort(cii);
             ci.add(cii);
         }
         courseArrange.setWeek(JSON.toJSONString(w));

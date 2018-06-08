@@ -28,6 +28,8 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
          $scope.formData.classIndex = [];
      }
 
+     // console.log($scope.formData);
+
     /**
      * 加载课程信息
      */
@@ -67,6 +69,10 @@ function($scope, $rootScope, $uibModalInstance, params,$http,httpService,localSt
             SweetAlert.error("没有用户信息", '请检查网络...');
         });
     };
+
+    if ($scope.formData.courseId){
+        $scope.searchTeacher($scope.formData.courseId);
+    }
 
     /**
      * 加载教室信息

@@ -1,6 +1,7 @@
 package com.fzu.edu.model;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.fei.common.CDataSet;
 
 import java.util.ArrayList;
@@ -11,7 +12,9 @@ import java.util.HashMap;
  */
 public class CourseArrangeDetail extends CourseFullArrange {
 
-    private String courseName;
+    private ArrayList classIndex;
+
+    private ArrayList week;
 
     private String teacherName;
 
@@ -19,27 +22,21 @@ public class CourseArrangeDetail extends CourseFullArrange {
 
     private String yearTerm;
 
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public void createWhenWhere() {
-        ArrayList<Integer> weekList = JSON.parseObject(getWeek(), ArrayList.class);
-        ArrayList<ArrayList<Integer>> classIndexList = JSON.parseObject(getClassIndex(), ArrayList.class);
+        ArrayList weekList = week;
+        ArrayList<JSONArray> classIndexList = classIndex;
+
         ArrayList<String> weekStr = new ArrayList<String>();
         ArrayList<ArrayList> classIndexStr = new ArrayList<ArrayList>();
+
         for (int i  = 0; i < weekList.size(); i++){
-            Integer week = weekList.get(i);
+            Object week = weekList.get(i);
             String w = CDataSet.numberToString(week.toString());
-            if (week == 0) weekStr.add("星期日");
+            if (Integer.parseInt(week.toString()) == 0) weekStr.add("星期日");
             else weekStr.add("星期" + w);
-            ArrayList<Integer> classIndex = classIndexList.get(i);
+            JSONArray classIndex = classIndexList.get(i);
             ArrayList<String> cIS = new ArrayList<String>();
-            for (Integer c : classIndex){
+            for (Object c : classIndex){
                 String cc = CDataSet.numberToString(c.toString());
                 cIS.add("第"+ cc +"节");
             }
@@ -48,8 +45,8 @@ public class CourseArrangeDetail extends CourseFullArrange {
         HashMap h = new HashMap();
         h.put("week", weekStr);
         h.put("classIndex", classIndexStr);
-        h.put("class", getBuildName() + getClassName());
-        whenWhere = h;
+        h.put("class", getBuildName() + "-" + getClassName());
+        this.whenWhere = h;
     }
 
     public void createYearTerm() {
@@ -74,4 +71,19 @@ public class CourseArrangeDetail extends CourseFullArrange {
         return whenWhere;
     }
 
+    public ArrayList getClassIndex() {
+        return classIndex;
+    }
+
+    public void setClassIndex(ArrayList classIndex) {
+        this.classIndex = classIndex;
+    }
+
+    public ArrayList getWeek() {
+        return week;
+    }
+
+    public void setWeek(ArrayList week) {
+        this.week = week;
+    }
 }

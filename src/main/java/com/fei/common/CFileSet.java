@@ -5,6 +5,7 @@ import com.fei.file.FileSet;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,9 @@ public class CFileSet {
     }
     public static List<Map> readExcelData(File file, List fields){
         return ExcelSet.readData(file, fields);
+    }
+    public static List<Map> readExcelData(InputStream inputStream, List fields){
+        return ExcelSet.readData(inputStream, fields);
     }
     /**
      * 设置字段

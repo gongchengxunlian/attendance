@@ -71,7 +71,7 @@ public class CourseArrange {
         this.timeType = timeType;
     }
 
-    public String getWeek() {
+    public Object getWeek() {
         return week;
     }
 
@@ -79,7 +79,7 @@ public class CourseArrange {
         this.week = week == null ? null : week.trim();
     }
 
-    public String getClassIndex() {
+    public Object getClassIndex() {
         return classIndex;
     }
 

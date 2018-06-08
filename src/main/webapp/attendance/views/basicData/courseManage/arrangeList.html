@@ -58,17 +58,14 @@
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[2].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[2].order}} {{pageFields.order == pageFields.list[2].type ? 'table-order-select':''}}" ng-click="setOrder(2)"></span>
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[3].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[3].order}} {{pageFields.order == pageFields.list[3].type ? 'table-order-select':''}}" ng-click="setOrder(3)"></span>
                     </th>
                     <th class="nowrap text-center">
                         {{pageFields.list[4].title}}
-                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[4].order}} {{pageFields.order == pageFields.list[4].type ? 'table-order-select':''}}" ng-click="setOrder(4)"></span>
-                    </th>
-                    <th class="nowrap text-center">
-                        {{pageFields.list[5].title}}
-                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[5].order}} {{pageFields.order == pageFields.list[5].type ? 'table-order-select':''}}" ng-click="setOrder(5)"></span>
                     </th>
                     <!--<th class="nowrap text-center">-->
                         <!--上课时间-->
@@ -81,7 +78,7 @@
                 <tr ng-if="tableData.length == 0">
                     <td colspan="10" class="text-center">暂无课程信息</td>
                 </tr>
-                <tr ng-repeat="data in tableData">
+                <tr ng-repeat="data in tableData | orderBy:pageFields.order:pageFields.__order">
                     <td class="text-center">
                         <input class="select-all-check-children" type="checkbox" ng-model="data.checked" >
                     </td>
@@ -99,10 +96,17 @@
                         <div>{{data[pageFields.list[3].type]}}</div>
                     </td>
                     <td class="nowrap text-center" auto-title>
-                        <div>{{data[pageFields.list[4].type]}}</div>
-                    </td>
-                    <td class="nowrap text-center" auto-title>
-                        <div>{{data[pageFields.list[5].type]}}</div>
+                        <div>
+                            <div>{{data.whenWhere.class}}</div>
+                            <div style="display: inline-block;">
+                                <p style="margin: 0; padding: 0; border-top: 1px solid #999; text-align: left;" ng-repeat="(index, week) in data.whenWhere.week">
+                                    <label style="margin: 0; padding: 0; vertical-align: middle;">{{week}}</label>
+                                    <label style="margin: 0; padding: 0; max-width: 22em; white-space: normal; vertical-align: middle;">
+                                        <span style="font-size: .8em; color: #666; margin-left: .5em; white-space: nowrap; display: inline-block;" ng-repeat="class in data.whenWhere.classIndex[index]">{{class}}</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
                     </td>
                     <!--<td class="nowrap text-center" auto-title>-->
                         <!--<div>-->

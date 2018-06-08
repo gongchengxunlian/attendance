@@ -24,7 +24,7 @@
   </resultMap>
 
 
-  <select id="checkTeacherExist">
+  <select id="checkTeacherExist" resultType="java.lang.Integer">
     <!--SELECT COUNT(1) FROM course_arrange WHERE teacher_id = #{teacherId} AND flag = 0
     <if test="id != null and id != ''">
       AND id != id
@@ -32,7 +32,7 @@
     SELECT 0;
   </select>
 
-  <select id="checkTimeConflict">
+  <select id="checkTimeConflict" resultType="java.lang.Integer">
     SELECT 0;
   </select>
 
