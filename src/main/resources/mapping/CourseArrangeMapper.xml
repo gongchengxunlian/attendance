@@ -43,6 +43,15 @@
     <if test="schoolId != null and schoolId != ''">
       AND U.schiil_id = #{schoolId}
     </if>
+    <if test="courseName != null and courseName != ''">
+      AND course_name LIKE CONCAT('%', #{courseName}, '%')
+    </if>
+    <if test="courseCode != null and courseCode != ''">
+      AND course_code LIKE CONCAT('%', #{courseCode}, '%')
+    </if>
+    <if test="teacherName != null and teacherName != ''">
+      AND teacher_name LIKE CONCAT('%', #{teacherName}, '%')
+    </if>
   </select>
 
 

@@ -41,11 +41,8 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         '': '请选择搜索条件',
         courseName: '课程名称',
         courseCode: '课程编号',
-        schoolName: '学校',
-        collegeName: '学院',
         // code: '单双周',
-        credit: '学分',
-        studyHours: '学时'
+        teacherName: '任课教师'
         // code: '开始周',
     };
     // 初始化查询条件
