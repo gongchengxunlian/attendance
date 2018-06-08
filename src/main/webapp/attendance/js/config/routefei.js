@@ -41,10 +41,18 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
             templateUrl: 'views/basicData/userManage/userList.html',
             controller: 'userListController'
         })
-        .state('userLogout', {
-            url: '/userLogout',
-            templateUrl: 'views/test/formPage.html',
-            controller: 'formPageController',
+        .state('absenceLevel', {
+            url: '/absenceLevel',
+            templateUrl: 'views/basicData/studySetting/absenceLevel.html',
+            controller: 'absenceLevelController',
             params: {  }
         })
+        .state('assessmentWeight', {
+            url: '/assessmentWeight',
+            templateUrl: 'views/basicData/studySetting/assessmentWeight.html',
+            controller: 'assessmentWeightController',
+            params: {  }
+        })
+
+
 });

@@ -2,6 +2,10 @@ body{
     font-size: medium;
     color: #000000;
 }
+.row{
+    margin-left: auto;
+    margin-right: auto;
+}
 .nowrap{
     white-space: nowrap;
 }
@@ -63,6 +67,9 @@ textarea.no-resize{
     display: none;
 }
 
+.panel-auto{
+    display: inline-block;
+}
 
 
 

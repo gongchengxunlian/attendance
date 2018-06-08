@@ -20,17 +20,5 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
             params: {args: {}}
         })
 
-    //客户信息
-        .state('client_list', {
-        url: '/client_list',
-        templateUrl: 'views/basicData/clientInfoManager/client_list.html',
-         controller: 'ClientControllerCtrl',
-         params:{args:{}}
-        })        //合同时间轴页面
-        .state('contractTimeLine', {
-            url: '/contractTimeLine',
-            templateUrl: "views/contract/ContractTimeLine.html",
-            controller: 'ContractTimeLineCtrl',
-            params: {param: null}
-        })});
+});
 
