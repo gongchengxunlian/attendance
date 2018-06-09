@@ -4,6 +4,9 @@
         margin: 1em .5em;
         min-width: 20%;
     }
+    .weight-template:hover{
+        box-shadow: 0 0 10px red;
+    }
     div[id^='form-body-']:not(:first-child){
         margin-top: .5em;
     }
@@ -41,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <section class="panel-auto panel panel-featured weight-template" ng-repeat="template in templateOptions" ng-if="!template.delete" ng-dblclick="templateReadOnly ? '' : template.edit = true">
+        <section class="panel-auto panel panel-featured weight-template" ng-repeat="template in templateOptions" ng-if="!template.delete" ng-dblclick="templateReadOnly ? setWeightOptionsEdit(template) : template.edit = true">
             <header class="panel-heading">
                 <div class="panel-actions">
                     <a href="javascript:;" class="panel-action panel-action-dismiss" ng-click="template.delete = true" ng-if="!templateReadOnly && template.edit"></a>
@@ -68,31 +71,73 @@
     </div>
     <hr>
 
-    <div class="panel-body ">
-        <section class="panel-auto panel panel-featured weight-template" ng-repeat="template in templateOptions" ng-if="!template.delete" ng-dblclick="templateReadOnly ? '' : template.edit = true">
-            <header class="panel-heading">
-                <div class="panel-actions">
-                    <a href="javascript:;" class="panel-action panel-action-dismiss" ng-click="template.delete = true" ng-if="!templateReadOnly && template.edit"></a>
-                </div>
-                <h2 class="panel-title">
-                    <div style="width: calc(100% - 1.5em)">
-                        <input type="text" ng-disabled="templateReadOnly  || !template.edit" required class="form-control" ng-init="template.name = template.name || $index" ng-model="template.name">
+    <div class="row" ng-if="templateReadOnly">
+        <div class="col-md-8">
+            <div class="panel-body" style="min-height: 20em;">
+                <form>
+                    <div class="btn-toolbar">
+                        <div class="btn-group focus-btn-group" ng-if="sign == 1">
+                            <button class="btn btn-default gridBtn"><span class="fa-plus"></span> 保存</button>
+                        </div>
                     </div>
-                </h2>
-            </header>
-            <div class="panel-body">
-                <div class="row form-inline" ng-repeat="row in template.value" id="form-body-{{$index}}">
-                    <input type="text" required ng-model="row.name" class="form-control" placeholder="名称" ng-disabled="templateReadOnly || !template.edit">
-                    <input style="text-align: right" type="number" required ng-model="row.value" min="0" max="100" class="form-control" placeholder="比例" ng-disabled="templateReadOnly || !template.edit">
-                    <label for="form-body-{{$index}}">%</label>
-                    <button type="button" class="btn btn-width-xsm btn-danger" ng-click="template.value.splice($index, 1)" ng-if="template.value.length > 1 && !templateReadOnly && template.edit">-</button>
-                </div>
-                <div class="row form-inline text-center" style="margin-top: .5em;" ng-if="!templateReadOnly && template.edit">
-                    <button type="button" class="btn btn-width-sm btn-primary" ng-click="template.value.push({})">+</button>
-                </div>
+                    <section class="panel-auto panel panel-featured weight-template" ng-repeat="template in weightOptions" ng-if="!template.delete" ng-dblclick="setWeightOptionsEdit(template)">
+                        <header class="panel-heading">
+                            <div class="panel-actions">
+                                <a href="javascript:;" class="panel-action panel-action-dismiss" ng-click="template.delete = true" ng-if="template.edit"></a>
+                            </div>
+                            <h2 class="panel-title">
+                                <div style="width: calc(100% - 1.5em)">
+                                    <input type="text" ng-disabled="true" required class="form-control" ng-init="template.name = template.name || $index" ng-model="template.name">
+                                </div>
+                            </h2>
+                        </header>
+                        <div class="panel-body">
+                            <div class="row form-inline" ng-repeat="row in template.value" id="form-body-i{{$index}}">
+                                <input type="text" required ng-model="row.name" class="form-control" placeholder="名称" ng-disabled="true">
+                                <input style="text-align: right" type="number" required ng-model="row.value" min="0" max="100" class="form-control" placeholder="比例" ng-disabled="true">
+                                <label for="form-body-{{$index}}">%</label>
+                            </div>
+                        </div>
+                    </section>
+                </form>
             </div>
-        </section>
+        </div>
+        <div class="col-md-4">
+            <div class="panel-body" style="min-height: 20em;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        编辑区<button style="float: right; position: relative; top: -.5em;" type="button" class="btn btn-width-xsm btn-default" ng-click="pushItem()" ng-if="!weightOptionsEdit.delete">保存</button>
+                    </h3>
+                </div>
+
+                <section class="panel-auto panel panel-featured weight-template" ng-if="!weightOptionsEdit.delete">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="javascript:;" class="panel-action panel-action-dismiss" ng-click="weightOptionsEdit.delete = true"></a>
+                        </div>
+                        <h2 class="panel-title">
+                            <div style="width: calc(100% - 1.5em)">
+                                <input type="text" required class="form-control" ng-init="weightOptionsEdit.name = weightOptionsEdit.name || $index" ng-model="weightOptionsEdit.name">
+                            </div>
+                        </h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="row form-inline" ng-repeat="row in weightOptionsEdit.value" id="form-body-edit">
+                            <input type="text" required ng-model="row.name" class="form-control" placeholder="名称">
+                            <input style="text-align: right" type="number" required ng-model="row.value" min="0" max="100" class="form-control" placeholder="比例">
+                            <label for="form-body-edit">%</label>
+                            <button type="button" class="btn btn-width-xsm btn-danger" ng-if="weightOptionsEdit.value.length > 1" ng-click="weightOptionsEdit.value.splice($index, 1)">-</button>
+                        </div>
+                        <div class="row form-inline text-center" style="margin-top: .5em;">
+                            <button type="button" class="btn btn-width-sm btn-primary" ng-click="weightOptionsEdit.value.push({})">+</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
     </div>
+
 </div>
 <div ng-include="'views/basicData/schoolManage/classForm.html'"></div>
 <div ng-include="'views/basicData/schoolManage/classDistribution.html'"></div>
