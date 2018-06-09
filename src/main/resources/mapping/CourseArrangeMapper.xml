@@ -41,7 +41,7 @@
     FROM course_full_arrange AS C, user_info AS U
     WHERE C.teacher_id = U.id
     <if test="schoolId != null and schoolId != ''">
-      AND U.schiil_id = #{schoolId}
+      AND U.school_id = #{schoolId}
     </if>
     <if test="courseName != null and courseName != ''">
       AND course_name LIKE CONCAT('%', #{courseName}, '%')

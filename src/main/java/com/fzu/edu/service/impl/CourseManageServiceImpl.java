@@ -64,7 +64,7 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
     }
 
     public List getAllCourseArrage(Map params) {
-        List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage();
+        List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage(params);
         List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
         for (CourseFullArrange courseFullArrange : courseFullArranges){
             String week = (String) courseFullArrange.getWeek();

@@ -7,7 +7,8 @@ import java.util.Map;
  * Created by huhu on 2018/6/8.
  */
 public interface StudySettingService {
-    int saveTemplateData(String params) throws Exception;
+    int saveTemplateData(String params, boolean b) throws Exception;
 
-    List getTemplateData(Map params);
+    List getTemplateData(Map params, boolean b);
+
 }

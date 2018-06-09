@@ -36,7 +36,7 @@ public class StudySettingController {
     public String saveTemplateData(@RequestParam String params) {
         log.info("新增/修改考核权重模板");
         try {
-            return JSON.toJSONString(studySettingService.saveTemplateData(params));
+            return JSON.toJSONString(studySettingService.saveTemplateData(params, true));
         }catch (Exception e){
             log.warn(e);
             return "0";
@@ -48,7 +48,32 @@ public class StudySettingController {
     public String getTemplateData(@RequestParam Map params) {
         log.info("查询考核权重模板");
         try {
-            return JSON.toJSONString(studySettingService.getTemplateData(params));
+            return JSON.toJSONString(studySettingService.getTemplateData(params, true));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/saveWeightData", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveWeightData(@RequestParam String params) {
+        log.info("新增/修改考核权重");
+        try {
+            return JSON.toJSONString(studySettingService.saveTemplateData(params, false));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/getweightData", method = RequestMethod.GET)
+    @ResponseBody
+    public String getweightData(@RequestParam Map params, HttpSession session) {
+        log.info("查询考核权重");
+        try {
+            params.put("schoolId", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
+            return JSON.toJSONString(studySettingService.getTemplateData(params, false));
         }catch (Exception e){
             log.warn(e);
             return "0";

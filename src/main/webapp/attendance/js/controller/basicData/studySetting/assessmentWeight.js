@@ -75,14 +75,25 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
 
     $scope.weightEdit = false;
 
-    $scope.setWeightOptionsEdit = function (item) {
+    $scope.setWeightOptionsEdit = function (item, isT) {
         $scope.weightOptionsEdit = {delete: false};
         $.extend(true, $scope.weightOptionsEdit, item);
+        if(isT) delete $scope.weightOptionsEdit.id;
         console.log($scope.weightOptionsEdit);
     };
 
     $scope.pushItem = function () {
-        $scope.weightOptions.push($scope.weightOptionsEdit);
+        console.log($scope.weightOptionsEdit);
+        if ($scope.weightOptionsEdit.id){
+            for (var i in $scope.weightOptions){
+                if ($scope.weightOptions[i].id == $scope.weightOptionsEdit.id){
+                    $scope.weightOptions[i] = $scope.weightOptionsEdit;
+                    break;
+                }
+            }
+        }else {
+            $scope.weightOptions.push($scope.weightOptionsEdit);
+        }
         $scope.weightOptionsEdit = {delete: true};
     };
 
@@ -94,9 +105,10 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
     //  查询数据
     $scope.weightQueryList = function () {
 
-        httpService.getAll('studySetting/getTemplateData').then(function (data) {
+        httpService.getAll('studySetting/getweightData').then(function (data) {
 
             $scope.weightOptions = data || [];
+
             $timeout(function () {
                 $scope.weightEdit = false;
             });
@@ -116,8 +128,14 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             for (var j in data[i].value){
                 delete data[i].value[j].$$hashKey;
             }
+            data[i].courseId = $scope.courseOptions2[data[i].name];
+            if (!data[i].courseId){
+                console.log();
+                SweetAlert.error('课程不存在，请重试');
+                return;
+            }
         }
-        httpService.addRow('studySetting/saveTemplateData', {params: JSON.stringify(data)}).then(function (data) {
+        httpService.addRow('studySetting/saveWeightData', {params: JSON.stringify(data)}).then(function (data) {
             if (data > 0) {
                 $scope.weightQueryList();
             }else {
@@ -127,5 +145,27 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             SweetAlert.error('保存失败', '请检查网络');
         });
     };
+
+    $scope.courseOptions = {};
+    $scope.courseOptions2 = {};
+
+    $scope.courseOptionsQueryList = function () {
+        var params = {
+            pageSize: 0,
+            pageNo: 1
+        };
+
+        httpService.getAll('courseMenage/getAllCourseArrage', params).then(function (data) {
+            if (data){
+                for (var i in data.data){
+                    $scope.courseOptions[data.data[i].courseId] = data.data[i].courseName;
+                    $scope.courseOptions2[data.data[i].courseName] = data.data[i].courseId;
+                }
+            }
+        }, function (result) {
+            // SweetAlert.error("没有课程信息安排", '请检查网络...');
+        });
+    };
+    $scope.courseOptionsQueryList();
 
 }]);

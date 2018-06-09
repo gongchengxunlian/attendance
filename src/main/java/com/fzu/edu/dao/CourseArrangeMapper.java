@@ -7,6 +7,7 @@ import com.fzu.edu.model.CourseFullArrange;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface CourseArrangeMapper extends BaseMapper<CourseArrange> {
@@ -15,5 +16,5 @@ public interface CourseArrangeMapper extends BaseMapper<CourseArrange> {
 
     int checkTimeConflict(CourseArrange courseArrange);
 
-    List<CourseFullArrange> getAllCourseArrage();
+    List<CourseFullArrange> getAllCourseArrage(Map params);
 }
