@@ -5,7 +5,6 @@ import com.fzu.edu.dao.AssessmentWeightMapper;
 import com.fzu.edu.dao.AssessmentWeightTemplateMapper;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.StudySettingService;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
