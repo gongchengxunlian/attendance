@@ -79,11 +79,11 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
         $scope.weightOptionsEdit = {delete: false};
         $.extend(true, $scope.weightOptionsEdit, item);
         if(isT) delete $scope.weightOptionsEdit.id;
-        console.log($scope.weightOptionsEdit);
+        // console.log($scope.weightOptionsEdit);
     };
 
     $scope.pushItem = function () {
-        console.log($scope.weightOptionsEdit);
+        // console.log($scope.weightOptionsEdit);
         if ($scope.weightOptionsEdit.id){
             for (var i in $scope.weightOptions){
                 if ($scope.weightOptions[i].id == $scope.weightOptionsEdit.id){
@@ -130,7 +130,6 @@ function($scope, $rootScope, $state, $stateParams, $uibModal, $http, httpService
             }
             data[i].courseId = $scope.courseOptions2[data[i].name];
             if (!data[i].courseId){
-                console.log();
                 SweetAlert.error('课程不存在，请重试');
                 return;
             }
