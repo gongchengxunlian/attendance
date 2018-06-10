@@ -80,4 +80,30 @@ public class StudySettingController {
         }
     }
 
+    @RequestMapping(value = "/getAbsenceLevel", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAbsenceLevel(@RequestParam Map params, HttpSession session) {
+        log.info("查询缺课等级");
+        try {
+            params.put("school_id", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
+            return JSON.toJSONString(studySettingService.getAbsenceLevel(params));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/saveAbsenceLevel", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveAbsenceLevel(@RequestParam String params, HttpSession session) {
+        log.info("查询考核权重");
+        try {
+            Integer schoolId = ((SchoolInfo) session.getAttribute("schoolInfo")).getId();
+            return JSON.toJSONString(studySettingService.saveAbsenceLevel(params, schoolId));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
 }

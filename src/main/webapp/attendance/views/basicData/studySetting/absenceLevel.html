@@ -1,85 +1,59 @@
+<style type="text/css" rel="stylesheet">
+    .level-item{
+        display: inline-block;
+        margin: 2em;
+    }
+    input[disabled]{
+        background-color: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        cursor: default !important;
+        color: #ffffff;
+    }
+    .form-label{
+        font-size: 14px;
+    }
+</style>
 <div class="panel ">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            {{bodyTitle}}
-        </h3>
-    </div>
-    <div class="panel-body ">
-        <div class="btn-toolbar">
-            <div class="btn-group focus-btn-group">
-                <button class="btn btn-default gridBtn" ng-click="addData()"><span class="fa-plus"></span> 新增</button>
-                <button class="btn btn-default gridBtn" ng-click="delData()"><span class="fa-plus"></span> 删除</button>
-            </div>
-
-            <div class="form-inline text-right form-group">
-                <div class="form-group">
-                    <input type="text" ng-model="searchValue" class="form-control" size="25" placeholder="请输入教学楼名称进行查询" />
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-default btn-single" ng-click="queryList()">查询</button>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-default btn-single" ng-click="searchInit()">重置</button>
-                </div>
-            </div>
+    <form ng-submit="saveData()">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{bodyTitle}}<button style="float: right; position: relative; top: -.5em;" type="submit" class="btn btn-width-xsm btn-default" ng-if="edit">保存</button>
+                <button style="float: right; position: relative; top: -.5em;" type="button" class="btn btn-width-xsm btn-default" ng-click="levelOptions.push({edit: true})">添加</button>
+            </h3>
         </div>
-        <div class="table-responsive table-col-size-2 select-all-area">
-            <table class="table table-bordered table-striped table-hover" >
-                <thead>
-                <tr>
-                    <th class="select-all">
-                        <div ng-show="tableData.length">
-                            <input class="select-all-check" type="checkbox" ng-model="select_all">
-                            <span ng-hide="select_all" style="white-space: nowrap;">全选</span>
-                            <span ng-show="select_all" style="white-space: nowrap;">取消全选</span>
+        <div class="panel-body" style="min-height: 75vh">
+            <section class="panel panel-info level-item" ng-repeat="level in levelOptions" id="level-item-{{$index}}" ng-dblclick="level.edit = true" ng-if="!level.delete">
+                <header class="panel-heading level-item-heading-{{$index}}">
+                    <div class="panel-actions" ng-if="level.edit">
+                        <a href="javascript:;" class="panel-action panel-action-dismiss" ng-click="level.delete = true"></a>
+                    </div>
+                    <h2 class="panel-title">
+                        <div style="" class="form-inline nowrap">
+                            <label class="form-label">名称：</label>
+                            <input style="width: 10em;" type="text" class="form-control" required ng-model="level.name" ng-disabled="!level.edit" placeholder="名称">
+                            <span style="width: 1em; display: inline-block;"></span>
                         </div>
-                    </th>
-                    <th class="order text-center">序号</th>
-                    <th class="text-center" style="width: 8em;">
-                        {{pageFields.list[0].title}}
-                    </th>
-                    <th class="text-center" style="width: 8em;">
-                        {{pageFields.list[1].title}}
-                    </th>
-                    <th class="nowrap text-center" style="width: 5em;">
-                        {{pageFields.list[2].title}}
-                    </th>
-                    <th class="nowrap text-center" style="width: 112px">操作</th>
-                </tr>
-                </thead>
-
-                <tbody class="middle-align">
-                <tr ng-if="tableData.length == 0">
-                    <td colspan="6" class="text-center">暂无教室信息</td>
-                </tr>
-                <tr ng-repeat="data in tableData | limitTo: 10">
-                    <td class="text-center">
-                        <input class="select-all-check-children" type="checkbox" ng-model="data.checked" >
-                    </td>
-                    <td class="nowrap text-center">{{$index}}</td>
-                    <td class="nowrap text-center" auto-title>
-                        <div>{{data[pageFields.list[0].type]}}</div>
-                    </td>
-                    <td class="nowrap text-center" auto-title>
-                        <div>{{data[pageFields.list[1].type]}}</div>
-                    </td>
-                    <td class="nowrap text-center" auto-title>
-                        <a href="javascript:;" ng-click="showDis(data)">查看分布</a>
-                    </td>
-                    <td class="nowrap text-center">
-                        <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="editData(data)">
-                            编辑
-                        </a>
-                        <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="delData(data.id)">
-                            删除
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        <div style="" class="form-inline nowrap">
+                            <label class="form-label">比例：</label>
+                            <input style="width: 5em;" type="number"
+                                   class="form-control" min="0" max="{{level.maxValue}} || 100"
+                                   required ng-model="level.minValue" ng-disabled="!level.edit"
+                                   placeholder="最小"
+                            ><input style="width: 5em;" min="{{level.minValue}} || 0" max="100"
+                                    type="number" class="form-control" required ng-model="level.maxValue"
+                                    ng-disabled="!level.edit" placeholder="最大">
+                        </div>
+                        <div class="form-inline nowrap">
+                            <label class="form-label">颜色：</label>
+                            <input style="width: 10em" required index="{{$index}}" type="color" class="form-control"
+                                   ng-model="level.color" ng-disabled="!level.edit" ng-init="level.color=level.color || '#f3f3f3'" />
+                        </div>
+                    </h2>
+                </header>
+            </section>
         </div>
-        <div ng-show="tableData.length>0" ng-include="'views/common/pagination.html'"></div>
-    </div>
+    </form>
 </div>
-<div ng-include="'views/basicData/schoolManage/classForm.html'"></div>
-<div ng-include="'views/basicData/schoolManage/classDistribution.html'"></div>
+

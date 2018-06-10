@@ -11,4 +11,7 @@ public interface StudySettingService {
 
     List getTemplateData(Map params, boolean b);
 
+    List getAbsenceLevel(Map params);
+
+    int saveAbsenceLevel(String params, Integer schoolId);
 }

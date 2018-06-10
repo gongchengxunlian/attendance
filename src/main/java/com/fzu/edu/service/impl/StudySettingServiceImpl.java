@@ -1,10 +1,12 @@
 package com.fzu.edu.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.fzu.edu.dao.AbsenceLevelMapper;
 import com.fzu.edu.dao.AssessmentWeightMapper;
 import com.fzu.edu.dao.AssessmentWeightTemplateMapper;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.StudySettingService;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,9 @@ public class StudySettingServiceImpl implements StudySettingService {
     private AssessmentWeightTemplateMapper assessmentWeightTemplateMapper;
     @Resource
     private AssessmentWeightMapper assessmentWeightMapper;
+    @Resource
+    private AbsenceLevelMapper absenceLevelMapper;
+    private Logger log = Logger.getLogger(StudySettingServiceImpl.class);
 
     public int saveTemplateData(String params, boolean b) throws Exception {
         List<Map> assessmentWeightTemplates = JSON.parseObject(params, List.class);
@@ -85,4 +90,40 @@ public class StudySettingServiceImpl implements StudySettingService {
         }
         return assessmentWeightTemplateFulls;
     }
+
+    public List getAbsenceLevel(Map params) {
+        List l = absenceLevelMapper.selectByMap(params);
+        return l;
+    }
+
+    public int saveAbsenceLevel(String params, Integer schoolId) {
+        List<Map> l = JSON.parseArray(params, Map.class);
+        int n = 0;
+        for (Map m : l){
+            Integer id;
+            AbsenceLevel absenceLevel = null;
+            try {
+                id = Integer.parseInt(m.get("id").toString());
+                if (m.get("delete") == null || m.get("delete").toString().trim().equals("") || m.get("delete").equals(false)){
+                    absenceLevel = JSON.parseObject(JSON.toJSONString(m), AbsenceLevel.class);
+                    absenceLevel.setSchoolId(schoolId);
+                }else {
+                    absenceLevel = new AbsenceLevel();
+                    absenceLevel.setFlag(1);
+                    absenceLevel.setId(id);
+                }
+                n += absenceLevelMapper.updateById(absenceLevel);
+            } catch (Exception e){
+                log.info(e);
+                if (m.get("delete") == null || m.get("delete").toString().trim().equals("") || m.get("delete").equals(false)){
+                    absenceLevel = JSON.parseObject(JSON.toJSONString(m), AbsenceLevel.class);
+                    absenceLevel.setSchoolId(schoolId);
+                    n += absenceLevelMapper.insert(absenceLevel);
+                }else n++;
+            }
+        }
+        return n;
+    }
+
+
 }
