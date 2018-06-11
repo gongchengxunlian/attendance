@@ -62,10 +62,10 @@
       AND CI.id = #{collegeId}
     </if>
     <if test="name!=null and name!=''">
-      AND CI.`name` LIKE '%'+#{name}+'%'
+      AND CI.`name` LIKE CONCAT('%', #{name}, '%')
     </if>
     <if test="code!=null and code!=''">
-      AND CI.`code` LIKE '%'+#{code}+'%'
+      AND CI.`code` LIKE CONCAT('%', #{code}, '%')
     </if>
     <if test="order!=null and order!=''">
       ORDER BY CI.`${order}`

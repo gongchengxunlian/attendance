@@ -22,7 +22,7 @@
     CI.flag = 0 AND SI.flag = 0
     AND CI.school_id = SI.id AND CI.school_id = #{school_id}
     <if test="searchValue!=null and searchValue!=''">
-      AND CI.`build_name` LIKE '%'+#{searchValue}+'%'
+      AND CI.`build_name` LIKE CONCAT('%', #{searchValue}, '%')
     </if>
 
   </select>
