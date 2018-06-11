@@ -173,7 +173,7 @@ loginModule.controller('recoverPwdController',['$scope', '$http','localStorageSe
 
         $scope.resetPassword = function () {
             $http.post('userManage/resetPasswordForMail', {mail: $scope.username}).success(function (data) {
-                if (data = 1){
+                if (data == 1){
                     SweetAlert.success('邮箱已发送', '请在24小时内重设密码');
                     window.location.href = '/#login';
                 }else if(data == -1) {
