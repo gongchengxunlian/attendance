@@ -54,7 +54,7 @@
                 <div class="form-group mb-lg">
                     <label>用户名</label>
                     <div class="input-group input-group-icon">
-                        <input required type="text" ng-model="username" class="form-control input-lg" />
+                        <input tabindex="0" required type="text" ng-model="username" class="form-control input-lg" />
                         <span class="input-group-addon">
                             <span class="icon icon-lg">
                                 <i class="fa fa-user"></i>
@@ -66,10 +66,10 @@
                 <div class="form-group mb-lg">
                     <div class="clearfix">
                         <label class="pull-left">密码</label>
-                        <a href="#recoverPassword" class="pull-right" >忘记密码?</a>
+                        <a tabindex="1" href="#recoverPassword" class="pull-right" >忘记密码?</a>
                     </div>
                     <div class="input-group input-group-icon">
-                        <input required type="{{!showPassword ? 'password' : 'text'}}" ng-model="password" class="form-control input-lg" />
+                        <input tabindex="0" required type="{{!showPassword ? 'password' : 'text'}}" ng-model="password" class="form-control input-lg" />
                         <span class="input-group-addon" ng-click="showPassword = !showPassword">
                             <span class="icon icon-lg" style="cursor: pointer; pointer-events: all;">
                                 <i class="fa" ng-class="showPassword ? 'fa-eye' : 'fa-eye-slash'"></i>
@@ -87,7 +87,7 @@
                         </div>-->
                     </div>
                     <div class="col-sm-4 text-right">
-                        <button type="submit" class="btn btn-primary hidden-xs" >登录</button>
+                        <button tabindex="0" type="submit" class="btn btn-primary hidden-xs" >登录</button>
                     </div>
                 </div>
                 </form>

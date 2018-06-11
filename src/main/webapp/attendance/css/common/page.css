@@ -2,6 +2,12 @@ body{
     font-size: medium;
     color: #000000;
 }
+.select-disabled{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .row{
     margin-left: auto;
     margin-right: auto;

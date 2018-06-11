@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.fzu.edu.dao.AbsenceLevelMapper;
 import com.fzu.edu.dao.AssessmentWeightMapper;
 import com.fzu.edu.dao.AssessmentWeightTemplateMapper;
+import com.fzu.edu.dao.StudentAndCourseMapper;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.StudySettingService;
 import org.apache.log4j.Logger;
@@ -28,6 +29,9 @@ public class StudySettingServiceImpl implements StudySettingService {
     private AssessmentWeightMapper assessmentWeightMapper;
     @Resource
     private AbsenceLevelMapper absenceLevelMapper;
+    @Resource
+    private StudentAndCourseMapper studentAndCourseMapper;
+
     private Logger log = Logger.getLogger(StudySettingServiceImpl.class);
 
     public int saveTemplateData(String params, boolean b) throws Exception {
@@ -126,5 +130,35 @@ public class StudySettingServiceImpl implements StudySettingService {
         return n;
     }
 
+    public int saveStudentAndCourse(String params) {
+        StudentAndCourse studentAndCourses = JSON.parseObject(params, StudentAndCourse.class);
+        int n = 0;
+        try {
+            n += studentAndCourseMapper.updateById(studentAndCourses);
+            if (n == 0) throw new Exception("update StudentAndCourse 0");
+        }catch (Exception e1){
+            try {
+                n += studentAndCourseMapper.insertOne(studentAndCourses);
+                if (n == 0) throw new Exception();
+            }catch (Exception e2){
+                log.warn(e1);
+                log.warn(e2);
+            }
+        }
+        return n;
+    }
 
+    public Object getSaveStudentAndCourse(Integer id) {
+        StudentAndCourseFull studentAndCourseFull = new StudentAndCourseFull();
+
+        try {
+            StudentAndCourse studentAndCourse = studentAndCourseMapper.selectById(id);
+            studentAndCourseFull.setId(studentAndCourse.getId());
+            studentAndCourseFull.setStudentId(JSON.parseObject(studentAndCourse.getStudentId().toString(), Map.class));
+        }catch (Exception e){
+            log.info(e);
+        }
+
+        return studentAndCourseFull;
+    }
 }

@@ -106,4 +106,27 @@ public class StudySettingController {
         }
     }
 
+    @RequestMapping(value = "/saveStudentAndCourse", method = RequestMethod.POST)
+    @ResponseBody
+    public String saveStudentAndCourse(@RequestParam String params) {
+        log.info("设置学生和课程");
+        try {
+            return JSON.toJSONString(studySettingService.saveStudentAndCourse(params));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
+    @RequestMapping(value = "/getSaveStudentAndCourse", method = RequestMethod.GET)
+    @ResponseBody
+    public String getSaveStudentAndCourse(@RequestParam Integer id) {
+        log.info("获得学生和课程");
+        try {
+            return JSON.toJSONString(studySettingService.getSaveStudentAndCourse(id));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
 }

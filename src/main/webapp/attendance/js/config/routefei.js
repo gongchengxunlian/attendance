@@ -53,6 +53,12 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
             controller: 'assessmentWeightController',
             params: {  }
         })
+        .state('studentANDcourse', {
+            url: '/studentANDcourse',
+            templateUrl: 'views/basicData/studySetting/studentANDcourse.html',
+            controller: 'studentANDcourseController',
+            params: {  }
+        })
 
 
 });

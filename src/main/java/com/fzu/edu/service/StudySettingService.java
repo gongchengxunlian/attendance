@@ -14,4 +14,8 @@ public interface StudySettingService {
     List getAbsenceLevel(Map params);
 
     int saveAbsenceLevel(String params, Integer schoolId);
+
+    int saveStudentAndCourse(String params);
+
+    Object getSaveStudentAndCourse(Integer id);
 }

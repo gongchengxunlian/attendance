@@ -12,7 +12,7 @@
             <!--<span>列表页面</span>-->
         <!--</a>-->
     <!--</li>-->
-    <li class="nav-parent">
+    <li class="nav-parent" ng-show="sign <= 1">
         <a>
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>学校管理</span>
@@ -39,7 +39,7 @@
             </li>
         </ul>
     </li>
-    <li class="nav-parent" ng-show="sign < 3">
+    <li class="nav-parent" ng-show="sign <= 1">
         <a ui-sref="courseManage({ showAll: 1 })">
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>课程管理</span>
@@ -52,13 +52,13 @@
             </li>
         </ul>
     </li>
-    <li ng-if="sign < 3">
+    <li ng-if="sign < 2">
         <a href="#userManage">
             <i class="fa fa-user-md"></i>
             <span>用户管理</span>
         </a>
     </li>
-    <li class="nav-parent" ng-show="sign <= 1">
+    <li class="nav-parent" ng-show="sign <= 2">
         <a>
             <i class="fa fa-user-md"></i>
             <span>教学设置</span>
@@ -77,23 +77,44 @@
                 </a>
             </li>
         </ul>
-        <!--<ul class="nav nav-children" ng-if="sign <= 1">
+        <ul class="nav nav-children" ng-if="sign == 1 || sign == 2">
             <li>
-                <a href="#classSetting">
-                    班级设置
+                <a href="#studentANDcourse">
+                    学生与课程
                 </a>
             </li>
-        </ul>-->
+        </ul>
+    </li>
+
+    <li ng-if="sign == 2">
+        <a>
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            <span>上课考勤管理</span>
+        </a>
     </li>
     <li class="nav-parent">
         <a>
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>信息汇总</span>
         </a>
-        <ul class="nav nav-children" ng-if="sign < 3">
+        <ul class="nav nav-children" ng-if="sign == 1">
             <li>
-                <a href="#attendanceSummary">
-                    期末考勤汇总
+                <a href="#attendanceDetail">
+                    学院考勤情况
+                </a>
+            </li>
+        </ul>
+        <ul class="nav nav-children" ng-if="sign == 1">
+            <li>
+                <a href="#attendanceDetail">
+                    课程考勤情况
+                </a>
+            </li>
+        </ul>
+        <ul class="nav nav-children" ng-if="sign == 1 || sign == 2">
+            <li>
+                <a href="#attendanceDetail">
+                    个人考勤情况
                 </a>
             </li>
         </ul>

@@ -52,6 +52,9 @@
     <if test="teacherName != null and teacherName != ''">
       AND teacher_name LIKE CONCAT('%', #{teacherName}, '%')
     </if>
+    <if test="teacherId != null and teacherId != ''">
+      AND teacher_id = #{teacherId}
+    </if>
   </select>
 
 

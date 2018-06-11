@@ -95,11 +95,14 @@
             END
         </if>
     </if>
-    <if test="courseId != null and courseId != ''">
+        <if test="courseId != null and courseId != ''">
             AND CI.flag = 0
             AND UI.college_id = CI.college_id
             AND CI.id = #{courseId}
-    </if>
+        </if>
+        <if test="myOrder != null and myOrder != ''">
+            ORDER BY ${myOrder}
+        </if>
 
     </select>
 

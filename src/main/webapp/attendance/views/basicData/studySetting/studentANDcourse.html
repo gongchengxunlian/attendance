@@ -1,0 +1,111 @@
+<div class="panel ">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span ng-if="collegeInfo && sign == 0">
+                <a href="#collegeMenage">
+                    {{collegeInfo.name}}
+                </a>
+                /
+            </span>
+            {{bodyTitle}}
+        </h3>
+        <!--<div class="panel-actions">-->
+            <!--<a href="#" class="panel-action panel-action-toggle" data-panel-toggle></a>-->
+            <!--<a href="#" class="panel-action panel-action-dismiss" data-panel-dismiss></a>-->
+        <!--</div>-->
+    </div>
+    <div class="panel-body ">
+        <div class="btn-toolbar">
+            <div class="form-inline text-right form-group">
+                <div class="form-group">
+                    <select style="width:160px;" class="form-control" ng-model ="searchValue.key" ng-options="type as name for (type, name) in searchOptions"></select>
+                </div>
+                <div class="form-group" ng-show="searchValue.key">
+                    <input type="text" ng-model="searchValue.value" class="form-control" size="25" placeholder="{{'请输入'+searchOptions[searchValue.key]+'进行查询'}}" />
+                </div>
+                <div class="form-group" ng-show="searchValue.key">
+                    <button class="btn btn-default btn-single" ng-click="queryList()">查询</button>
+                </div>
+                <div class="form-group" ng-show="searchValue.key">
+                    <button class="btn btn-default btn-single" ng-click="searchInit()">重置</button>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover" >
+                <thead>
+                <tr>
+                    <th class="order text-center">序号</th>
+                    <th class="text-center" style="width: 10em;">
+                        {{pageFields.list[0].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[0].order}} {{pageFields.order == pageFields.list[0].type ? 'table-order-select':''}}" ng-click="setOrder(0)"></span>
+                    </th>
+                    <th class="text-center">
+                        {{pageFields.list[1].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[1].order}} {{pageFields.order == pageFields.list[1].type ? 'table-order-select':''}}" ng-click="setOrder(1)"></span>
+                    </th>
+                    <th class="nowrap text-center">
+                        {{pageFields.list[2].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[2].order}} {{pageFields.order == pageFields.list[2].type ? 'table-order-select':''}}" ng-click="setOrder(2)"></span>
+                    </th>
+                    <th class="nowrap text-center">
+                        {{pageFields.list[3].title}}
+                        <span ng-if="tableData.length" class="table-order table-order-{{pageFields.list[3].order}} {{pageFields.order == pageFields.list[3].type ? 'table-order-select':''}}" ng-click="setOrder(3)"></span>
+                    </th>
+                    <th class="nowrap text-center">
+                        {{pageFields.list[4].title}}
+                    </th>
+                    <th class="nowrap text-center" style="width: 88px">操作</th>
+                </tr>
+                </thead>
+
+                <tbody class="middle-align">
+                <tr ng-if="tableData.length == 0">
+                    <td colspan="10" class="text-center">暂无课程信息</td>
+                </tr>
+                <tr ng-repeat="data in tableData | orderBy:pageFields.order:pageFields.__order">
+                    <td class="nowrap text-center">{{$index}}</td>
+                    <td class="nowrap text-center" auto-title>
+                        <div>{{data[pageFields.list[0].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title>
+                        <div>{{data[pageFields.list[1].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title>
+                        <div>{{data[pageFields.list[2].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title>
+                        <div>{{data[pageFields.list[3].type]}}</div>
+                    </td>
+                    <td class="nowrap text-center" auto-title>
+                        <div>
+                            <div>{{data.whenWhere.class}}</div>
+                            <div style="display: inline-block;">
+                                <p style="margin: 0; padding: 0; border-top: 1px solid #999; text-align: left;" ng-repeat="(index, week) in data.whenWhere.week">
+                                    <label style="margin: 0; padding: 0; vertical-align: middle;">{{week}}</label>
+                                    <label style="margin: 0; padding: 0; max-width: 22em; white-space: normal; vertical-align: middle;">
+                                        <span style="font-size: .8em; color: #666; margin-left: .5em; white-space: nowrap; display: inline-block;" ng-repeat="class in data.whenWhere.classIndex[index]">{{class}}</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <!--<td class="nowrap text-center" auto-title>-->
+                        <!--<div>-->
+                            <!--<div>{{data.timeHeader}}<br></div>-->
+                            <!--<div ng-repeat="timeItem in data.timeList">{{timeItem}}<br></div>-->
+                        <!--</div>-->
+                    <!--</td>-->
+                    <td class="nowrap">
+                        <a href="javascript:;" class="btn btn-default btn-sm btn-icon icon-left" ng-click="editData(data)">
+                            设置学生
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-show="tableData.length>0" ng-include="'views/common/pagination.html'"></div>
+    </div>
+</div>
+<div ng-include="'views/basicData/studySetting/studentANDcourseForm.html'"></div>

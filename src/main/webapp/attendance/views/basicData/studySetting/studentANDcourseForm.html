@@ -1,0 +1,32 @@
+<style>
+    .student-item{
+        display: inline-block;
+        margin: 1em;
+    }
+</style>
+<script type="text/ng-template" id="studentANDcourseForm.html" xmlns="http://www.w3.org/1999/html">
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss()"></button>
+    <h4 class="modal-title">{{title}}</h4>
+
+</div>
+<div class="modal-body" style="height: 77vh;">
+    <button style="float: right; position: relative; top: -.5em;" class="btn btn-width-xsm btn-default" ng-click="saveData()">保存</button>
+    <section style="cursor: pointer;" class="panel student-item select-disabled"
+             ng-repeat="data in tableData"
+             ng-init="studentOptions[data.id] ? data.select = true : data.select = null"
+             ng-class="data.select ? 'panel-info' : ''"
+             ng-click="(data.select = !data.select) == true ? (studentOptions[data.id] = data.id) : (studentOptions[data.id] = null)"
+    >
+        <header class="panel-heading" style="padding: 0 .5em;">
+            <div class="panel-title">
+                <div style="" class="form-inline nowrap">
+                    <label class="form-label" style="font-size: 14px;">姓名：{{data.name}}</label>
+                    <label class="form-label" style="font-size: 14px;">学号：{{data.code}}</label>
+                </div>
+            </div>
+        </header>
+    </section>
+</div>
+
+</script>
