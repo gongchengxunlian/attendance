@@ -81,4 +81,22 @@ public class UserLogServiceImpl implements UserLogService {
 
         return u_detail;
     }
+
+    public boolean userCheckByMail(String mail){
+        UserInfo userInfo = new UserInfo();
+        userInfo.setMail(mail);
+        userInfo.setFlag(0);
+        UserInfo l = userInfoMapper.selectOne(userInfo);
+        if (l != null) return true;
+        else return false;
+    }
+
+    public int resetPassword(Map params) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setPassword(params.get("pass").toString());
+        Wrapper wrapper = new EntityWrapper(UserInfo.class);
+        wrapper.addFilter("mail = " + params.get("mail"));
+        int n = userInfoMapper.update(userInfo, wrapper);
+        return n;
+    }
 }

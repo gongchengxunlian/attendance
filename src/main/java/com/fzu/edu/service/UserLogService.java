@@ -9,4 +9,7 @@ public interface UserLogService {
 
     Object loginCheck(Map params);
 
+    boolean userCheckByMail(String mail);
+
+    int resetPassword(Map params);
 }

@@ -83,6 +83,12 @@ loginModule.config(function($httpProvider,$stateProvider,$uiViewScrollProvider,$
             controllerUrl:'recoverPassword',
             controller:'recoverPwdController'
         })
+        .state('resetPassword', {
+            url: '/resetPassword',
+            templateUrl: 'resetPassword.html',
+            controllerUrl:'resetPassword',
+            controller:'resetPasswordController'
+        })
 
 });
 
@@ -165,14 +171,57 @@ function ($scope, $http, localStorageService,$state,$rootScope,$location,$window
 loginModule.controller('recoverPwdController',['$scope', '$http','localStorageService','$state','$rootScope','$location','$window','SweetAlert','$uibModal',
     function ($scope, $http, localStorageService,$state,$rootScope,$location,$window,SweetAlert,$uibModal) {
 
-    console.log("忘记密码");
-
-
-
-
-
+        $scope.resetPassword = function () {
+            $http.post('userManage/resetPasswordForMail', {mail: $scope.username}).success(function (data) {
+                if (data = 1){
+                    SweetAlert.success('邮箱已发送', '请在24小时内重设密码');
+                    window.location.href = '/#login';
+                }else if(data == -1) {
+                    SweetAlert.info('该邮箱的账户不存在');
+                }else {
+                    SweetAlert.error('网络异常', '请检查网络');
+                }
+            }).error(function (result) {
+                SweetAlert.error('网络异常', '请检查网络');
+            });
+        };
     }]);
 
+loginModule.controller('resetPasswordController',['$scope', '$http','localStorageService','$state','$rootScope','$location','$window','SweetAlert','$uibModal',
+    function ($scope, $http, localStorageService,$state,$rootScope,$location,$window,SweetAlert,$uibModal) {
+
+        var url = window.document.location.href.toString();
+        var __get = {};
+        try{
+            var p = url.substring(url.indexOf("?") + 1).split("&");
+            for (var i in p){
+                var d = p[i].split("=");
+                if (d.length != 2) throw "";
+                __get[d[0]] = d[1];
+            }
+        }catch (e){
+            location.href = "/#login";
+        }
+
+
+        $scope.resetPassword = function () {
+            if ($scope.pass != $scope.repass){
+                SweetAlert.error('两次密码不一致');
+                return;
+            }
+
+            $http.post('userManage/resetPassword', {pass: $scope.pass, mail: __get.mail}).success(function (data) {
+                if (data){
+                    SweetAlert.success('重置成功', '前往登录');
+                    location.href = "/#login";
+                }else {
+                    SweetAlert.error('网络异常', '请检查网络');
+                }
+            }).error(function (result) {
+                SweetAlert.error('网络异常', '请检查网络');
+            });
+        };
+    }]);
 
 loginModule.controller('userFormController',['$scope', '$rootScope', '$uibModal', '$uibModalInstance', 'params','$http', 'httpService','localStorageService','$interval','SweetAlert',
     function($scope, $rootScope, $uibModal, $uibModalInstance, params, $http, httpService,localStorageService,$interval,SweetAlert){

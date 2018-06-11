@@ -12,13 +12,6 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
             params: {args: {}}
         })
 
-     //合同管理   addby hw 2018 03 12
-        .state('contractManager', {
-            url: '/contractManager',
-            templateUrl: 'views/contract/ContractManager.html',
-            controller: 'ContractManagerCtrl',
-            params: {args: {}}
-        })
 
 });
 

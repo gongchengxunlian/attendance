@@ -2,6 +2,7 @@ package com.fzu.edu.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.fzu.edu.app.SMTPSendMail;
 import com.fzu.edu.model.UserInfo;
 import com.fzu.edu.service.UserManageService;
 import com.fzu.edu.service.UserEduManageService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +117,44 @@ public class UserManageController {
         }catch (Exception e){
             log.warn(e);
             return "0";
+        }
+    }
+
+    @RequestMapping(value = "/resetPasswordForMail", method = RequestMethod.POST)
+    @ResponseBody
+    public int resetPasswordForMail(@RequestParam Map params){
+        try {
+            String mail = params.get("mail").toString();
+
+            boolean check = userLogService.userCheckByMail(mail);
+
+            if (check){
+                String content = "<a href=\"http://127.0.0.1:8090/#resetPassword?mail="+mail+"&t="+new Date().getTime()+"\">点击该链接重新设置密码</a>";
+                SMTPSendMail smtpSendMail = new SMTPSendMail();
+                com.fzu.edu.app.SMTPSendMail.Massage message = smtpSendMail.createMassage();
+                message.setSender("");
+                message.setRecipient(mail);
+                message.setSubject("考勤管理---找回密码");
+                message.setContent(content);
+                message.send();
+                return 1;
+            }else {
+                return -1;
+            }
+        }catch (Exception e){
+            log.warn(e);
+            return 0;
+        }
+    }
+
+    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public int resetPassword(@RequestParam Map params){
+        try {
+            return userLogService.resetPassword(params);
+        }catch (Exception e){
+            log.warn(e);
+            return 0;
         }
     }
 
