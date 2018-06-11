@@ -25,7 +25,7 @@
 
 
     <select id="getAllUserInfo" resultMap="UserFullInfoMap">
-        SELECT
+        SELECT DISTINCT
             UI.id,
             UI.`name`,
             UI.`code`,
