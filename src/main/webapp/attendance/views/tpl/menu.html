@@ -17,21 +17,21 @@
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>学校管理</span>
         </a>
-        <ul class="nav nav-children" ng-if="sign == 0">
+        <ul class="nav nav-children" ng-show="sign == 0">
             <li>
                 <a href="#schoolMenage" >
                     学校管理
                 </a>
             </li>
         </ul>
-        <ul class="nav nav-children" ng-if="sign < 2">
+        <ul class="nav nav-children" ng-show="sign < 2">
             <li>
                 <a ui-sref="collegeManage({ showAll: 1 })">
                     学院管理
                 </a>
             </li>
         </ul>
-        <ul class="nav nav-children" ng-if="sign == 1">
+        <ul class="nav nav-children" ng-show="sign == 1">
             <li>
                 <a href="#classManage">
                     教室管理
@@ -44,7 +44,7 @@
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>课程管理</span>
         </a>
-        <ul class="nav nav-children" ng-if="sign == 1">
+        <ul class="nav nav-children" ng-show="sign == 1">
             <li>
                 <a href="#courseArrange">
                     课程安排
@@ -63,21 +63,21 @@
             <i class="fa fa-user-md"></i>
             <span>教学设置</span>
         </a>
-        <ul class="nav nav-children" ng-if="sign == 1">
+        <ul class="nav nav-children" ng-show="sign == 1">
             <li>
                 <a href="#absenceLevel">
                     缺课等级
                 </a>
             </li>
         </ul>
-        <ul class="nav nav-children" ng-if="sign <= 1">
+        <ul class="nav nav-children" ng-show="sign <= 1">
             <li>
                 <a href="#assessmentWeight">
                     课程考核权重
                 </a>
             </li>
         </ul>
-        <ul class="nav nav-children" ng-if="sign == 1 || sign == 2">
+        <ul class="nav nav-children" ng-show="sign == 1 || sign == 2">
             <li>
                 <a href="#studentANDcourse">
                     学生与课程
