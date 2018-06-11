@@ -39,7 +39,7 @@
             </li>
         </ul>
     </li>
-    <li class="nav-parent" ng-show="sign <= 1">
+    <li ng-class="sign == 0 ? '' : 'nav-parent'" ng-show="sign <= 1">
         <a ui-sref="courseManage({ showAll: 1 })">
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>课程管理</span>
@@ -87,12 +87,13 @@
     </li>
 
     <li ng-if="sign == 2">
-        <a>
+        <a href="#studentANDcourse">
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>上课考勤管理</span>
         </a>
     </li>
-    <li class="nav-parent">
+
+    <li class="nav-parent" ng-show="sign == 1 || sign == 2">
         <a>
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>信息汇总</span>
