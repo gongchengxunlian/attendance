@@ -92,6 +92,7 @@ public class StudySettingServiceImpl implements StudySettingService {
     }
 
     public List getAbsenceLevel(Map params) {
+        params.put("flag", 0);
         List l = absenceLevelMapper.selectByMap(params);
         return l;
     }

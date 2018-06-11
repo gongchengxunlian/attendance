@@ -8,10 +8,7 @@
     <result column="color" jdbcType="VARCHAR" property="color" />
     <result column="flag" jdbcType="INTEGER" property="flag" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
-    <result column="max_value" jdbcType="REAL" property="maxValue" />
+    <!--<result column="max_value" jdbcType="REAL" property="maxValue" />-->
   </resultMap>
-  <sql id="Base_Column_List">
-    id, name, min_value, color, flag, school_id, max_value
-  </sql>
 
 </mapper>

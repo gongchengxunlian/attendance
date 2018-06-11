@@ -92,11 +92,7 @@ public class UserLogServiceImpl implements UserLogService {
     }
 
     public int resetPassword(Map params) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setPassword(params.get("pass").toString());
-        Wrapper wrapper = new EntityWrapper(UserInfo.class);
-        wrapper.addFilter("mail = " + params.get("mail"));
-        int n = userInfoMapper.update(userInfo, wrapper);
+        int n = userInfoMapper.resetPassword(params);
         return n;
     }
 }

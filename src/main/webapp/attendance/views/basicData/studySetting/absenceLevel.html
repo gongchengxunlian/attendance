@@ -36,14 +36,15 @@
                             <span style="width: 1em; display: inline-block;"></span>
                         </div>
                         <div style="" class="form-inline nowrap">
-                            <label class="form-label">比例：</label>
-                            <input style="width: 5em;" type="number"
+                            <!--<label class="form-label">比例：</label>-->
+                            <label class="form-label">次数：</label>
+                            <input style="width: 10em;" type="number"
                                    class="form-control" min="0" max="{{level.maxValue}} || 100"
                                    required ng-model="level.minValue" ng-disabled="!level.edit"
-                                   placeholder="最小"
-                            ><input style="width: 5em;" min="{{level.minValue}} || 0" max="100"
+                                   placeholder="次数"
+                            ><!--<input style="width: 5em;" min="{{level.minValue}} || 0" max="100"
                                     type="number" class="form-control" required ng-model="level.maxValue"
-                                    ng-disabled="!level.edit" placeholder="最大">
+                                    ng-disabled="!level.edit" placeholder="最大">-->
                         </div>
                         <div class="form-inline nowrap">
                             <label class="form-label">颜色：</label>

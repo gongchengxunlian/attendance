@@ -103,6 +103,8 @@
 
     </select>
 
-
+    <update id="resetPassword">
+        UPDATE user_info SET password=#{pass} WHERE mail=#{mail}
+    </update>
 
 </mapper>

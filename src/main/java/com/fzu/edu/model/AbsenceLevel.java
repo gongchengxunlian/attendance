@@ -13,7 +13,7 @@ public class AbsenceLevel {
 
     private Integer schoolId;
 
-    private Float maxValue;
+//    private Float maxValue;
 
     public Integer getId() {
         return id;
@@ -63,11 +63,11 @@ public class AbsenceLevel {
         this.schoolId = schoolId;
     }
 
-    public Float getMaxValue() {
-        return maxValue;
-    }
+//    public Float getMaxValue() {
+//        return maxValue;
+//    }
 
-    public void setMaxValue(Float maxValue) {
-        this.maxValue = maxValue;
-    }
+//    public void setMaxValue(Float maxValue) {
+//        this.maxValue = maxValue;
+//    }
 }
