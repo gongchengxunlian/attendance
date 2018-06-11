@@ -16,7 +16,7 @@ file -> project structure -> artifacts -> + -> web applacation...explode.. -> fr
 
 控制台 -> 打开到项目文件的main目录下 -> 安装gulp(安装的方法在gulpfile.js下)
 
-配置服务器 -> edit configura... -> + -> tomcat serve -> 设置tomcat路径 -> deployment -> + -> arti... -> 选择exploded那个, application context 填写 web-attendance -> server -> 路径填写http://localhost.../web-attendance/attendance#index -> ok (如果端口冲突改下面的http port和jmx port)
+配置服务器 -> edit configura... -> + -> tomcat serve -> 设置tomcat路径 -> deployment -> + -> arti... -> 选择exploded那个, application context 填写 web-attendance -> server -> 路径填写http://localhost.../attendance#index -> ok (如果端口冲突改下面的http port和jmx port)
 
 点击运行或调试
 
