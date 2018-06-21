@@ -2,7 +2,6 @@ package com.fzu.edu.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.fzu.edu.dao.*;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.AttendanceManagementService;
@@ -36,6 +35,10 @@ public class AttendanceManagementServiceImpl implements AttendanceManagementServ
     private AttendanceDetailFullMapper attendanceDetailFullMapper;
     @Resource
     private SchoolStartTimeMapper schoolStartTimeMapper;
+    @Resource
+    private AttendanceCollectMapper attendanceCollectMapper;
+    @Resource
+    private AttendanceCollectClassMapper attendanceCollectClassMapper;
 
     public List getStudents(Map params) {
         Calendar c = Calendar.getInstance();
@@ -132,5 +135,26 @@ public class AttendanceManagementServiceImpl implements AttendanceManagementServ
         params.put("flag", 1);
         saveData(JSON.toJSONString(params));
         return 0;
+    }
+
+    public List getClassCollect(HashMap params) {
+        setParamsForCollect(params);
+        List list = attendanceCollectClassMapper.selectByMap(params);
+        return list;
+    }
+
+    public List getOneCollect(Map params) {
+        setParamsForCollect(params);
+        List list = attendanceCollectMapper.selectByMap(params);
+        return list;
+    }
+
+    private void setParamsForCollect(Map params){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int term = month / 6;
+        params.put("start_year", year);
+        params.put("term", term);
     }
 }

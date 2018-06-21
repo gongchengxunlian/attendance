@@ -8,21 +8,24 @@
         <div class="distribution-body">
             <table class="table table-striped" style="width: 100%" border="1">
                 <thead>
-                    <tr>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>旷课次数</th>
-                    </tr>
+                <tr>
+                    <th colspan="1">课程</th>
+                    <th colspan="1">学生</th>
+                    <th colspan="3">加分情况</th>
+                    <th colspan="3">旷课情况</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="student in studentOptions" ng-click="close(student)"
-                        ng-init="studentMaxStudyDay = (studentMaxStudyDay || studentStudyInfo[student.studentId].studyDay) > studentStudyInfo[student.studentId].studyDay ? studentMaxStudyDay : studentStudyInfo[student.studentId].studyDay "
-                    >
-                        <td>{{student.studentCode}}</td>
-                        <td>{{student.studentName}}{{Math.max((studentMaxStudyDay || studentStudyInfo[student.studentId].studyDay), studentStudyInfo[student.studentId].studyDay)}}</td>
-                        <td ng-if="studentStudyInfo[student.studentId]">{{studentMaxStudyDay - studentStudyInfo[student.studentId].studyDay}}</td>
-                        <td ng-if="!studentStudyInfo[student.studentId]">{{studentMaxStudyDay - studentStudyInfo[-1].studyDay}}</td>
-                    </tr>
+                <tr ng-repeat="class in classOptions">
+                    <td>{{class.courseName}}<br>{{class.courseCode}}<br>{{class.startYear - 1}}/{{class.startYear}}{{class.term ? '下' : '上'}}</td>
+                    <td>{{class.studentNumber}}</td>
+                    <td><small style="color: red; font-size: xx-small;">MAX</small><br>{{class.maxScore}}</td>
+                    <td><small style="color: red; font-size: xx-small;">AVG</small><br>{{class.avgSocre}}</td>
+                    <td><small style="color: red; font-size: xx-small;">MIN</small><br>{{class.minScore}}</td>
+                    <td><small style="color: red; font-size: xx-small;">MAX</small><br>{{class.maxStudyDay}}</td>
+                    <td><small style="color: red; font-size: xx-small;">AVG</small><br>{{class.acgStudyDay}}</td>
+                    <td><small style="color: red; font-size: xx-small;">MIN</small><br>{{class.minStudyDay}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>

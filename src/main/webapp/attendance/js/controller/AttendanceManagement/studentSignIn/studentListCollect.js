@@ -12,13 +12,14 @@ function($scope, $rootScope, data, $uibModal, $uibModalInstance,$http,httpServic
         $uibModalInstance.dismiss(data);
     };
 
-    console.log(data, 'studentListController');
+    data.data = data.data || {};
+    console.log(data.data, 'studentListCollectController');
     $scope.studentStudyInfo = data.studentStudyInfo;
 
-    httpService.getAll('attendanceManagement/getStudents', {courseId: data.courseId}).then(function (data) {
+    httpService.getAll('attendanceManagement/getOneCollect', {course_id: data.data.courseId}).then(function (data) {
         if (data){
             $scope.studentOptions = data;
-            console.log(data, 'getStudents');
+            console.log(data, 'getOneCollect');
         }else {
             console.log('没有学生');
         }

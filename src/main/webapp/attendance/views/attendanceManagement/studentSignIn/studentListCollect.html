@@ -2,27 +2,28 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="dismiss()"></button>
-        <h4 class="modal-title">选择学生</span></h4>
+        <h4 class="modal-title">查看学生统计</span></h4>
     </div>
     <div class="modal-body">
         <div class="distribution-body">
             <table class="table table-striped" style="width: 100%" border="1">
                 <thead>
-                    <tr>
-                        <th>学号</th>
-                        <th>姓名</th>
-                        <th>旷课次数</th>
-                    </tr>
+                <tr>
+                    <th ng-if="sign == 2">学生</th>
+                    <th ng-if="sign == 3">课程</th>
+                    <th>加分情况</th>
+                    <th>上课总次数</th>
+                    <th>旷课次数</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="student in studentOptions" ng-click="close(student)"
-                        ng-init="studentMaxStudyDay = (studentMaxStudyDay || studentStudyInfo[student.studentId].studyDay) > studentStudyInfo[student.studentId].studyDay ? studentMaxStudyDay : studentStudyInfo[student.studentId].studyDay "
-                    >
-                        <td>{{student.studentCode}}</td>
-                        <td>{{student.studentName}}{{Math.max((studentMaxStudyDay || studentStudyInfo[student.studentId].studyDay), studentStudyInfo[student.studentId].studyDay)}}</td>
-                        <td ng-if="studentStudyInfo[student.studentId]">{{studentMaxStudyDay - studentStudyInfo[student.studentId].studyDay}}</td>
-                        <td ng-if="!studentStudyInfo[student.studentId]">{{studentMaxStudyDay - studentStudyInfo[-1].studyDay}}</td>
-                    </tr>
+                <tr ng-repeat="student in studentOptions" ng-init="studentMaxStudyDay = (studentMaxStudyDay || student.studyDay) > student.studyDay ? studentMaxStudyDay : student.studyDay">
+                    <td ng-if="sign == 2">{{student.studentName}}<br>{{student.studentCode}}</td>
+                    <td ng-if="sign == 3">{{student.courseName}}<br>{{student.courseCode}}</td>
+                    <td>{{student.score}}分</td>
+                    <td>{{student.studyDay}}</td>
+                    <td>{{studentMaxStudyDay - student.studyDay}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>

@@ -1,5 +1,6 @@
 package com.fzu.edu.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +16,8 @@ public interface AttendanceManagementService {
     List getAttendance(Map params);
 
     int cancelAttendance(Map params);
+
+    List getClassCollect(HashMap params);
+
+    List getOneCollect(Map params);
 }

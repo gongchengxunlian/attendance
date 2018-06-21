@@ -299,6 +299,29 @@ function($scope, $rootScope, $timeout, data, $uibModal, $uibModalInstance,$http,
         });
     };
 
+    $scope.showOne = function () {
+        $uibModal.open({
+            backdrop:'static',
+            keyboard: false,
+            animation: true,
+            templateUrl: 'studentListCollect.html',
+            controller: 'studentListCollectController',
+            size: 'xlg',
+            // windowClass: 'distribution-window',
+            resolve: {
+                data: {
+                    data: data.data
+                }
+            }
+        }).result.then(function (result) {
+            console.log(result);
+            // $scope.queryList();
+        },function (reason) {
+            // $scope.queryList();
+            // $scope.reset();
+        });
+    };
+
     $scope.close = function (data) {
         $uibModalInstance.close(data);
     };
