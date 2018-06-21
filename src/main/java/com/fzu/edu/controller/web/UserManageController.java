@@ -39,6 +39,19 @@ public class UserManageController {
     @Resource
     private UserLogService userLogService;
 
+
+    @RequestMapping(value = "/addScore", method = RequestMethod.POST)
+    @ResponseBody
+    public String addScore(@RequestParam Map params) {
+        log.info("加减分");
+        try {
+            return JSON.toJSONString(userManageService.addScore(params));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
+
     @RequestMapping(value = "/addUserBasic", method = RequestMethod.POST)
     @ResponseBody
     public String addUser(@RequestParam Map params) {

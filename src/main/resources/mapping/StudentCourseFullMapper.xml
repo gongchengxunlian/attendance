@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzu.edu.dao.StudentCourseFullMapper" >
+  <resultMap id="BaseResultMap" type="com.fzu.edu.model.StudentCourseFull" >
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="student_code" property="studentCode" jdbcType="VARCHAR" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="INTEGER" />
+    <result column="time_type" property="timeType" jdbcType="INTEGER" />
+    <result column="week" property="week" jdbcType="VARCHAR" />
+    <result column="class_index" property="classIndex" jdbcType="VARCHAR" />
+    <result column="start_year" property="startYear" jdbcType="VARCHAR" />
+    <result column="term" property="term" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="FLOAT" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
+    <result column="build_name" property="buildName" jdbcType="VARCHAR" />
+    <result column="class_name" property="className" jdbcType="VARCHAR" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="begin" property="begin" jdbcType="INTEGER" />
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Blob_Column_List" >
+    student_id
+  </sql>
+
+</mapper>

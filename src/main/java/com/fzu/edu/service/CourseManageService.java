@@ -21,4 +21,5 @@ public interface CourseManageService extends IService<CourseInfo> {
 
     int addOrUpdateCourseArrage(String params);
 
+    int updateCourseArrage(Map params);
 }

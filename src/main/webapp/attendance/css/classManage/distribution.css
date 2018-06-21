@@ -38,21 +38,75 @@
 .distribution-body th{
     text-align: center;
 }
+
 .distribution-row-title,.distribution-col-title{
     background-color: #1d2127 !important;
     color: #fff;
 }
-.distribution-row-body:hover .distribution-cell, .distribution-cell-hover{
-    background-color: #a1f3f3;
+@media (min-width: 776px) {
+
+    .distribution-row-body:hover .distribution-cell, .distribution-cell-hover{
+        background-color: #a1f3f3;
+    }
+    .distribution-col-title:hover ~ .distribution-cell{
+        background-color: inherit;
+    }
+    .distribution-cell:hover{
+        background-color: #99c2f3 !important;
+    }
+    .distribution-col-title{  }
+
 }
-.distribution-col-title:hover ~ .distribution-cell{
-    background-color: inherit;
+.distribution-cell-road{
+    background-color: #000000 !important;
 }
-.distribution-cell:hover{
-    background-color: #99c2f3 !important;
+.distribution-cell-student{
+    background-color: #9f54ff !important;
 }
-.distribution-col-title{  }
+.distribution-options{
+    position: fixed;
+    top: 0;
+    left: 0;
+    /*background-color: #fff;*/
+    padding: 1em;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+.distribution-options>div{
+    background-color: #fff;
+    display: inline-block;
+    padding: 1em 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+    position: relative;
+    top: 20%;
+}
+.distribution-menu{
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.distribution-menu-box{
+    position: absolute;
+    z-index: 99999;
+    background-color: #ffff;
+    text-align: center;
+    padding: 1em;
+    font-size: medium;
+    right: 2.5em;
+    top: 2.5em;
+    border-radius: 10px;
+    box-shadow: 0 0 20px black;
+}
+.distribution-menu-box>p:last-child{
+    margin-bottom: 0;
+}
+/*
 .distribution-cell-road:after{
     content: "道";
     font-size: x-small;
-}
+}*/

@@ -12,6 +12,7 @@
         <result column="school_id" property="schoolId" jdbcType="INTEGER" />
         <result column="college_id" property="collegeId" jdbcType="INTEGER" />
         <result column="flag" property="flag" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="FLOAT" />
         <result column="info" property="info" jdbcType="VARCHAR" />
         <result column="sex" property="sex" jdbcType="INTEGER" />
         <result column="birthday" property="birthday" jdbcType="BIGINT" />
@@ -30,7 +31,8 @@
             UI.`name`,
             UI.`code`,
             UI.mail,
-            UI.phone
+            UI.phone,
+            UI.score
         <if test="courseId == null or courseId == ''">
             ,UI.power,
             UI.flag,
@@ -108,6 +110,10 @@
 
     <update id="resetPassword">
         UPDATE user_info SET password=#{pass} WHERE mail=#{mail}
+    </update>
+
+    <update id="addScore">
+        UPDATE user_info SET score=score+#{value} WHERE id=#{studentId}
     </update>
 
 </mapper>

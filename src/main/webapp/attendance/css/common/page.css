@@ -79,3 +79,52 @@ textarea.no-resize{
 
 
 
+
+
+/*app*/
+@media only screen and (max-width: 767px){
+    .header .header-right {
+        background: #FFF;
+        float: none !important;
+        height: 60px;
+        margin-top: 0px;
+        width: 100%;
+    }
+    .header-right {
+        display: none;
+    }
+    .content-body{
+        padding: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+    .content-body>.page-header{
+        display: none;
+    }
+
+    .icon-float-right{
+        float: right;
+        border: none;
+        background-color: transparent;
+        border-radius: 50%;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .modal-body{
+        padding: 0;
+        margin: 0;
+    }
+
+    .modal-body .form{
+        padding: 0;
+    }
+
+    .distribution-body table{
+        zoom: .5;
+    }
+}
+
+

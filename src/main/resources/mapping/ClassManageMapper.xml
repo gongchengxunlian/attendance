@@ -24,6 +24,9 @@
     <if test="searchValue!=null and searchValue!=''">
       AND CI.`build_name` LIKE CONCAT('%', #{searchValue}, '%')
     </if>
+    <if test="classId!=null and classId!=''">
+      AND CI.`id` = #{classId}
+    </if>
 
   </select>
 

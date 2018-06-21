@@ -15,4 +15,5 @@ public interface UserManageService extends IService<UserInfo> {
 
     Object addOrUpdateUserBasic(Map params);
 
+    int addScore(Map params);
 }

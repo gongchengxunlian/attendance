@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.fei.common.CDataSet;
-import com.fzu.edu.dao.CourseArrangeMapper;
-import com.fzu.edu.dao.CourseFullArrangeMapper;
-import com.fzu.edu.dao.CourseFullInfoMapper;
-import com.fzu.edu.dao.CourseManageMapper;
+import com.fzu.edu.dao.*;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.CourseManageService;
 import org.springframework.stereotype.Service;
@@ -32,6 +29,9 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
     private CourseArrangeMapper courseArrangeMapper;
     @Resource
     private CourseFullArrangeMapper courseFullArrangeMapper;
+    @Resource
+    private StudentCourseFullMapper studentCourseFullMapper;
+
 
     public int addOrUpdateCourse(String params) {
         CourseInfo courseInfo = JSONObject.parseObject(params, CourseInfo.class);
@@ -58,28 +58,57 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
         }
     }
 
+    public int updateCourseArrage(Map params) {
+        return courseArrangeMapper.updateById(JSON.parseObject(JSON.toJSONString(params), CourseArrange.class));
+    }
+
     public List getAll(Map params) {
         List<CourseFullInfo> course = courseManageMapper.getAllCourse(params);
         return course;
     }
 
     public List getAllCourseArrage(Map params) {
-        List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage(params);
-        List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
-        for (CourseFullArrange courseFullArrange : courseFullArranges){
-            String week = (String) courseFullArrange.getWeek();
-            String classIndex = (String) courseFullArrange.getClassIndex();
-            courseFullArrange.setWeek(null);
-            courseFullArrange.setClassIndex(null);
-            String courseFullArrangeStr = JSON.toJSONString(courseFullArrange);
-            CourseArrangeDetail courseArrangeDetail = JSON.parseObject(courseFullArrangeStr, CourseArrangeDetail.class);
-            courseArrangeDetail.setWeek(JSON.parseObject(week, ArrayList.class));
-            courseArrangeDetail.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
-            courseArrangeDetail.createYearTerm();
-            courseArrangeDetail.createWhenWhere();
-            courseArrangeDetails.add(courseArrangeDetail);
+        params.remove("pageNo");
+        params.remove("pageSize");
+        List l = null;
+        if (params.get("teacherId") != null){
+            List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage(params);
+            List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
+            for (CourseFullArrange courseFullArrange : courseFullArranges){
+                String week = (String) courseFullArrange.getWeek();
+                String classIndex = (String) courseFullArrange.getClassIndex();
+                courseFullArrange.setWeek(null);
+                courseFullArrange.setClassIndex(null);
+                String courseFullArrangeStr = JSON.toJSONString(courseFullArrange);
+                CourseArrangeDetail courseArrangeDetail = JSON.parseObject(courseFullArrangeStr, CourseArrangeDetail.class);
+                courseArrangeDetail.setWeek(JSON.parseObject(week, ArrayList.class));
+                courseArrangeDetail.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
+                courseArrangeDetail.createYearTerm();
+                courseArrangeDetail.createWhenWhere();
+                courseArrangeDetails.add(courseArrangeDetail);
+            }
+            l = courseArrangeDetails;
+        }else if (params.get("student_id") != null){
+            params.remove("schoolId");
+            List<StudentCourseFull> studentCourseFulls = studentCourseFullMapper.selectByMap(params);
+            List<StudentCourseFull2> studentCourseFull2s = new ArrayList<StudentCourseFull2>();
+            for (StudentCourseFull studentCourseFull : studentCourseFulls){
+                String week = (String) studentCourseFull.getWeek();
+                String classIndex = (String) studentCourseFull.getClassIndex();
+                studentCourseFull.setWeek(null);
+                studentCourseFull.setClassIndex(null);
+                String studentCourseFullStr = JSON.toJSONString(studentCourseFull);
+                StudentCourseFull2 studentCourseFull2 = JSON.parseObject(studentCourseFullStr, StudentCourseFull2.class);
+                studentCourseFull2.setWeek(JSON.parseObject(week, ArrayList.class));
+                studentCourseFull2.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
+                studentCourseFull2.createYearTerm();
+                studentCourseFull2.createWhenWhere();
+                studentCourseFull2s.add(studentCourseFull2);
+            }
+            l = studentCourseFull2s;
         }
-        return courseArrangeDetails;
+
+        return l;
     }
 
     public List getCollegeAndCourse(Map params) {

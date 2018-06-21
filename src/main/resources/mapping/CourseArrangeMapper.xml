@@ -12,6 +12,7 @@
     <result column="start_year" jdbcType="VARCHAR" property="startYear" />
     <result column="term" jdbcType="INTEGER" property="term" />
     <result column="teacher_id" jdbcType="INTEGER" property="teacherId" />
+    <result column="begin" jdbcType="INTEGER" property="begin" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
   </resultMap>
   <resultMap id="CourseFullArrangeMap" type="com.fzu.edu.model.CourseFullArrange" extends="BaseResultMap">

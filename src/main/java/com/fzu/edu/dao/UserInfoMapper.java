@@ -13,4 +13,6 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     List getAllUserInfo(Map params);
 
     int resetPassword(Map params);
+
+    int addScore(Map params);
 }

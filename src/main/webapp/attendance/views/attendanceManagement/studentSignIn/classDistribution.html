@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="/attendance/css/classManage/distribution.css">
+<script type="text/ng-template" id="classDistribution2.html">
+
+<div class="modal-header">
+    <!--<button type="button" class="close" ng-click="dismiss()"></button>-->
+    <h4 class="modal-title">
+        <span>教室情况<span ng-if="isBeginClass">（正在上课）</span></span>
+        <button type="button" class="demo-icon-hover icon-float-right" ng-click="showMenu = !showMenu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="distribution-menu" ng-show="showMenu" ng-click="showMenu = !showMenu">
+            <div class="distribution-menu-box">
+                <p ng-click="beginClass()" ng-if="!isBeginClass && sign == 2">开始上课</p>
+                <p ng-click="stopClass()" ng-if="isBeginClass && sign == 2">下课</p>
+                <p ng-click="showOne()" ng-if="sign = 2">个人情况统计</p>
+                <p ng-click="dismiss()">返回</p>
+            </div>
+        </div>
+        <!--<a class="btn btn-primary" style="margin-left: 2em" ng-click="stopClass()" ng-if="isBeginClass && sign == 2">下课</a>-->
+        <!--<a class="btn btn-primary" style="margin-left: 2em" ng-click="beginClass()" ng-if="!isBeginClass && sign == 2">开始上课</a>-->
+    </h4>
+</div>
+<div class="modal-body" id="distribution-attendance">
+    <form name="distribution" class="form">
+        <div class="distribution-body">
+            <table class="table table-striped" border="1">
+                <tr>
+                    <td class="distribution-row-title" ng-repeat="col in colArray track by $index">{{$index != 0 ? $index : ''}}</td>
+                </tr>
+                <tr class="distribution-row-body" ng-repeat="(i, row) in rowArray track by $index">
+                    <td
+                            ng-repeat="(j, col) in colArray track by $index"
+                            ng-click="setRoad($event, i, j)"
+                            ng-class="setClass(i, j)"
+                    >{{j == 0 ? (i + 1) : ''}}</td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>
+
+<div class="distribution-options" ng-show="openOperations.open && sign == 2">
+    <div>
+        <p><button class="btn btn-default" ng-click="addScore(openOperations.studentId) ? openOperations = {} : openOperations = {}">加减分</button></p>
+        <p><button class="btn btn-default" ng-click="openStudent(openOperations.row, openOperations.col) ? openOperations = {} : openOperations = {}">帮助学生签到</button></p>
+        <p><button class="btn btn-default" ng-click="clearStudent(openOperations.row, openOperations.col) ? openOperations = {} : openOperations = {}">取消签到</button></p>
+        <p><button class="btn btn-default" ng-click="openOperations = {}">关闭</button></p>
+    </div>
+</div>
+
+</script>
+

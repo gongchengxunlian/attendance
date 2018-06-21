@@ -1,0 +1,55 @@
+<div class="panel">
+    <div class="panel-heading">
+        学生签到管理
+        <button type="button" class="demo-icon-hover icon-float-right" ng-click="showMenu = !showMenu">
+            <i class="fa fa-bars"></i>
+        </button>
+        <div class="distribution-menu" ng-show="showMenu" ng-click="showMenu = !showMenu">
+            <div class="distribution-menu-box">
+                <p ng-if="sign == 2" ng-click="showClass()">班级情况统计</p>
+                <p ng-if="sign == 3" ng-click="showOne()">个人情况统计</p>
+                <p ng-click="userLogout()">退出</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="btn-toolbar">
+            选择班级
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr ng-repeat="data in tableData" ng-click="showDetail(data)">
+                    <td>
+                        <table border="1" style="width: 100%">
+                            <tr>
+                                <td colspan="2" style="padding: .5em">{{data.courseName}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: .5em">{{data.whenWhere.class}}</td>
+                                <td style="padding: .5em">
+                                    <table ng-repeat="(index, week) in data.whenWhere.week">
+                                        <tr>
+                                            <td>{{week}}</td>
+                                            <td>
+                                                <label style="margin: 0; padding: 0; white-space: normal; vertical-align: middle;">
+                                                    <span style="font-size: .8em; color: #666; margin-left: .5em; white-space: nowrap; display: inline-block;" ng-repeat="class in data.whenWhere.classIndex[index]">{{class}}</span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--<p></p>-->
+                        <!--<p>{{data.whenWhere.class}}</p>-->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div ng-include="'views/attendanceManagement/studentSignIn/classDistribution.html'"></div>
+<div ng-include="'views/attendanceManagement/studentSignIn/studentList.html'"></div>
+<div ng-include="'views/attendanceManagement/studentSignIn/classListCollect.html'"></div>
+<div ng-include="'views/attendanceManagement/studentSignIn/studentListCollect.html'"></div>
+

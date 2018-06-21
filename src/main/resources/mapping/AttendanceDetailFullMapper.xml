@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzu.edu.dao.AttendanceDetailFullMapper" >
+  <resultMap id="BaseResultMap" type="com.fzu.edu.model.AttendanceDetailFull" >
+    <result column="attendance_info_id" property="attendanceInfoId" jdbcType="INTEGER" />
+    <result column="current_week" property="currentWeek" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="study_day" property="studyDay" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="INTEGER" />
+    <!--<result column="max_study_day" property="maxStudyDay" jdbcType="INTEGER" />-->
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="attendance_detail_id" property="attendanceDetailId" jdbcType="INTEGER" />
+  </resultMap>
+
+
+</mapper>

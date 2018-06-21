@@ -1,0 +1,27 @@
+<script type="text/ng-template" id="schoolTimeSettingForm.html">
+
+<div class="modal-header">
+    <button type="button" class="close" ng-click="dismiss(startDate)"></button>
+    <h4 class="modal-title">设置开学时间</h4>
+</div>
+<div class="modal-body">
+    <form name="classForm" class="form" ng-submit="saveData()">
+        <div class="row">
+            <div class="col-md-12 form-inline">
+                <span class="form-icon-required"></span>
+                <div class="form-group">
+                    <input type="date" readonly placeholder="请选择提醒时间" class="form-control"
+                           datetime-picker="yyyy-MM-dd"
+                           ng-model="startDate"
+                           is-open="startDateOptions.open"
+                           enable-time="false"
+                           datepicker-options="startDateOptions.config"
+                           ng-click="startDateOptions.openEvent()"
+                    />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</script>

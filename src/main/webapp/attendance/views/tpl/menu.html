@@ -85,13 +85,26 @@
             </li>
         </ul>
     </li>
-
-    <!--<li ng-if="sign == 2">
-        <a href="#studentANDcourse">
+    <li ng-show="sign == 1">
+        <a ng-click="setSchoolStartTime()">
+            <i class="fa fa-copy" aria-hidden="true"></i>
+            <span>设置开学时间</span>
+        </a>
+        <div ng-include="'views/basicData/schoolManage/schoolTimeSettingForm.html'"></div>
+    </li>
+    <li class="nav-parent" ng-show="sign == 2 || sign == 3">
+        <a>
             <i class="fa fa-copy" aria-hidden="true"></i>
             <span>上课考勤管理</span>
         </a>
-    </li>-->
+        <ul class="nav nav-children">
+            <li>
+                <a href="#studentSignIn">
+                    学生签到管理
+                </a>
+            </li>
+        </ul>
+    </li>
 
     <!--<li class="nav-parent" ng-show="sign == 1 || sign == 2">
         <a>

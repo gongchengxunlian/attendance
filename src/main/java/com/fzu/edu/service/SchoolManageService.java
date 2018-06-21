@@ -14,4 +14,6 @@ public interface SchoolManageService extends IService<SchoolInfo> {
     List getAll(Map params);
 
     int addOrUpdateSchool(Map params);
+
+    int setSchoolStartTime(Map params);
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,4 +77,18 @@ public class SchoolManageController {
         }
     }
 
+
+    @RequestMapping(value = "/setSchoolStartTime", method = RequestMethod.POST)
+    @ResponseBody
+    public String setSchoolStartTime(@RequestParam Map params, HttpSession session) {
+        log.info("设置学校开学时间");
+        try {
+            SchoolInfo s = (SchoolInfo) session.getAttribute("schoolInfo");
+            params.put("schoolId", s.getId());
+            return JSON.toJSONString(schoolManageService.setSchoolStartTime(params));
+        }catch (Exception e){
+            log.warn(e);
+            return "0";
+        }
+    }
 }

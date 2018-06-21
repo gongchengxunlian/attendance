@@ -76,8 +76,9 @@ public class CourseManageController {
         log.info("查询所有课程安排");
         try {
             params.put("schoolId", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
-            List<CourseArrangeDetail> courseArrageInfos = courseManageService.getAllCourseArrage(params);
-            Page page = new Page(params.get("pageNo"), params.get("pageSize"), courseArrageInfos);
+            Object pageNo = params.get("pageNo"), pageSize = params.get("pageSize");
+            List courseArrageInfos = courseManageService.getAllCourseArrage(params);
+            Page page = new Page(pageNo, pageSize, courseArrageInfos);
             return JSON.toJSONString(page);
         }catch (Exception e){
             log.warn(e);
@@ -115,6 +116,18 @@ public class CourseManageController {
         }catch (Exception e){
             log.warn(e);
             return "0";
+        }
+    }
+
+    @RequestMapping(value = "/beginClass", method = RequestMethod.POST)
+    @ResponseBody
+    public int beginClass(@RequestParam Map params){
+        log.info("开始结束签到");
+        try {
+            return courseManageService.updateCourseArrage(params);
+        }catch (Exception e){
+            log.warn(e);
+            return 0;
         }
     }
 

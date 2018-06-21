@@ -18,6 +18,12 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
                 showAll: 0
             }
         })
+        /*.state('schoolTimeSetting', {
+            url: '/schoolTimeSetting',
+            templateUrl: 'views/basicData/schoolManage/schoolTimeSetting.html',
+            controller: 'schoolTimeSettingController',
+            params: {  }
+        })*/
         .state('classManage', {
             url: '/classManage',
             templateUrl: 'views/basicData/schoolManage/classList.html',
@@ -59,6 +65,11 @@ app.config(function ($httpProvider, $stateProvider, $urlRouterProvider, $locatio
             controller: 'studentANDcourseController',
             params: {  }
         })
-
+        .state('studentSignIn', {
+            url: '/studentSignIn',
+            templateUrl: 'views/attendanceManagement/studentSignIn/page.html',
+            controller: 'studentSignInController',
+            params: {  }
+        })
 
 });

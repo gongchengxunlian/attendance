@@ -23,6 +23,16 @@ public class CourseArrange {
 
     private Integer classId;
 
+    private Integer begin;
+
+    public Integer getBegin() {
+        return begin;
+    }
+
+    public void setBegin(Integer begin) {
+        this.begin = begin;
+    }
+
     public Integer getClassId() {
         return classId;
     }

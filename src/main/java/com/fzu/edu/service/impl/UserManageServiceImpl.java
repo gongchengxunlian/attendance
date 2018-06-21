@@ -44,4 +44,7 @@ public class UserManageServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo>
         return u;
     }
 
+    public int addScore(Map params) {
+        return userInfoMapper.addScore(params);
+    }
 }
