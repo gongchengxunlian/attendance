@@ -75,7 +75,10 @@ public class CourseManageController {
     public String getAllCourseArrage(@RequestParam Map params, HttpSession session) {
         log.info("查询所有课程安排");
         try {
-            params.put("schoolId", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
+            try {
+                params.put("schoolId", ((SchoolInfo) session.getAttribute("schoolInfo")).getId());
+            }catch (Exception e){}
+
             Object pageNo = params.get("pageNo"), pageSize = params.get("pageSize");
             List courseArrageInfos = courseManageService.getAllCourseArrage(params);
             Page page = new Page(pageNo, pageSize, courseArrageInfos);

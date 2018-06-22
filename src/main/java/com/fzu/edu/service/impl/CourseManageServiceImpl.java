@@ -71,24 +71,7 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
         params.remove("pageNo");
         params.remove("pageSize");
         List l = null;
-        if (params.get("teacherId") != null){
-            List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage(params);
-            List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
-            for (CourseFullArrange courseFullArrange : courseFullArranges){
-                String week = (String) courseFullArrange.getWeek();
-                String classIndex = (String) courseFullArrange.getClassIndex();
-                courseFullArrange.setWeek(null);
-                courseFullArrange.setClassIndex(null);
-                String courseFullArrangeStr = JSON.toJSONString(courseFullArrange);
-                CourseArrangeDetail courseArrangeDetail = JSON.parseObject(courseFullArrangeStr, CourseArrangeDetail.class);
-                courseArrangeDetail.setWeek(JSON.parseObject(week, ArrayList.class));
-                courseArrangeDetail.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
-                courseArrangeDetail.createYearTerm();
-                courseArrangeDetail.createWhenWhere();
-                courseArrangeDetails.add(courseArrangeDetail);
-            }
-            l = courseArrangeDetails;
-        }else if (params.get("student_id") != null){
+        if (params.get("student_id") != null){
             params.remove("schoolId");
             List<StudentCourseFull> studentCourseFulls = studentCourseFullMapper.selectByMap(params);
             List<StudentCourseFull2> studentCourseFull2s = new ArrayList<StudentCourseFull2>();
@@ -106,6 +89,23 @@ public class CourseManageServiceImpl extends ServiceImpl<CourseManageMapper, Cou
                 studentCourseFull2s.add(studentCourseFull2);
             }
             l = studentCourseFull2s;
+        }else {
+            List<CourseFullArrange> courseFullArranges = courseArrangeMapper.getAllCourseArrage(params);
+            List<CourseArrangeDetail> courseArrangeDetails = new ArrayList<CourseArrangeDetail>();
+            for (CourseFullArrange courseFullArrange : courseFullArranges){
+                String week = (String) courseFullArrange.getWeek();
+                String classIndex = (String) courseFullArrange.getClassIndex();
+                courseFullArrange.setWeek(null);
+                courseFullArrange.setClassIndex(null);
+                String courseFullArrangeStr = JSON.toJSONString(courseFullArrange);
+                CourseArrangeDetail courseArrangeDetail = JSON.parseObject(courseFullArrangeStr, CourseArrangeDetail.class);
+                courseArrangeDetail.setWeek(JSON.parseObject(week, ArrayList.class));
+                courseArrangeDetail.setClassIndex(JSON.parseObject(classIndex, ArrayList.class));
+                courseArrangeDetail.createYearTerm();
+                courseArrangeDetail.createWhenWhere();
+                courseArrangeDetails.add(courseArrangeDetail);
+            }
+            l = courseArrangeDetails;
         }
 
         return l;

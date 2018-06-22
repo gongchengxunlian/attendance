@@ -80,13 +80,15 @@ public class AttendanceManagementController {
 
     @RequestMapping(value = "/getClassCollect", method = RequestMethod.GET)
     @ResponseBody
-    public String getClassCollect(HttpSession session) {
+    public String getClassCollect(@RequestParam Map params, HttpSession session) {
         log.info("班级统计");
         try {
-            HashMap params = new HashMap();
-            UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
-            Integer id = userInfo.getId();
-            params.put("teacher_id", id);
+            try {
+                UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+                Integer id = userInfo.getId();
+                params.put("teacher_id", id);
+            }catch (Exception e){}
+
             return JSON.toJSONString(attendanceManagementService.getClassCollect(params));
         }catch (Exception e){
             log.warn(e);
@@ -99,11 +101,14 @@ public class AttendanceManagementController {
     public String getOneCollect(@RequestParam Map params, HttpSession session) {
         log.info("学生统计");
         try {
-            UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
-            Integer id = userInfo.getId();
-            Integer power = userInfo.getPower();
-            if (power == 3) params.put("student_id", id);
-            else if (power == 2) params.put("teacher_id", id);
+            try {
+                UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
+                Integer id = userInfo.getId();
+                Integer power = userInfo.getPower();
+                if (power == 3) params.put("student_id", id);
+                else if (power == 2) params.put("teacher_id", id);
+            }catch (Exception e){}
+
             return JSON.toJSONString(attendanceManagementService.getOneCollect(params));
         }catch (Exception e){
             log.warn(e);

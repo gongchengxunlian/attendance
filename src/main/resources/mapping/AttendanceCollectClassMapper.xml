@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fzu.edu.dao.AttendanceCollectClassMapper" >
+  <resultMap id="BaseResultMap" type="com.fzu.edu.model.AttendanceCollectClass" >
+    <result column="course_arrage_id" property="courseArrageId" jdbcType="INTEGER" />
+    <result column="course_id" property="courseId" jdbcType="INTEGER" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_code" property="courseCode" jdbcType="VARCHAR" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="teacher_name" property="teacherName" jdbcType="VARCHAR" />
+    <result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
+    <result column="start_year" property="startYear" jdbcType="VARCHAR" />
+    <result column="term" property="term" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="max_score" property="maxScore" jdbcType="REAL" />
+    <result column="min_score" property="minScore" jdbcType="REAL" />
+    <result column="avg_socre" property="avgSocre" jdbcType="DOUBLE" />
+    <result column="study_day" property="studyDay" jdbcType="DECIMAL" />
+    <result column="max_study_day" property="maxStudyDay" jdbcType="BIGINT" />
+    <result column="min_study_day" property="minStudyDay" jdbcType="BIGINT" />
+    <result column="acg_study_day" property="acgStudyDay" jdbcType="DECIMAL" />
+    <result column="student_number" property="studentNumber" jdbcType="BIGINT" />
+  </resultMap>
+
+
+</mapper>

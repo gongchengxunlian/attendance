@@ -47,8 +47,10 @@ public class ClassManageController {
     public String getAll(@RequestParam Map params, HttpSession session) {
         log.info("查询所有教室");
         try {
-            Integer schoolId = ((SchoolInfo) session.getAttribute("schoolInfo")).getId();
-            params.put("school_id", schoolId);
+            try {
+                Integer schoolId = ((SchoolInfo) session.getAttribute("schoolInfo")).getId();
+                params.put("school_id", schoolId);
+            }catch (Exception e){}
             List<HashMap> classInfos = classManageService.getAll(params);
             Page page = new Page(params.get("pageNo"), params.get("pageSize"), classInfos);
             return JSON.toJSONString(page);

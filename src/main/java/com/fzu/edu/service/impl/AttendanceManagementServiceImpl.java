@@ -137,7 +137,7 @@ public class AttendanceManagementServiceImpl implements AttendanceManagementServ
         return 0;
     }
 
-    public List getClassCollect(HashMap params) {
+    public List getClassCollect(Map params) {
         setParamsForCollect(params);
         List list = attendanceCollectClassMapper.selectByMap(params);
         return list;

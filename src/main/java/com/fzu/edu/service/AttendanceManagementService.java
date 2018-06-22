@@ -17,7 +17,7 @@ public interface AttendanceManagementService {
 
     int cancelAttendance(Map params);
 
-    List getClassCollect(HashMap params);
+    List getClassCollect(Map params);
 
     List getOneCollect(Map params);
 }

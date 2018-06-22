@@ -64,6 +64,12 @@
     </bean>
 
     <!--拦截器定义-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.fzu.edu.app.Interceptors" />
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <mvc:default-servlet-handler />
