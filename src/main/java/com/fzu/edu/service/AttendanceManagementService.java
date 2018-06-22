@@ -19,5 +19,5 @@ public interface AttendanceManagementService {
 
     List getClassCollect(Map params);
 
-    List getOneCollect(Map params);
+    Map getOneCollect(Map params);
 }

@@ -2,6 +2,8 @@ package com.fzu.edu.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.fzu.edu.dao.*;
 import com.fzu.edu.model.*;
 import com.fzu.edu.service.AttendanceManagementService;
@@ -39,6 +41,8 @@ public class AttendanceManagementServiceImpl implements AttendanceManagementServ
     private AttendanceCollectMapper attendanceCollectMapper;
     @Resource
     private AttendanceCollectClassMapper attendanceCollectClassMapper;
+    @Resource
+    private AbsenceLevelMapper absenceLevelMapper;
 
     public List getStudents(Map params) {
         Calendar c = Calendar.getInstance();
@@ -143,10 +147,20 @@ public class AttendanceManagementServiceImpl implements AttendanceManagementServ
         return list;
     }
 
-    public List getOneCollect(Map params) {
+    public Map getOneCollect(Map params) {
         setParamsForCollect(params);
-        List list = attendanceCollectMapper.selectByMap(params);
-        return list;
+        Integer school_id = Integer.parseInt(params.get("school_id").toString());
+        params.remove("school_id");
+        List<AttendanceCollect> list = attendanceCollectMapper.selectByMap(params);
+        Wrapper<AbsenceLevel> wrapper = new EntityWrapper<AbsenceLevel>();
+        wrapper.addFilter("school_id = " + school_id);
+        wrapper.orderBy("min_value");
+        List<AbsenceLevel> levels = absenceLevelMapper.selectList(wrapper);
+        HashMap map = new HashMap();
+        map.put("attendanceCollect", list);
+        map.put("levels", levels);
+
+        return map;
     }
 
     private void setParamsForCollect(Map params){

@@ -15,7 +15,7 @@
     <result column="teacher_code" property="teacherCode" jdbcType="VARCHAR" />
     <result column="start_year" property="startYear" jdbcType="VARCHAR" />
     <result column="term" property="term" jdbcType="INTEGER" />
-    <result column="study_day" property="studyDay" jdbcType="BIGINT" />
+    <result column="study_day" property="studyDay" jdbcType="INTEGER" />
   </resultMap>
 
 

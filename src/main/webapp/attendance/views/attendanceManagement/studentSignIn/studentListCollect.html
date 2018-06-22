@@ -17,12 +17,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="student in studentOptions" ng-init="studentMaxStudyDay = (studentMaxStudyDay || student.studyDay) > student.studyDay ? studentMaxStudyDay : student.studyDay">
+                <tr ng-repeat="student in studentOptions.attendanceCollect" ng-init="setClassForStudent(student)">
                     <td ng-if="sign == 2">{{student.studentName}}<br>{{student.studentCode}}</td>
                     <td ng-if="sign == 3">{{student.courseName}}<br>{{student.courseCode}}</td>
                     <td>{{student.score}}分</td>
-                    <td>{{student.studyDay}}</td>
-                    <td>{{studentMaxStudyDay - student.studyDay}}</td>
+                    <td style="background-color: {{student.level.color}}">{{student.studyDay}}</td>
+                    <td style="background-color: {{student.level.color}}">{{studentMaxStudyDay - student.studyDay}}</td>
                 </tr>
                 </tbody>
             </table>

@@ -27,7 +27,7 @@ public class AttendanceCollect {
 
     private Integer term;
 
-    private Long studyDay;
+    private Integer studyDay;
 
     public Integer getStudentId() {
         return studentId;
@@ -133,11 +133,11 @@ public class AttendanceCollect {
         this.term = term;
     }
 
-    public Long getStudyDay() {
+    public Integer getStudyDay() {
         return studyDay;
     }
 
-    public void setStudyDay(Long studyDay) {
+    public void setStudyDay(Integer studyDay) {
         this.studyDay = studyDay;
     }
 }
